@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'exchange',
+    'django_cas_ng',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_cas_ng.middleware.CASMiddleware',
 ]
 
 ROOT_URLCONF = 'PWEB.urls'
@@ -129,6 +131,19 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
-STATICFILES_DIRS = (
-	os.path.join(BASE_DIR, 'static'),
+AUTHENTICATION_BACKENDS = (
+    'django_cas_ng.backends.CASBackend',
+    'django.contrib.auth.backends.ModelBackend',    
 )
+
+LOGIN_URL='accounts/login'
+
+#CAS_SERVER_URL = 'https://login.insa-lyon.fr/cas/'
+CAS_SERVER_URL = 'https://casserver.herokuapp.com/cas/login'
+CAS_APPLY_ATTRIBUTES_TO_USER = True
+
+CAS_IGNORE_REFERER = True
+LOGIN_REDIRECT_URL = '/blog/'
+LOGOUT_REDIRECT_URL = '/blog/'
+CAS_REDIRECT_URL = '/blog/'
+CAS_STORE_NEXT = True
