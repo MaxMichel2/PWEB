@@ -98,17 +98,17 @@
 			
 			//On met les infos dans chaques tableau
 			{% for o in Univ_list %} 
-				{% if o.City.Country.Continent == 'AS' %}
+				{% if (o.City.Country.Continent == 'AS') %}
 					universiteAS.push( ["{{o.Name}}",parseFloat("{{o.Lat}}".replace(',','.')),parseFloat("{{o.Long}}".replace(',','.')),"{{o.RankMetric}}","{{o.LifeMetric}}",parseInt("{{o.ID}}")] )
-				{% elif o.City.Country.Continent == 'AF' %}
+				{% elif (o.City.Country.Continent == 'AF') %}
 					universiteAF.push( ["{{o.Name}}",parseFloat("{{o.Lat}}".replace(',','.')),parseFloat("{{o.Long}}".replace(',','.')),"{{o.RankMetric}}","{{o.LifeMetric}}",parseInt("{{o.ID}}")] )
-				{% elif o.City.Country.Continent == 'AdN' %}
+				{% elif (o.City.Country.Continent == 'AdN') %}
 					universiteAdN.push( ["{{o.Name}}",parseFloat("{{o.Lat}}".replace(',','.')),parseFloat("{{o.Long}}".replace(',','.')),"{{o.RankMetric}}","{{o.LifeMetric}}",parseInt("{{o.ID}}")] )
-				{% elif o.City.Country.Continent == 'AdS' %}
+				{% elif (o.City.Country.Continent == 'AdS') %}
 					universiteAdS.push( ["{{o.Name}}",parseFloat("{{o.Lat}}".replace(',','.')),parseFloat("{{o.Long}}".replace(',','.')),"{{o.RankMetric}}","{{o.LifeMetric}}",parseInt("{{o.ID}}")] )
-				{% elif o.City.Country.Continent == 'EU' %}
+				{% elif (o.City.Country.Continent == 'EU') %}
 					universiteEU.push( ["{{o.Name}}",parseFloat("{{o.Lat}}".replace(',','.')),parseFloat("{{o.Long}}".replace(',','.')),"{{o.RankMetric}}","{{o.LifeMetric}}",parseInt("{{o.ID}}")] ) 
-				{% elif o.City.Country.Continent == 'OC' %}
+				{% elif (o.City.Country.Continent == 'OC') %}
 					universiteOC.push( ["{{o.Name}}",parseFloat("{{o.Lat}}".replace(',','.')),parseFloat("{{o.Long}}".replace(',','.')),"{{o.RankMetric}}","{{o.LifeMetric}}",parseInt("{{o.ID}}")] )
 				{% endif %}
 			{% endfor %}
