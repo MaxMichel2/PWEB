@@ -27,7 +27,7 @@ class LangueForm(forms.ModelForm):
 class ExchForm(forms.ModelForm):
     class Meta:
         model = Exchange
-        fields = ('Year','StartDate','EndDate','Semester','Comment','TimeVisa','Rent','MonthlyExpenses','NightLifeGrade','CulturalLifeGrade','Security',)
+        fields = ('Year','StartDate','EndDate','Semester','Comment','Rent','MonthlyExpenses','NightLifeGrade','CulturalLifeGrade','Security','VisaMonths', 'VisaWeeks', 'VisaDays')
 
 #RajouterInfo3 - Exchange (case à cocher)
 class ExchFormVisa(forms.ModelForm):
