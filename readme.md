@@ -19,6 +19,4 @@
 * Click the bottom-left **Synchronize Changes** icon
 * Click **Ok** if a prompt appears
 
-Test
-
 The changes should be saved to the repository and you should be able to see them online
