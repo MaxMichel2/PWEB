@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Elements Reference - Massively by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="{% static 'exchange/assets/css/main.css' %}" />
+		<noscript><link rel="stylesheet" type="text.css" href="{% static 'exchange/assets/css/noscript.css' %}" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+                <header id="header">
+                    <a href="/exchange/accueil" class="logo">Accueil</a>
+                </header>
+
+            <!-- Nav -->
+                <nav id="nav">
+                    <ul class="links">
+                        <li><a href="/exchange/accueil">Recherche par pays</a></li>
+                        <li><a href="/exchange/recherche_avance">Recherche avancée</a></li>
+                        <li class="active"><a href="/exchange/rajouter">Ajouter une info</a></li>
+                    </ul>
+                </nav>
+                <div id="main">
+                    <header class="major">
+                        <h1>Ajouter<br />
+                        une info</h1>
+                        <p>Donne ton avis sur ton échange à l'étranger</p>
+                    </header>
+                    <h3>Continent</h3>
+                    <div class="table-wrapper">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td><a href=/exchange/continent/AS>Asie</a></td>
+                                    </tr>   
+                                    <tr>
+                                        <td><a href=/exchange/continent/AF>Afrique</a></td>
+                                    </tr>  
+                                    <tr>
+                                        <td><a href=/exchange/continent/AdN>Amerique du Nord</a></td>
+                                    </tr> 
+                                    <tr>
+                                        <td><a href=/exchange/continent/AdS>Amerique du Sud</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href=/exchange/continent/EU>Europe</a></td>
+                                    </tr>  
+                                    <tr>
+                                        <td><a href=/exchange/continent/OC>Oceanie</a></td>
+                                    </tr>                                                                           
+                                </tbody>
+                            </table>
+                        </div>
+                </div>
+            </div>
+            <div id="copyright">
+                <ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+            </div>
+                    
+            <script src="{% static 'exchange/assets/js/jquery.min.js' %}"></script>
+            <script src="{% static 'exchange/assets/js/jquery.scrollex.min.js' %}"></script>
+            <script src="{% static 'exchange/assets/js/jquery.scrolly.min.js' %}"></script>
+            <script src="{% static 'exchange/assets/js/browser.min.js' %}"></script>
+            <script src="{% static 'exchange/assets/js/breakpoints.min.js' %}"></script>
+            <script src="{% static 'exchange/assets/js/util.js' %}"></script>
+            <script src="{% static 'exchange/assets/js/main.js' %}"></script>
+    </body>
+</html>

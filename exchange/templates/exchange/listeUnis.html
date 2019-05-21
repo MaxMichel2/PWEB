@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Massively by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="{% static 'exchange/assets/css/main.css' %}" />
+		<noscript><link rel="stylesheet" type="text.css" href="{% static 'exchange/assets/css/noscript.css' %}" /></noscript>
+    </head>
+
+    <body class="is-preload">
+
+            <div id="wrapper">
+                
+                <!--Bouton pour retourner à l'accueil-->
+                <header id="header">
+                    <a href="/exchange/accueil" class="logo">Accueil</a>
+                </header>
+
+                <div id="main">
+                    <header>
+                        <h2>Liste des universités</h2>
+                    </header>
+                    <!--Truc qui fait que quand tu passes ta souris dessus tu peux cliquer-->
+                    <!--<a href="#" class="image main"><img src="images/pic01.jpg" alt="" /></a>-->
+
+                    <!-- Table -->
+					<div class="table-wrapper">
+						<table>
+							<thead>
+								<tr>
+									<th>Université</th>
+									<th>Pays</th>
+                                    <th>Ville</th>
+                                    <th>Excellence</th>
+                                    <th>Qualité de vie</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>INSA Lyon</td>
+									<td>France</td>
+                                    <td>Villeurbanne</td>
+                                    <td>6/5</td>
+                                    <td>17/5</td>
+								</tr>
+								<tr>
+									<td>Université de Sao Paulo</td>
+									<td>Brésil</td>
+                                    <td>Sao Paulo</td>
+                                    <td>5/5</td>
+                                    <td>5/5</td>
+								</tr>
+								<tr>
+									<td>University College of Dublin</td>
+									<td>Irlande</td>
+                                    <td>Dublin</td>
+                                    <td>5/5</td>
+                                    <td>5/5</td>
+								</tr>
+								
+							</tbody>
+						</table>
+					</div>
+					<!-- Footer 
+							<footer>
+								<div class="pagination">-->
+									<!--<a href="#" class="previous">Prev</a>
+									<a href="#" class="page active">1</a>
+									<a href="#" class="page">2</a>
+									<a href="#" class="page">3</a>
+									<span class="extra">&hellip;</span>
+									<a href="#" class="page">8</a>
+									<a href="#" class="page">9</a>
+									<a href="#" class="page">10</a>
+									<a href="#" class="next">Next</a>
+								</div>
+							</footer>  -->
+
+				</div>
+				<div id="copyright">
+						<ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+					</div>
+
+            </div>
+        
+        <!-- Scripts -->
+		<script src="{% static 'exchange/assets/js/jquery.min.js' %}"></script>
+		<script src="{% static 'exchange/assets/js/jquery.scrollex.min.js' %}"></script>
+		<script src="{% static 'exchange/assets/js/jquery.scrolly.min.js' %}"></script>
+		<script src="{% static 'exchange/assets/js/browser.min.js' %}"></script>
+		<script src="{% static 'exchange/assets/js/breakpoints.min.js' %}"></script>
+		<script src="{% static 'exchange/assets/js/util.js' %}"></script>
+		<script src="{% static 'exchange/assets/js/main.js' %}"></script>
+    
+    </body>
+</html>

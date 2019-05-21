@@ -1,0 +1,206 @@
+{% load static %}
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<style>
+		#map {
+			width: 100%;
+			height: 600px;
+			}
+	</style>
+	<head>
+		<title>Massively by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="{% static 'exchange/assets/css/main.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'exchange/assets/css/MarkerCluster.css' %}"/>
+		<link rel="stylesheet" type="text/css" href="{% static 'exchange/assets/css/MarkerCluster.Default.css' %}"/>
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ==" crossorigin="" />
+		<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js" integrity="sha512-WXoSHqw/t26DszhdMhOXOkI7qCiv5QWXhH9R7CgvgZMHz1ImlkVQ3uNsiQKu5wwbbxtPzFXd1hK4tzno2VqhpA==" crossorigin=""></script>
+	  
+		<script type='text/javascript' src='{% static 'exchange/assets/js/jquery2.min.js' %}'></script>
+		<script type='text/javascript' src='{% static 'exchange/assets/js/leaflet.markercluster.js' %}'></script>
+		<noscript><link rel="stylesheet" type="text.css" href="{% static 'exchange/assets/css/noscript.css' %}" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper" class="fade-in">
+
+				<!-- Intro -->
+					<div id="intro">
+						<h1>Echange<br />
+						Universitaire</h1>
+						<p>blablablablabla</p>
+						<ul class="actions">
+							<li><a href="#header" class="button icon solo fa-arrow-down scrolly">Continue</a></li>
+						</ul>
+					</div>
+
+				<!-- Header -->
+					<header id="header">
+						<a href="/exchange/accueil" class="logo">Accueil</a>
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li class="active"><a href="/exchange/accueil">Recherche par pays</a></li>
+							<li><a href="/exchange/recherche_avance">Recherche avancée</a></li>
+							<li><a href="/exchange/rajouter">Ajouter une info</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<header class="major">
+							<h2>Carte interactive</h2>
+						</header>
+						
+						<div id="map" height="20rem">
+
+						</div>
+
+						<div>
+							<p>/!\ La majorité des informations de ce site sont basés sur les avis/expériences des élèves partis en échange les années précédentes. Elles peuvent changer d'une année à l'autre, donc n'hésitez pas à chercher des informations en plus ! Ce site sert principalement à vous aider pour vous faire une première idée quant à votre échange universitaire.</p>
+						</div>
+
+					</div>
+				<!-- Copyright--> 
+					<div id="copyright">
+						<ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+					</div>
+
+			</div>
+		
+		<!-- Scripts -->
+		<script src="{% static 'exchange/assets/js/jquery.min.js' %}"></script>
+		<script src="{% static 'exchange/assets/js/jquery.scrollex.min.js' %}"></script>
+		<script src="{% static 'exchange/assets/js/jquery.scrolly.min.js' %}"></script>
+		<script src="{% static 'exchange/assets/js/browser.min.js' %}"></script>
+		<script src="{% static 'exchange/assets/js/breakpoints.min.js' %}"></script>
+		<script src="{% static 'exchange/assets/js/util.js' %}"></script>
+		<script src="{% static 'exchange/assets/js/main.js' %}"></script>
+		<script>
+			//INITIALISATION
+			
+			//universités + coordonées + metriques / par continent
+			var universiteAS = [];
+			var universiteAF = [];
+			var universiteAdN = [];
+			var universiteAdS = [];
+			var universiteEU = [];
+			var universiteOC = [];
+			
+			//On met les infos dans chaques tableau
+			{% for o in Univ_list %} 
+				{% if o.City.Country.Continent == 'AS' %}
+					universiteAS.push( ["{{o.Name}}",parseFloat("{{o.Lat}}".replace(',','.')),parseFloat("{{o.Long}}".replace(',','.')),"{{o.RankMetric}}","{{o.LifeMetric}}",parseInt("{{o.ID}}")] )
+				{% elif o.City.Country.Continent == 'AF' %}
+					universiteAF.push( ["{{o.Name}}",parseFloat("{{o.Lat}}".replace(',','.')),parseFloat("{{o.Long}}".replace(',','.')),"{{o.RankMetric}}","{{o.LifeMetric}}",parseInt("{{o.ID}}")] )
+				{% elif o.City.Country.Continent == 'AdN' %}
+					universiteAdN.push( ["{{o.Name}}",parseFloat("{{o.Lat}}".replace(',','.')),parseFloat("{{o.Long}}".replace(',','.')),"{{o.RankMetric}}","{{o.LifeMetric}}",parseInt("{{o.ID}}")] )
+				{% elif o.City.Country.Continent == 'AdS' %}
+					universiteAdS.push( ["{{o.Name}}",parseFloat("{{o.Lat}}".replace(',','.')),parseFloat("{{o.Long}}".replace(',','.')),"{{o.RankMetric}}","{{o.LifeMetric}}",parseInt("{{o.ID}}")] )
+				{% elif o.City.Country.Continent == 'EU' %}
+					universiteEU.push( ["{{o.Name}}",parseFloat("{{o.Lat}}".replace(',','.')),parseFloat("{{o.Long}}".replace(',','.')),"{{o.RankMetric}}","{{o.LifeMetric}}",parseInt("{{o.ID}}")] ) 
+				{% elif o.City.Country.Continent == 'OC' %}
+					universiteOC.push( ["{{o.Name}}",parseFloat("{{o.Lat}}".replace(',','.')),parseFloat("{{o.Long}}".replace(',','.')),"{{o.RankMetric}}","{{o.LifeMetric}}",parseInt("{{o.ID}}")] )
+				{% endif %}
+			{% endfor %}
+			
+			
+			
+			
+			for(var i=0; i<universiteAS.length; i++){
+			  console.log(universiteAS[i])
+			}
+			
+			//LA CARTE
+				// initialize the map object, passing it the id of the div where we want the map to go
+			var map = L.map('map').setView([0, 0], 2);
+			
+				//Creer un 'tile layer' contenant la carte
+			var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+							minZoom: 2,
+							maxZoom: 18,
+							attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Points &copy 2012 LINZ'
+						}).addTo(map);
+			
+			// add this tile layer to the map we just created
+			map.addLayer(tiles);
+			
+			//METTRE LES MARKERS SUR CARTE
+			//AS
+			var markersAS = new L.MarkerClusterGroup();
+				for (var i = 0; i < universiteAS.length; i++) {
+					var a = universiteAS[i];
+					var title = a[0];
+					var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
+					marker.bindPopup(title + '<br/>'+a[3]+'<br/>'+a[4]+'<br/>'+'<a href=/exchange/universite/'+a[5]+'>Clickez ici</a>'); //quand on clique (metter info plus url avec href accolade)
+					markersAS.addLayer(marker); 
+				}
+				map.addLayer(markersAS);
+			
+			//AF
+			var markersAF = new L.MarkerClusterGroup();
+				for (var i = 0; i < universiteAF.length; i++) {
+					var a = universiteAF[i];
+					var title = a[0];
+					var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
+					marker.bindPopup(title + '<br/>'+a[3]+'<br/>'+a[4]+'<br/>'+'<a href=/exchange/universite/'+a[5]+'>Clickez ici</a>'); //quand on clique (metter info plus url avec href accolade)
+					markersAF.addLayer(marker); 
+				}
+				map.addLayer(markersAF);
+			
+			//AdN
+			var markersAdN = new L.MarkerClusterGroup();
+				for (var i = 0; i < universiteAdN.length; i++) {
+					var a = universiteAdN[i];
+					var title = a[0];
+					var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
+					marker.bindPopup(title + '<br/>'+a[3]+'<br/>'+a[4]+'<br/>'+'<a href=/exchange/universite/'+a[5]+'>Clickez ici</a>'); //quand on clique (metter info plus url avec href accolade)
+					markersAdN.addLayer(marker); 
+				}
+				map.addLayer(markersAdN);
+			
+			//AdS
+			var markersAdS = new L.MarkerClusterGroup();
+				for (var i = 0; i < universiteAdS.length; i++) {
+					var a = universiteAdS[i];
+					var title = a[0];
+					var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
+					marker.bindPopup(title + '<br/>'+a[3]+'<br/>'+a[4]+'<br/>'+'<a href=/exchange/universite/'+a[5]+'>Clickez ici</a>'); //quand on clique (metter info plus url avec href accolade)
+					markersAdS.addLayer(marker); 
+				}
+				map.addLayer(markersAdS);
+			
+			//EU
+			var markersEU = new L.MarkerClusterGroup();
+				for (var i = 0; i < universiteEU.length; i++) {
+					var a = universiteEU[i];
+					var title = a[0];
+					var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
+					marker.bindPopup(title + '<br/>'+a[3]+'<br/>'+a[4]+'<br/>'+'<a href=/exchange/universite/'+a[5]+'>Clickez ici</a>'); //quand on clique (metter info plus url avec href accolade)
+					markersEU.addLayer(marker); 
+				}
+				map.addLayer(markersEU);
+			
+			//OC
+			var markersOC = new L.MarkerClusterGroup();
+				for (var i = 0; i < universiteOC.length; i++) {
+					var a = universiteOC[i];
+					var title = a[0];
+					var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
+					marker.bindPopup(title + '<br/>'+a[3]+'<br/>'+a[4]+'<br/>'+'<a href=/exchange/universite/'+a[5]+'>Clickez ici</a>'); //quand on clique (metter info plus url avec href accolade)
+					markersOC.addLayer(marker); 
+				}
+				map.addLayer(markersOC);
+			
+			</script>
+	</body>
+</html>
