@@ -20,3 +20,20 @@
 * Click **Ok** if a prompt appears
 
 The changes should be saved to the repository and you should be able to see them online
+
+## How to run this website
+
+* Install (if not already done) the following: Python 3, MySQL, VS Code (for practicality)
+* Install the following python libraries: django, mysql, mysqlclient, django-cas, django-cas-ng, certifi, requests, sqlparse, python-cas, lxml, six, urllib3
+* Create a folder on your computer and clone this repository (Download and copy everything contained in this repository)
+* Open **MySQL Workbench** and create a root user with/without a password
+* Open **Local instance MySQL Router** with the root user
+* Create a new schema with the name you like (The name used in this code is: **pweb_international**)
+* Set it as the default schema
+* Edit the file **settings.py** in the folder **PWEB** with your specific database information
+* Open a command prompt/terminal window in the folder containing **manage.py** and type: 
+    * **python manage.py makemigrations**
+    * **python manage.py migrate**
+    * **python manage.py runserver**
+* Open any browser and type: **localhost:8000/exchange/accueil**
+* Congratulations, the website is up and running! Feel free to play around.
