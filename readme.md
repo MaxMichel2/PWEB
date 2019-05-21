@@ -26,6 +26,7 @@ The changes should be saved to the repository and you should be able to see them
 * Install (if not already done) the following: Python 3, MySQL, VS Code (for practicality)
 * Install the following python libraries: django, mysql, mysqlclient, django-cas, django-cas-ng, certifi, requests, sqlparse, python-cas, lxml, six, urllib3
 * Create a folder on your computer and clone this repository (Download and copy everything contained in this repository)
+   * If you followed the above instructions, you should already have this folder
 * Open **MySQL Workbench** and create a root user with/without a password
 * Open **Local instance MySQL Router** with the root user
 * Create a new schema with the name you like (The name used in this code is: **pweb_international**)
