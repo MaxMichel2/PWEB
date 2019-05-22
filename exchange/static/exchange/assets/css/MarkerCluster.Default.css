@@ -18,7 +18,11 @@
 .marker-cluster-large div {
 	background-color: rgba(241, 128, 23, 0.6);
 	}
+
 .marker-cluster-eu {
+	background-color: rgba(66, 66, 206, 0.6)
+	}
+.marker-cluster-eu div{
 	background-color: rgba(35, 35, 200, 0.6)
 	}
 
