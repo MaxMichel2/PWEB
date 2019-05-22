@@ -115,7 +115,7 @@ def rajouter(request):
 
 #selection pays
 def pays(request,cont):
-    pay = Country.objects.filter(Continent=cont)
+    pays_var = Country.objects.filter(Continent=cont)
     return render(request, 'exchange/pays.html',locals())
 
 #selection ville
