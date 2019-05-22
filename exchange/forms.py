@@ -36,7 +36,24 @@ class LangueForm(forms.ModelForm):
 class ExchForm(forms.ModelForm):
     class Meta:
         model = Exchange
-        fields = ('Year','StartDate','EndDate','Semester','Comment','Rent','MonthlyExpenses','NightLifeGrade','CulturalLifeGrade','Security','VisaMonths', 'VisaWeeks', 'VisaDays')
+        fields = ('Year','Semester','StartDate','EndDate','Rent','MonthlyExpenses','NightLifeGrade','CulturalLifeGrade','Security','VisaMonths', 'VisaWeeks', 'VisaDays','Comment')
+        labels = {
+            'Year':('Promo dans laquelle vous étiez durant votre échange'),
+            'Semester':("Semestre de l'échange"),
+            'StartDate':("Date du début de l'échange"),
+            'EndDate':("Date de fin de l'échange"),
+            'Rent':("Quel était votre loyer ? (en €)"),
+            'MonthlyExpenses':("Combien dépensiez-vous en moyenne par mois ? (en €)"),
+            'NightLifeGrade':('Sur une échelle de 1 à 5 (5 étant la note la plus haute), quelle note donneriez-vous à la vie nocture (soirées, bars, etc) dans la ville de votre échange ?'),
+            'CulturalLifeGrade':('Sur une échelle de 1 à 5 (5 étant la note la plus haute), quelle note donneriez-vous à la vie culturelle dans la ville de votre échange ?'),
+            'Security':('Sur une échelle de 1 à 5 (5 étant la note la plus haute), quelle note donneriez-vous à la sécurité dans la ville de votre échange ?'),
+            'Comment':("Avez-vous un commentaire à faire sur votre échange ?"),
+            'VisaMonths':("Combien de temps a duré votre procédure de visa en mois?"),
+            'VisaWeeks':("Combien de temps a duré votre procédure de visa en semaines?"),
+            'VisaDays':("Combien de temps a duré votre procédure de visa en jours?"),
+        }
+
+    
 
 #RajouterInfo3 - Exchange (case à cocher)
 class ExchFormVisa(forms.ModelForm):
@@ -49,6 +66,11 @@ class FinancialForm(forms.ModelForm):
     class Meta:
         model = FinancialAid
         fields = ('Name','Value','ReceivedEvery',)
+        labels = {
+            'Name':("Nom de la bourse"),
+            'Value':("Valeur de la bourse (en €)"),
+            'ReceivedEvery':("S'agit-il d'une valeur mensuelle, hebdomadaire ou journalière ?")
+        }
 
 #-----------------RECHERCHE AVANCEE-------------------
 #Filtre : Continent
@@ -73,7 +95,7 @@ class RAContinentForm(forms.ModelForm):
 #Filtre : Contract
 class ContractForm(forms.ModelForm):
     CONTRACTS = (
-        ('','(pas trier par contract)'),
+        ('','---------'),
         ('AR','Accord de Recherche'),
         ('AC','Accord Cadre'),
         ('DD','Double Diplome'),
@@ -90,6 +112,9 @@ class ContractForm(forms.ModelForm):
     class Meta:
         model = UniversityContracts
         fields = ['ContractType']
+        labels = {
+            'ContractType':("Type de contrat avec l'INSA")
+        }
 """           
      def __init__(self, *args, **kwargs):
         super(ContractForm, self).__init__(*args, **kwargs)
@@ -123,4 +148,8 @@ class UnivForm(forms.ModelForm):
     class Meta:
         model = University
         fields = ('Places','Demand',)
+        labels = {
+            'Places':('Nombre de places'),
+            'Demand':('Nombre de demandes (en moyenne)')
+        }
 

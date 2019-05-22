@@ -37,8 +37,9 @@
                         Avancée</h1>
                         <p>Recherchez les infos dont vous avez besoin</p>
                     </header>
-                    <h3>Filtrer les Universitées selon:</h3>
+                    
                     <div class="table-wrapper">
+                        <header><h3>Filtrer les Universitées selon:</h3></header>
                         <form action="{% url 'RechercheAvancee' %}"  method="post">
                             {% csrf_token %}
                             <label for="id_Continent">Continent&nbsp;:</label>
@@ -51,16 +52,18 @@
                                 <option value="EU">Europe</option>
                                 <option value="OC">Oceanie</option>
                               </select>
-                            <label for="id_CountryName">Countryname&nbsp;:</label>
+                            <label for="id_CountryName">Pays&nbsp;:</label>
                             <select name="CountryName" id="testt">
-                                <option value="" >(pas trier par pays)</option>  
+                                <option value="" >---------</option>  
                                 {% for c in ttl %}
                                 <option value="{{ c.CountryName }}" id="{{c.ID}}" style="display:none;">{{ c.CountryName }}</option>
                                 {% endfor %}
                             </select>
                             {{ formContract.as_p }}
+                            <hr>
                             <h3>Ordonner les Universitées selon:</h3>
                             {{ ordre.as_p }}
+                            </hr>
                             <!--
                             {% for field in selections %}
                                 <label>
@@ -77,12 +80,13 @@
                             <input type="submit" value="ok">
                             {% endif %}
                             -->
-                            <input id="buton" type="submit" value="Submit">
+                            <input id="buton" type="submit" value="Rechercher">
                         </form>
                     </div>
-                    {% if valide %}
-                    <p>Nombre d'éléments trouvés : {{universitiesC.count}}</p>
+                    
                     <div class="table-wrapper">
+                        {% if valide %}
+                        <p>Nombre d'éléments trouvés : {{universitiesC.count}}</p>
                         <table>
                             <thead>
                                 <tr>
@@ -113,13 +117,14 @@
                     </div>
                     {% endif %}
                 </div>
+                <div id="copyright">
+                    <ul><li>&copy; Astus International</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+                </div>
+                       
             </div>
 
 
-            <div id="copyright">
-                <ul><li>&copy; Astus International</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
-            </div>
-                    
+             
             <script src="{% static 'exchange/assets/js/jquery.min.js' %}"></script>
             <script src="{% static 'exchange/assets/js/jquery.scrollex.min.js' %}"></script>
             <script src="{% static 'exchange/assets/js/jquery.scrolly.min.js' %}"></script>

@@ -51,18 +51,19 @@
 						<!-- Post -->
 							<section class="post">
 								<header class="major">
-									<h1>Rajouter Infos Officielles</h1>
+									<h1>Ajouter une information officielle</h1>
 								</header>
 								<div class="image main"><img src="images/pic01.jpg" alt="" /></div>
 							</section>
 							<section>
+								
                                 <div class="table-wrapper">
                                     <h3>Départements déjà existants:</h3>
                                     <table>
                                         <thead>
                                             <tr>
                                                 <th>Nom</th>
-                                                <th>Ranking</th>
+                                                <th>Classement</th>
                                                 <th>Modifier</th>
                                             </tr>
                                         </thead>
@@ -76,28 +77,32 @@
                                             {% endfor %}                                        
                                         </tbody>
                                     </table>
-                                </div>
+								</div>
+								<hr>
 								<div class="table-wrapper">
-                                    <h3>Creer un département</h3>
+                                    <h3>Ajouter un département</h3>
                                     <form action="{% url 't' Uni.ID %}" method="post">
                                         {% csrf_token %}
                                         {{ form.as_p }}
-                                        <input type="submit" value="Add">
+                                        <input type="submit" value="Ajouter">
                                     </form>
 								</div>
+								</hr>
+								<hr>
 								<div class="table-wrapper">
-                                    <h3>Modifier infos de {{Uni.Name}}</h3>
+                                    <h3>Modifier les infos de {{Uni.Name}}</h3>
                                     <form action="{% url 't' Uni.ID %}" method="post">
                                         {% csrf_token %}
                                         {{ formUni.as_p }}
-                                        <input type="submit" value="Modify">
+                                        <input type="submit" value="Modifier">
                                     </form>
                                 </div>
                                 <div class="table-wrapper">
                                     <form action="/exchange/universite/{{Uni.ID}}" method="get">
-                                        <input type="submit" value="Retour à Université" >
+                                        <input type="submit" value="Retour sur la page de l'université" >
                                     </form>
-                                </div>
+								</div>
+							</hr>
 							</section>
 
 					</div>
@@ -154,7 +159,7 @@
 
 				<!-- Copyright -->
 					<div id="copyright">
-						<ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+						<ul><li>&copy; Astus International</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
 					</div>
 
 			</div>

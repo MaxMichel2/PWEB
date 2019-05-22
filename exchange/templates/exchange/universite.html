@@ -272,6 +272,18 @@
                             });
                         }
                     </script>
+
+                    <div>
+                        <a href=/exchange/modifier/{{univ.ID}} class ="button">Donner son avis sur cette université</a>
+                    </div>
+                    <div>
+                        {% if perms.exchange.noter_depart %}
+                        <a href=/exchange/addDep/{{univ.ID}} class="button">Aouter une info officielle</a>
+                        {% endif %}
+                    </div>
+                       
+                       
+                    
                    
                 </div>
 

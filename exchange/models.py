@@ -123,15 +123,9 @@ class FinancialAid(models.Model):
 		("S", "Semaines"),
 		("M", "Mois"),
 	)
-	AID_NAME = (
-		("Erasmus+", "Erasmus+"),
-		("Aide Régionale", "Aide Régionale"),
-		("Aide à la mobilité internationale", "Aide à la mobilité internationale"),
-		("JASSO", "JASSO"),
-	)
 	ID = models.AutoField(primary_key=True)
-	Name = models.CharField(max_length=100, null=True, blank=True, help_text="Le nom de la bourse.")
-	Value = models.IntegerField(null=True, blank=True, help_text="En euros (€).", default=-1)
+	Name = models.CharField(max_length=100, null=True, blank=True)
+	Value = models.IntegerField(null=True, blank=True, default=-1)
 	ReceivedEvery = models.CharField(max_length=15, null=True, blank=True, choices=RECEIVED_EVERY)
 	Exchange = models.ForeignKey('Exchange', on_delete=models.CASCADE)
 
@@ -140,13 +134,13 @@ class FinancialAid(models.Model):
 
 class Exchange(models.Model):
 	YEAR_CHOICE = (
-		(4, 4),
-		(5, 5),
+		(4, '4TC'),
+		(5, '5TC'),
 	)
 
 	SEMESTER_CHOICE = (
-		(1, 1),
-		(2, 2),
+		(1, 'S1'),
+		(2, 'S2'),
 	)
 	ID = models.AutoField(primary_key=True)
 	Year = models.IntegerField(default=-1, choices=YEAR_CHOICE)
@@ -155,8 +149,8 @@ class Exchange(models.Model):
 	Semester = models.IntegerField(default=-1, choices=SEMESTER_CHOICE)
 	Visa = models.BooleanField(default=False)
 	Comment = models.CharField(max_length=1000, null=True, blank=True)
-	VisaMonths = models.IntegerField(null=True, blank=True, default=-1)
-	VisaWeeks = models.IntegerField(null=True, blank=True, default=-1)
+	VisaMonths = models.IntegerField(null=True, blank=True, default=-1, help_text="Si la procédure a duré moins d'un mois, remplissez le champ suivant")
+	VisaWeeks = models.IntegerField(null=True, blank=True, default=-1, help_text="Si la procédure a duré moins d'une semaine, remplissez le champ suivant")
 	VisaDays = models.IntegerField(null=True, blank=True, default=-1)
 	Rent = models.IntegerField(null=True, blank=True, default=-1)
 	MonthlyExpenses = models.IntegerField(null=True, blank=True, default=-1)

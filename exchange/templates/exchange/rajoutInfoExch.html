@@ -47,7 +47,8 @@
                             {{ form.as_p }}
                             <p>
                             {{formVisa.Visa}}
-                            <label for="{{formVisa.Visa.id_for_label}}">Besoin de Visa</label>
+                            <label for="{{formVisa.Visa.id_for_label}}">Avez-vous eu besoin d'un visa ?</label>
+                            <i>Si vous n'avez pas eu besoin de visa, cliquez directement sur "Continuer"</i>
                             </p>
                             <input type="submit" value="Continuer">
                         </form>
@@ -55,10 +56,11 @@
    <label for="opA">Option A</label>"""-->
                     </div>
                 </div>
+                <div id="copyright">
+                    <ul><li>&copy; Astus International</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+                </div>
             </div>
-            <div id="copyright">
-                <ul><li>&copy; Astus International</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
-            </div>
+          
                     
             <script src="{% static 'exchange/assets/js/jquery.min.js' %}"></script>
             <script src="{% static 'exchange/assets/js/jquery.scrollex.min.js' %}"></script>
