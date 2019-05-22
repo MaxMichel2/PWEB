@@ -18,16 +18,7 @@ class StudentForm(forms.ModelForm):
         #widjets to change field  form
         # labels to change how it is veid
         #help_text 
-
-#RajouterInfo2 - Department
-class DepartForm(forms.ModelForm):
-    class Meta:
-        model = Department
-        fields = ('Name','Rank',)
-        labels = {
-            'Name':("Nom du département de l'université dans lequel l'échange a été effectué"),
-            'Rank':('Note du département (/5)')
-        }
+        
 
 #RajouterInfo2 - Language
 class LangueForm(forms.ModelForm):
@@ -116,59 +107,20 @@ class OrdreForm(forms.Form):
     )
     Ordre = forms.ChoiceField(choices=ORDRES)
 
-
-
-#-----------------TESTS ET DEBEUG------------------
-"""class SelectForm(forms.Form):
-    Tirer_par_pays = forms.BooleanField()
-    Trier_par_contract = forms.BooleanField()
-
-class ArticleForm(forms.ModelForm):
+#------------------PROF: MOFIFIE----------------
+#RajouterInfo2 - Department
+class DepartForm(forms.ModelForm):
     class Meta:
-        model = Country
-        fields = ('Continent',)
+        model = Department
+        fields = ('Name','Rank',)
+        labels = {
+            'Name':("Nom du département de l'université dans lequel l'échange a été effectué"),
+            'Rank':('Note du département (/5)')
+        }
 
-class ArticleForm2(forms.Form):
-    item_field = forms.ModelChoiceField(queryset=Country.objects.none())
-    
-    def __init__(self, qs, *args, **kwargs): 
-        # call the standard init first 
-        super(ArticleForm2, self).__init__(*args, **kwargs) 
-        # now customise your field 
-        self.fields['item_field'].queryset = qs 
-    
-class ArticleForm3(forms.Form):
-    Ville = forms.ModelChoiceField(queryset=City.objects.none())
-    
-    def __init__(self, qs, *args, **kwargs): 
-        # call the standard init first 
-        super(ArticleForm3, self).__init__(*args, **kwargs) 
-        # now customise your field 
-        self.fields['ville'].queryset = qs 
+#Modifie Infos Université
+class UnivForm(forms.ModelForm):
+    class Meta:
+        model = University
+        fields = ('Places','Demand',)
 
-
-
-class ContactForm(forms.Form):
-
-    
-    nom = forms.CharField(max_length=20)
-    prenom = forms.CharField(max_length=20)
-    email = forms.EmailField(label="E-mail")
-    continent = forms.CharField(max_length=20)
-    pays = forms.CharField(max_length=20)
-    ville = forms.CharField(max_length=20)
-    université = forms.CharField(max_length=20)
-    département= forms.CharField(max_length=20, label = "Département de l'université dans lequel vous avez fait votre échange")
-    langue = forms.CharField(max_length=20, label = "Langue des cours")
-    dateDebut = forms.DateField(widget =forms.SelectDateWidget)
-    dateFin = forms.DateField(widget =forms.SelectDateWidget)
-    annee = forms.ChoiceField(choices=["4TC", "5TC"]) 
-
-
-#class ArticleForm(forms.ModelForm):
-#    class Meta:
-#        model = University
-#        fields = '__all__'
-
-class TestForm2(forms.Form):
-    CountryName = forms.ModelChoiceField(queryset=Country.objects.all().values_list('CountryName').order_by('Continent'),required=False,empty_label="(pas trier par pays)")"""

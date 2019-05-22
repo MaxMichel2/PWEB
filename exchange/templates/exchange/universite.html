@@ -55,6 +55,11 @@
                     <h1>{{univ.Name}}</h1>
                     <a href='{{univ.WebLink}}'>Lien vers le site de l'université</a>
                     <a href=/exchange/modifier/{{univ.ID}}>Rajouter Info</a>
+                    {% if user.is_authenticated %}
+                    <li><a href="/exchange/deconnexion">Se déconnecter de {{user.username}}</a></li>
+                    {% else %}
+                    <li><a href="/exchange/connexion">Se connecter</a></li>
+                    {% endif %}
                 </div>
                 <!--Bouton pour retourner à l'accueil
                 ATTENTION pb au niveau de l'url pour le retour à l'accueil-->
@@ -81,12 +86,16 @@
                             <div class="col-6 col-12-small">
                                 <h3>Semestre 1 </h3>
                                     <li>Date de début</li>
+                                    {{ S1.StartDate }}
                                     <li>Date de fin</li>
+                                    {{ S1.EndDate }}
                             </div>
                             <div class="col-6 col-12-small">
                                 <h3>Semestre 2 </h3>
-                                <li>Date de début</li>                                    
+                                <li>Date de début</li>
+                                {{ S2.StartDate }}                                     
                                 <li>Date de fin</li>
+                                {{ S2.EndDate }}
                             </div>
                         </div>
                         </hr>
@@ -97,9 +106,11 @@
                         <div class="row">
                             <div class="col-4 col-8-small col-12-small">
                             <p>Nombre de places</p>
+                            {{univ.Places}}
                         </div>
                         <div class="col-4 col-8-small col-12-small">
                             <p>Nombre de demandes</p>
+                            {{univ.Demand}}
                         </div>
                         <div class="col-4 col-8-small col-12-small">
                             <p>Année sécable ?</p>
@@ -114,7 +125,9 @@
                         <div class="row">
                             <div class="col-4 col-8-small col-12-small">
                                 <p>Type de contrat avec l'INSA :</p>
-                                {{cont.ContractType}}<!--faire un for-->
+                                {% for c in cont  %}
+                                    {{c.ContractType}}
+                                {% endfor %}
                             </div>
                             <div class="col-4 col-8-small col-12-small">
                                 <p>Projets :</p>
@@ -136,9 +149,11 @@
                         <div class="row">
                             <div class="col-6 col-12-small">
                                 <h5>Loyer moyen : </h5>
+                                {{ avg.r}}
                             </div>
                             <div class="col-6 col-12-small">
                                 <h5>Dépenses par mois en moyenne : </h5>
+                                {{ avg.m}}
                             </div>
                         </div>
                     <hr>
@@ -146,12 +161,15 @@
                         <div class="row">
                             <div class="col-4 col-8-small col-12-small">
                                 <h5>Vie nocturne :  /5</h5>
+                                {{ avg.n}}
                             </div>
                             <div class="col-4 col-8-small col-12-small">
                                 <h5>Vie culturelle :  /5</h5>
+                                {{ avg.c}}
                             </div>
                             <div class="col-4 col-8-small col-12-small">
                                 <h5>Sécurité :  /5</h5>
+                                {{ avg.s}}
                             </div>
                         </div>
                     </hr>
@@ -177,9 +195,13 @@
                         <div class="row">
                             <div class="col-6 col-12-small">
                                 <h5>Visa (non) nécessaire pour les européens </h5>
+                                {{S1.Visa}}
                             </div>
                             <div class="col-6 col-12-small">
                                 <h5>Temps d'obtention du visa </h5>
+                                {{S1.Days}}
+                                {{S1.Weeks}}
+                                {{S1.Months}}
                             </div>
                         </div>
                     <hr>
@@ -207,17 +229,17 @@
                                     <tr>
                                         <th>Bourse obtenue</th>
                                         <th>Valeur moyenne</th>
+                                        <th>Reçu tout les</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {% for f in fin %}
                                     <tr>
-                                        <td>Erasmus +</td>
-                                        <td>0,50 €</td>
-                                    </tr>                                        
-                                    <tr>
-                                        <td>Aide à la mobilité internationale</td>
-                                        <td>10000 €</td>
-                                    </tr>   
+                                        <td>{{f.Name}}</td>
+                                        <td>{{f.Value}}</td>
+                                        <td>{{f.ReceivedEvery}}</td>
+                                    </tr>
+                                    {% endfor %}                                       
                                 </tbody>
                             </table>
                         </div>
@@ -231,8 +253,8 @@
                     <button class="accordion">Commentaires</button>
                     <div class="panel">
                         {% for e in ex %}
-                            <h5>{{ex.Student.Name}} {{ex.Student.Surname}}, parti en {{ex.StartDate}} ({{ex.Year}} {{ex.Student.INSADepartement}} {{ex.Semester</h5>
-                            <blockquote>{{ex.Comment}}</blockquote>
+                        <h5>{{e.Student.Name}} {{e.Student.Surname}}, parti en {{e.StartDate}} ({{e.Year}}A {{e.Student.INSADepartement}} S{{e.Semester}})</h5>
+                            <blockquote>{{e.Comment}}</blockquote>
                         {% endfor %}
                     </div>
 

@@ -53,6 +53,11 @@
 							<li class="active"><a href="/exchange/accueil">Recherche par pays</a></li>
 							<li><a href="/exchange/recherche_avance">Recherche avancée</a></li>
 							<li><a href="/exchange/rajouter">Ajouter une info</a></li>
+							{% if user.is_authenticated %}
+							<li><a href="/exchange/deconnexion">Se déconnecter de {{user.username}}</a></li>
+							{% else %}
+							<li><a href="/exchange/connexion">Se connecter</a></li>
+							{% endif %}
 						</ul>
 					</nav>
 

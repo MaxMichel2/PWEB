@@ -3,6 +3,11 @@ from django.http import HttpResponse
 from .forms import *
 from exchange.models import *
 from django.db.models import Avg
+#pour l'authentification
+from django_cas_ng.signals import cas_user_authenticated #signal
+from django.contrib.auth.decorators import login_required,permission_required,user_passes_test
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import Permission
 
 # Actualisation de rankMetrique
 def actualiserMetrique1():
@@ -20,38 +25,6 @@ def actualiserMetrique2():
        instance = University.objects.get(ID=elem[0])
        instance.LifeMetric = ((elem[1]+elem[2]+elem[3])/3)
        instance.save()
-"""
-def test(request): 
-   form = TestForm(request.POST or None)
-   #form2 = TestForm2(Country.objects.none())
-   form2 = TestForm2(request.POST or None)
-   formContract = ContractForm(request.POST or None)
-   #selections = SelectForm(request.POST or None)
-   #if form.is_valid() and form2.is_valid() and formContract.is_valid() and ordre.is_valid():
-      #print("guguuu")
-   if form.is_valid() and formContract.is_valid() :
-      Continent = form.cleaned_data['Continent']
-      #qs =Country.objects.filter(Continent=Continent).order_by('CountryName')
-      #form2 = TestForm2(qs)
-      print(form2.is_valid())
-      ordre = OrdreForm(request.POST or None)
-      
-      if ordre.is_valid():
-         orde = ordre.cleaned_data['Ordre']
-         print("dedededeeeeede")
-      
-    if form.is_valid() and selections.is_valid():
-      valide = True
-      Continent = form.cleaned_data['Continent']
-      qs =Country.objects.filter(Continent=Continent).values_list('CountryName')
-      form2 = TestForm2(qs) #dire que ce n'est pas obligatoire
-      formContract = ContractForm(request.POST or None)
-      ordre = OrdreForm(request.POST or None)
-
-      if formContract.is_valid() and ordre.is_valid():
-         print("gugu yeyeee") 
-
-   return render(request, 'exchange/test.html', locals())"""
 
 
 #-----------------------PAGE D'ACCUEIL-----------------
@@ -66,11 +39,19 @@ def listeUnis(request):
 
 #-----------------------PAGE D'UNE UNIVERSITE (PAR ID)-----------------
 def universite(request, idUni):
-    univ = University.objects.get(pk=idUni)
-    cont = UniversityContracts.objects.get(University=univ)#peut renvoyer plusieurs
-    langue = UniversityLanguages.objects.filter(University=univ)
-    ex = Exchange.objects.filter(University=univ)
-    return render(request, 'exchange/universite.html', locals())
+   univ = University.objects.get(pk=idUni)
+   cont = UniversityContracts.objects.filter(University=univ)#peut renvoyer plusieurs
+   langue = UniversityLanguages.objects.filter(University=univ)
+   #avg.get('r')
+   ex = Exchange.objects.filter(University=univ)
+   S1 = ex.filter(Semester=-1).order_by('EndDate').first()
+   S2 = ex.filter(Semester=2).order_by('EndDate').first()
+   fin = FinancialAid.objects.none()
+   for e in ex:
+      fin = fin | FinancialAid.objects.filter(Exchange=e)
+   avg = Exchange.objects.filter(University=univ).aggregate(r=Avg('Rent'),m=Avg('MonthlyExpenses'),n=Avg('NightLifeGrade'),c=Avg('CulturalLifeGrade'),s=Avg('Security'))#mettre le cout de la vie aussi
+
+   return render(request, 'exchange/universite.html', locals())
 
 #-----------------------PAGE RECHERCHE AVANCEE-----------------
 def RechercheAvancee(request): 
@@ -123,33 +104,7 @@ def RechercheAvancee(request):
          print("par contract,autre ordre")
          universitiesC = UniversityContracts.objects.filter(University__City__Country__Continent=Continent).filter(ContractType=ContractType).order_by('University__'+ordres)
       for c in universitiesC:
-         print(c.University.Name)
-
-      """
-       l = UniversityLanguages.objects.all()
-       l2 = l.exclude(Language='Inconnu')
-      
-      universities = UniversityContracts.objects.all().filter(University__City__Country__CountryName=CountryName).order_by('University__City__Country__CountryName')
-      for c in universities:
-         print(c.City.Country.CountryName)"""
-      """#----------avec contract
-      contract = UniversityContracts.objects.filter(ContractType=ContractType)
-      for c in contract:
-         print(c.University.Name)
-      #---------avec pays sans contract ordoné par pays----------
-      universities = University.objects.filter(City__Country__CountryName=Continent).order_by('City__Country__CountryName')
-      for u in universities:
-         print(u.City.Country.CountryName)
-
-      #------sans pays sans contract ordoné par pays----------
-      universities = University.objects.filter(City__Country__Continent=Continent).order_by('City__Country__CountryName')
-      #for u in universities:
-         #print(u.City.Country.CountryName)
-
-      #------sans pays sans contract ordoné par autres----------
-      universities = University.objects.filter(City__Country__Continent=Continent).order_by(ordre)
-      #for u in universities:
-         #print(u.City.Country.CountryName)"""      
+         print(c.University.Name)      
 
    return render(request, 'exchange/Recherche_Avancee.html', locals())
 
@@ -285,3 +240,76 @@ def rajoutInfo4(request,univ,exch):
 def test(request):
    return render(request,'exchange/recherche_avance.html')
 
+#----------------AUTHENTIFICATION---------
+#Connexion
+#ou @permission_required('blog.commenter_article')
+@login_required(login_url='/accounts/login/')
+def connexion(request):
+    error = False
+    print(request.session['attributes'])
+    user = request.user
+    permission = Permission.objects.get(codename='noter_depart')
+    user.user_permissions.add(permission)
+    print(user.has_perm('exchange.noter_depart'))
+    #ici faire user.atribuChePa == blabla
+    #user.user_permissions.add(permission)
+
+    return redirect('/exchange/accueil')
+
+#pour la deconnexion 
+def check(user):
+    return not(user.is_authenticated)
+
+#DECONEXION ou sinon CAS_IGNORE_REFERER à true
+@user_passes_test(check , login_url='/accounts/logout/')#essayer avec ?next=...
+def deconnexion(request):
+    logout(request)
+    #HttpResponse(reverse('cas_ng_logout'))
+    #reverse(connexion)
+    return redirect('/exchange/accueil')
+
+
+#----------------------PROF : MODIFIE--------------------
+#pour la page d'ajout de département
+@permission_required('exchange.noter_depart')
+def test(request,univ):
+   form = DepartForm(request.POST or None)
+   formUni = UnivForm(request.POST or None)
+   Uni = University.objects.get(pk=univ)
+   departs = Department.objects.filter(University = Uni)
+
+   if form.is_valid():
+      Name = form.cleaned_data['Name']
+      Rank = form.cleaned_data['Rank']
+
+      depart = Department(Name=Name,University=Uni,Rank=Rank)
+      depart.save()
+   
+   #completer html de univ
+   if formUni.is_valid():
+      Places = formUni.cleaned_data['Places']
+      Demand = formUni.cleaned_data['Demand']
+
+      Uni.Places = Places
+      Uni.Demand = Demand
+      Uni.save()
+
+   return render(request, 'exchange/test.html',locals())
+
+#pour la page d'ajout de département
+@permission_required('exchange.noter_depart')
+def test2(request,dep):
+   form = DepartForm(request.POST or None)
+   depart = Department.objects.get(pk = dep)
+
+   if form.is_valid():
+      Name = form.cleaned_data['Name']
+      Rank = form.cleaned_data['Rank']
+
+      depart.Name = Name
+      depart.Rank = Rank
+      depart.save()
+
+      return redirect('/exchange/addDep/'+str(depart.University.ID))
+
+   return render(request, 'exchange/test2.html',locals())
