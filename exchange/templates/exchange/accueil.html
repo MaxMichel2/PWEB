@@ -203,16 +203,7 @@
 			//EU
 			var markersEU = new L.MarkerClusterGroup({
 				showCoverageOnHover: false,
-				iconCreateFunction: function(cluster) {
-					var t = cluster.getChildCount();
-					return new L.divIcon(
-						{
-							html: "<div><span>" + t + "</span></div>",
-							className: "leaflet-marker-icon marker-cluster marker-cluster-eu leaflet-zoom-animated leaflet-interactive",
-							iconSize: new L.Point(40, 40)
-						}
-					);
-				}
+				
 			});
 				for (var i = 0; i < universiteEU.length; i++) {
 					var a = universiteEU[i];
@@ -220,6 +211,7 @@
 					var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
 					marker.bindPopup(title + '<br/>'+'Ranking:  '+a[3]+'/5'+'<br/>'+'Qualité de vie:  '+a[4]+'/5'+'<br/>'+'<a href=/exchange/universite/'+a[5]+'>Cliquez ici</a>'); //quand on clique (metter info plus url avec href accolade)
 					markersEU.addLayer(marker); 
+					
 				}
 				map.addLayer(markersEU);
 			

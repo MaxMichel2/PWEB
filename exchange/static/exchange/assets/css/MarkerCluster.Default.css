@@ -22,7 +22,7 @@
 .marker-cluster-eu {
 	background-color: rgba(74, 74, 206, 0.6);
 	}
-.marker-cluster-eu div{
+.marker-cluster-eu div {
 	background-color: rgba(35, 35, 200, 0.6);
 	}
 
@@ -51,7 +51,7 @@
 .leaflet-oldie .marker-cluster-eu {
 	background-color: rgb(74, 74, 206);
 	}
-	.leaflet-oldie .marker-cluster-eu div{
+.leaflet-oldie .marker-cluster-eu div{
 	background-color: rgb(35, 35, 200);
 }
 

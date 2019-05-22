@@ -18,7 +18,7 @@ class Country(models.Model):
 	Continent = models.CharField(max_length=30, choices=CONTINENTS)
 
 	def __str__(self):
-		return str(self.ID)
+		return self.CountryName
 
 class City(models.Model):
 	ID = models.AutoField(primary_key=True)
@@ -34,7 +34,7 @@ class University(models.Model):
 	RankMetric = models.DecimalField(max_digits=3, decimal_places=2, default=-1)
 	LifeMetric = models.DecimalField(max_digits=3, decimal_places=2, default=-1)
 	Lat = models.DecimalField(max_digits=11, decimal_places=6, null=True, blank=True) # Utilisation de la base pour afficher
-	Long = models.DecimalField(max_digits=11, decimal_places=6, null=True, blank=True) # les POI sur la carte interactive ??? Good/Bad ???
+	Long = models.DecimalField(max_digits=11, decimal_places=6, null=True, blank=True) # les POI sur la carte interactive
 	City = models.ForeignKey('City', on_delete=models.CASCADE)
 	WebLink = models.URLField(default="https://pas.renseigne")
 	Places = models.IntegerField(default=-1)
@@ -143,13 +143,11 @@ class Exchange(models.Model):
 		(2, 'S2'),
 	)
 	GRADE = (
-		(0, '0'),
 		(1, '1'),
 		(2, '2'),
 		(3, '3'),
 		(4, '4'),
-		(5, '5'),
-		(6, '6')
+		(5, '5')
 	)
 	ID = models.AutoField(primary_key=True)
 	Year = models.IntegerField(default=-1, choices=YEAR_CHOICE)
@@ -170,4 +168,4 @@ class Exchange(models.Model):
 	University = models.ForeignKey('University', on_delete=models.CASCADE)
 
 	def __str__(self):
-		return self.Comment
+		return str(self.ID)
