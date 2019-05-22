@@ -190,8 +190,10 @@
 			
 			//EU
 			var markersEU = new L.MarkerClusterGroup(
-				/*{
+				{
 				showCoverageOnHover: false,
+				className: "marker-cluster-eu",
+				/*
 				iconCreateFunction: function (e) {
 					var t = e.getChildCount(),
 						i = " marker-cluster-";
@@ -199,9 +201,9 @@
 						html: "<div><span>" + t + "</span></div>",
 						className: "marker-cluster-eu",
 						iconSize: new L.Point(40, 40)
-				})}}
+				})}
 				*/
-				);
+				});
 				for (var i = 0; i < universiteEU.length; i++) {
 					var a = universiteEU[i];
 					var title = a[0];
