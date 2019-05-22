@@ -20,4 +20,5 @@ urlpatterns = [
     path('listeUnis', views.listeUnis),
     path('connexion', views.connexion, name='connexion'),
     path('deconnexion', views.deconnexion, name='deconnexion'),
+    path('rapport', views.rapport)
 ]

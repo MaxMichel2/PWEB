@@ -317,3 +317,9 @@ def test2(request,dep):
       return redirect('/exchange/addDep/'+str(depart.University.ID))
 
    return render(request, 'exchange/ModifOf.html',locals())
+
+
+
+#--------------Rapport---------------
+def rapport(request):
+    return render(request, 'exchange/rapport.html', {})
