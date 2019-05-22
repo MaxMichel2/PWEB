@@ -145,7 +145,10 @@
 			
 			//METTRE LES MARKERS SUR CARTE
 			//AS
-			var markersAS = new L.MarkerClusterGroup();
+			var markersAS = new L.MarkerClusterGroup({
+				showCoverageOnHover: false,
+				
+			});
 				for (var i = 0; i < universiteAS.length; i++) {
 					var a = universiteAS[i];
 					var title = a[0];
@@ -156,7 +159,10 @@
 				map.addLayer(markersAS);
 			
 			//AF
-			var markersAF = new L.MarkerClusterGroup();
+			var markersAF = new L.MarkerClusterGroup({
+				showCoverageOnHover: false,
+				
+			});
 				for (var i = 0; i < universiteAF.length; i++) {
 					var a = universiteAF[i];
 					var title = a[0];
@@ -167,7 +173,10 @@
 				map.addLayer(markersAF);
 			
 			//AdN
-			var markersAdN = new L.MarkerClusterGroup();
+			var markersAdN = new L.MarkerClusterGroup({
+				showCoverageOnHover: false,
+				
+			});
 				for (var i = 0; i < universiteAdN.length; i++) {
 					var a = universiteAdN[i];
 					var title = a[0];
@@ -178,7 +187,10 @@
 				map.addLayer(markersAdN);
 			
 			//AdS
-			var markersAdS = new L.MarkerClusterGroup();
+			var markersAdS = new L.MarkerClusterGroup({
+				showCoverageOnHover: false,
+				
+			});
 				for (var i = 0; i < universiteAdS.length; i++) {
 					var a = universiteAdS[i];
 					var title = a[0];
@@ -189,7 +201,19 @@
 				map.addLayer(markersAdS);
 			
 			//EU
-			var markersEU = new L.MarkerClusterGroup();
+			var markersEU = new L.MarkerClusterGroup({
+				showCoverageOnHover: false,
+				iconCreateFunction: function(cluster) {
+					var t = cluster.getChildCount();
+					return new L.divIcon(
+						{
+							html: "<div><span>" + t + "</span></div>",
+							className: "leaflet-marker-icon marker-cluster marker-cluster-eu leaflet-zoom-animated leaflet-interactive",
+							iconSize: new L.Point(40, 40)
+						}
+					);
+				}
+			});
 				for (var i = 0; i < universiteEU.length; i++) {
 					var a = universiteEU[i];
 					var title = a[0];
@@ -200,7 +224,10 @@
 				map.addLayer(markersEU);
 			
 			//OC
-			var markersOC = new L.MarkerClusterGroup();
+			var markersOC = new L.MarkerClusterGroup({
+				showCoverageOnHover: false,
+				
+			});
 				for (var i = 0; i < universiteOC.length; i++) {
 					var a = universiteOC[i];
 					var title = a[0];
