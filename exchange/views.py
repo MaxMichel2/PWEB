@@ -119,8 +119,8 @@ def pays(request,cont):
     return render(request, 'exchange/pays.html',locals())
 
 #selection ville
-def villes(request,pay):
-    p = Country.objects.get(pk=pay)
+def villes(request,pays):
+    p = Country.objects.get(pk=pays)
     ville = City.objects.filter(Country=p)
     return render(request, 'exchange/villes.html',locals())
 
