@@ -123,6 +123,12 @@ class FinancialAid(models.Model):
 		("S", "Semaines"),
 		("M", "Mois"),
 	)
+	AID_NAME = (
+		("Erasmus+", "Erasmus+"),
+		("Aide Régionale", "Aide Régionale"),
+		("Aide à la mobilité internationale", "Aide à la mobilité internationale"),
+		("JASSO", "JASSO"),
+	)
 	ID = models.AutoField(primary_key=True)
 	Name = models.CharField(max_length=100, null=True, blank=True, help_text="Le nom de la bourse.")
 	Value = models.IntegerField(null=True, blank=True, help_text="En euros (€).", default=-1)
