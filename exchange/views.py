@@ -199,7 +199,9 @@ def rajoutInfo3(request,univ,stud):
       EndDate = form.cleaned_data['EndDate']
       Semester = form.cleaned_data['Semester']
       Comment = form.cleaned_data['Comment']
-      TimeVisa = form.cleaned_data['TimeVisa']
+      VisaDays = form.cleaned_data['VisaDays']
+      VisaWeeks = form.cleaned_data['VisaWeeks']
+      VisaMonths = form.cleaned_data['VisaMonths']
       Rent = form.cleaned_data['Rent']
       MonthlyExpenses = form.cleaned_data['MonthlyExpenses']
       NightLifeGrade = form.cleaned_data['NightLifeGrade']
@@ -207,7 +209,7 @@ def rajoutInfo3(request,univ,stud):
       Security = form.cleaned_data['Security']
 
       Visa = formVisa.cleaned_data['Visa']
-      exch = Exchange(Year=Year,StartDate=StartDate,EndDate=EndDate,Semester=Semester,Visa=Visa,Comment=Comment,TimeVisa=TimeVisa,Rent=Rent,MonthlyExpenses=MonthlyExpenses,NightLifeGrade=NightLifeGrade,CulturalLifeGrade=CulturalLifeGrade,Security=Security,Student=Stud,University=Uni)
+      exch = Exchange(Year=Year,StartDate=StartDate,EndDate=EndDate,Semester=Semester,Visa=Visa,Comment=Comment,VisaMonths=VisaMonths,VisaDays=VisaDays,VisaWeeks=VisaWeeks,Rent=Rent,MonthlyExpenses=MonthlyExpenses,NightLifeGrade=NightLifeGrade,CulturalLifeGrade=CulturalLifeGrade,Security=Security,Student=Stud,University=Uni)
       exch.save()
       exchID=exch.ID
       #ou direct form.save()

@@ -55,10 +55,8 @@
                     <h1>{{univ.Name}}</h1>
                     <a href='{{univ.WebLink}}'>Lien vers le site de l'université</a>
                     <a href=/exchange/modifier/{{univ.ID}}>Rajouter Info</a>
-                    {% if user.is_authenticated %}
-                    <li><a href="/exchange/deconnexion">Se déconnecter de {{user.username}}</a></li>
-                    {% else %}
-                    <li><a href="/exchange/connexion">Se connecter</a></li>
+                    {% if perms.exchange.noter_depart %}
+                    <a href=/exchange/addDep/{{univ.ID}}>Noter Universiter</a>
                     {% endif %}
                 </div>
                 <!--Bouton pour retourner à l'accueil
@@ -201,7 +199,7 @@
                                 <h5>Temps d'obtention du visa </h5>
                                 {{S1.VisaDays}}
                                 {{S1.VisaWeeks}}
-                                {{S1.VisaMonthsf}}
+                                {{S1.VisaMonths}}
                             </div>
                         </div>
                     <hr>
