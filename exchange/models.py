@@ -75,12 +75,12 @@ class UniversityLanguages(models.Model):
 		('B2','B2'),
 		('C1','C1'),
 		('C2','C2'),
-		('X','Non Specifie'),
+		('X','Non Specifié'),
 	)
 	ID = models.AutoField(primary_key=True)
 	Language = models.CharField(max_length=50, default="Inconnu")
-	LanguageDiploma = models.CharField(max_length=200, null=True, blank=True, help_text="Si vous n'avez pas passé de certification, ne remplissez pas ce champ.")
-	LanguageLevel = models.CharField(max_length=10, choices=LEVEL, null=True, blank=True, default="X", help_text="Si vous n'avez pas passé de certification, ne remplissez pas ce champ.")
+	LanguageDiploma = models.CharField(max_length=200, null=True, blank=True,)
+	LanguageLevel = models.CharField(max_length=10, choices=LEVEL, null=True, blank=True, default="X", )
 	University = models.ForeignKey('University', on_delete=models.CASCADE)
 
 	def __str__(self):
@@ -142,6 +142,15 @@ class Exchange(models.Model):
 		(1, 'S1'),
 		(2, 'S2'),
 	)
+	GRADE = (
+		(0, '0'),
+		(1, '1'),
+		(2, '2'),
+		(3, '3'),
+		(4, '4'),
+		(5, '5'),
+		(6, '6')
+	)
 	ID = models.AutoField(primary_key=True)
 	Year = models.IntegerField(default=-1, choices=YEAR_CHOICE)
 	StartDate = models.DateField()
@@ -149,14 +158,14 @@ class Exchange(models.Model):
 	Semester = models.IntegerField(default=-1, choices=SEMESTER_CHOICE)
 	Visa = models.BooleanField(default=False)
 	Comment = models.CharField(max_length=1000, null=True, blank=True)
-	VisaMonths = models.IntegerField(null=True, blank=True, default=-1, help_text="Si la procédure a duré moins d'un mois, remplissez le champ suivant")
-	VisaWeeks = models.IntegerField(null=True, blank=True, default=-1, help_text="Si la procédure a duré moins d'une semaine, remplissez le champ suivant")
+	VisaMonths = models.IntegerField(null=True, blank=True, default=-1, )
+	VisaWeeks = models.IntegerField(null=True, blank=True, default=-1,)
 	VisaDays = models.IntegerField(null=True, blank=True, default=-1)
 	Rent = models.IntegerField(null=True, blank=True, default=-1)
 	MonthlyExpenses = models.IntegerField(null=True, blank=True, default=-1)
-	NightLifeGrade = models.IntegerField(null=True, blank=True, default=-1)
-	CulturalLifeGrade = models.IntegerField(null=True, blank=True, default=-1)
-	Security = models.IntegerField(null=True, blank=True, default=-1)
+	NightLifeGrade = models.IntegerField(null=True, blank=True, default=-1,choices=GRADE)
+	CulturalLifeGrade = models.IntegerField(null=True, blank=True, default=-1,choices=GRADE)
+	Security = models.IntegerField(null=True, blank=True, default=-1,choices=GRADE)
 	Student = models.ForeignKey('Student', on_delete=models.CASCADE)
 	University = models.ForeignKey('University', on_delete=models.CASCADE)
 

@@ -54,10 +54,7 @@
                 <div id="intro">
                     <h1>{{univ.Name}}</h1>
                     <a href='{{univ.WebLink}}'>Lien vers le site de l'université</a>
-                    <a href=/exchange/modifier/{{univ.ID}}>Rajouter Info</a>
-                    {% if perms.exchange.noter_depart %}
-                    <a href=/exchange/addDep/{{univ.ID}}>Noter Universiter</a>
-                    {% endif %}
+                  
                 </div>
                 <!--Bouton pour retourner à l'accueil
                 ATTENTION pb au niveau de l'url pour le retour à l'accueil-->
@@ -275,10 +272,8 @@
 
                     <div>
                         <a href=/exchange/modifier/{{univ.ID}} class ="button">Donner son avis sur cette université</a>
-                    </div>
-                    <div>
                         {% if perms.exchange.noter_depart %}
-                        <a href=/exchange/addDep/{{univ.ID}} class="button">Aouter une info officielle</a>
+                        <a href=/exchange/addDep/{{univ.ID}} class="button">Ajouter une info officielle</a>
                         {% endif %}
                     </div>
                        

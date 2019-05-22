@@ -35,7 +35,7 @@
                     <header class="major">
                         <h1>Recherche<br />
                         Avancée</h1>
-                        <p>Recherchez les infos dont vous avez besoin</p>
+                        <p>Recherchez une université en fonction de filtres</p>
                     </header>
                     
                     <div class="table-wrapper">
@@ -64,28 +64,12 @@
                             <h3>Ordonner les Universitées selon:</h3>
                             {{ ordre.as_p }}
                             </hr>
-                            <!--
-                            {% for field in selections %}
-                                <label>
-                                    <input type="checkbox" id="{{ field.name }}" name="{{ field.name }}">
-                                    <label for="{{ field.name }}">{{ field.name }}</label>
-                                </label>
-                            {% endfor %}
-                            {{ form2.as_p }}
-                            {{ formContract.as_p }}
-                            {{ ordre.as_p }}
-                            {% if valide %}
-                            <input type="submit" value="Submit">
-                            {% else %}
-                            <input type="submit" value="ok">
-                            {% endif %}
-                            -->
                             <input id="buton" type="submit" value="Rechercher">
                         </form>
                     </div>
-                    
+                    {% if valide %}
                     <div class="table-wrapper">
-                        {% if valide %}
+                        <h3>Liste des universités</h3>
                         <p>Nombre d'éléments trouvés : {{universitiesC.count}}</p>
                         <table>
                             <thead>
@@ -140,8 +124,6 @@
                 function myFunction() {
                     var cont = document.getElementById("id_Continent").value
                     console.log(cont)
-                    //document.getElementById("AS").setAttribute('style', 'display:block');
-                    //document.getElementById("AS").setAttribute('style', 'display:block');
                     {% for c in ttl %}
                         document.getElementById("{{c.ID}}").setAttribute('style', 'display:none;');
                     {% endfor %}

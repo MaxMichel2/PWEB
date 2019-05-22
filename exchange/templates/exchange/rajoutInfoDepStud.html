@@ -46,7 +46,16 @@
                             {% csrf_token %}
                                 {{ form.as_p }}
                             <h3>Informations Langue</h3>
-                                {{ form2.as_p }}
+                            <label for="{{form2.Language.id_for_label}}">Langue des cours</label>    
+                            {{ form2.Language }}
+                            <i>Si vous n'avez pas passé de certification, cliquez sur "Continuer"</i>
+                        </br>
+                            <label for="{{form2.LanguageDiploma.id_for_label}}">Quel certification linguistique avez-vous du passer ?</label>    
+                            {{ form2.LanguageDiploma }}
+                        </br>
+                            <label for="{{form2.LanguageLevel.id_for_label}}">Quel niveau avez-vous du certifier ?</label>    
+                            {{ form2.LanguageLevel }}
+                        </br>
                             <input type="submit" value="Continuer">
                         </form>
                     </div>

@@ -209,9 +209,11 @@ def rajoutInfo3(request,univ,stud):
       Security = form.cleaned_data['Security']
 
       Visa = formVisa.cleaned_data['Visa']
+      print(Visa)
       exch = Exchange(Year=Year,StartDate=StartDate,EndDate=EndDate,Semester=Semester,Visa=Visa,Comment=Comment,VisaMonths=VisaMonths,VisaDays=VisaDays,VisaWeeks=VisaWeeks,Rent=Rent,MonthlyExpenses=MonthlyExpenses,NightLifeGrade=NightLifeGrade,CulturalLifeGrade=CulturalLifeGrade,Security=Security,Student=Stud,University=Uni)
       exch.save()
       exchID=exch.ID
+      print(exch)
       #ou direct form.save()
 
       return redirect('/exchange/modifFinancial/'+str(univID)+'/'+str(exchID))
@@ -296,7 +298,7 @@ def test(request,univ):
       Uni.Demand = Demand
       Uni.save()
 
-   return render(request, 'exchange/test.html',locals())
+   return render(request, 'exchange/ajoutOf.html',locals())
 
 #pour la page d'ajout de département
 @permission_required('exchange.noter_depart')
@@ -314,4 +316,4 @@ def test2(request,dep):
 
       return redirect('/exchange/addDep/'+str(depart.University.ID))
 
-   return render(request, 'exchange/test2.html',locals())
+   return render(request, 'exchange/ModifOf.html',locals())

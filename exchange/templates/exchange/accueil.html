@@ -36,7 +36,7 @@
 					<div id="intro">
 						<h1>Echange<br />
 						Universitaire</h1>
-						<p>blablablablabla</p>
+						<p>"Le plus beau voyage, c'est celui qu'on n'a pas encore fait"  ~  Anonyme</p>
 						<ul class="actions">
 							<li><a href="#header" class="button icon solo fa-arrow-down scrolly">Continue</a></li>
 						</ul>
@@ -150,7 +150,7 @@
 					var a = universiteAS[i];
 					var title = a[0];
 					var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
-					marker.bindPopup(title + '<br/>'+a[3]+'<br/>'+a[4]+'<br/>'+'<a href=/exchange/universite/'+a[5]+'>Clickez ici</a>'); //quand on clique (metter info plus url avec href accolade)
+					marker.bindPopup(title + '<br/>'+'Ranking:  '+a[3]+'/5'+'<br/>'+'Qualité de vie:  '+a[4]+'/5'+'<br/>'+'<a href=/exchange/universite/'+a[5]+'>Clikez ici</a>'); //quand on clique (metter info plus url avec href accolade)
 					markersAS.addLayer(marker); 
 				}
 				map.addLayer(markersAS);
@@ -161,7 +161,7 @@
 					var a = universiteAF[i];
 					var title = a[0];
 					var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
-					marker.bindPopup(title + '<br/>'+a[3]+'<br/>'+a[4]+'<br/>'+'<a href=/exchange/universite/'+a[5]+'>Clickez ici</a>'); //quand on clique (metter info plus url avec href accolade)
+					marker.bindPopup(title + '<br/>'+'Ranking:  '+a[3]+'/5'+'<br/>'+'Qualité de vie:  '+a[4]+'/5'+'<br/>'+'<a href=/exchange/universite/'+a[5]+'>Clikez ici</a>'); //quand on clique (metter info plus url avec href accolade)
 					markersAF.addLayer(marker); 
 				}
 				map.addLayer(markersAF);
@@ -172,7 +172,7 @@
 					var a = universiteAdN[i];
 					var title = a[0];
 					var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
-					marker.bindPopup(title + '<br/>'+a[3]+'<br/>'+a[4]+'<br/>'+'<a href=/exchange/universite/'+a[5]+'>Clickez ici</a>'); //quand on clique (metter info plus url avec href accolade)
+					marker.bindPopup(title + '<br/>'+'Ranking:  '+a[3]+'/5'+'<br/>'+'Qualité de vie:  '+a[4]+'/5'+'<br/>'+'<a href=/exchange/universite/'+a[5]+'>Clikez ici</a>'); //quand on clique (metter info plus url avec href accolade)
 					markersAdN.addLayer(marker); 
 				}
 				map.addLayer(markersAdN);
@@ -183,32 +183,18 @@
 					var a = universiteAdS[i];
 					var title = a[0];
 					var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
-					marker.bindPopup(title + '<br/>'+a[3]+'<br/>'+a[4]+'<br/>'+'<a href=/exchange/universite/'+a[5]+'>Clickez ici</a>'); //quand on clique (metter info plus url avec href accolade)
+					marker.bindPopup(title + '<br/>'+'Ranking:  '+a[3]+'/5'+'<br/>'+'Qualité de vie:  '+a[4]+'/5'+'<br/>'+'<a href=/exchange/universite/'+a[5]+'>Clikez ici</a>'); //quand on clique (metter info plus url avec href accolade)
 					markersAdS.addLayer(marker); 
 				}
 				map.addLayer(markersAdS);
 			
 			//EU
-			var markersEU = new L.MarkerClusterGroup(
-				{
-				showCoverageOnHover: false,
-				className: "marker-cluster-eu",
-				/*
-				iconCreateFunction: function (e) {
-					var t = e.getChildCount(),
-						i = " marker-cluster-";
-					return i += 10 > t ? "small" : 100 > t ? "medium" : "large", new L.DivIcon({
-						html: "<div><span>" + t + "</span></div>",
-						className: "marker-cluster-eu",
-						iconSize: new L.Point(40, 40)
-				})}
-				*/
-				});
+			var markersEU = new L.MarkerClusterGroup();
 				for (var i = 0; i < universiteEU.length; i++) {
 					var a = universiteEU[i];
 					var title = a[0];
 					var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
-					marker.bindPopup(title + '<br/>'+a[3]+'<br/>'+a[4]+'<br/>'+'<a href=/exchange/universite/'+a[5]+'>Clickez ici</a>'); //quand on clique (metter info plus url avec href accolade)
+					marker.bindPopup(title + '<br/>'+'Ranking:  '+a[3]+'/5'+'<br/>'+'Qualité de vie:  '+a[4]+'/5'+'<br/>'+'<a href=/exchange/universite/'+a[5]+'>Clikez ici</a>'); //quand on clique (metter info plus url avec href accolade)
 					markersEU.addLayer(marker); 
 				}
 				map.addLayer(markersEU);
@@ -219,7 +205,7 @@
 					var a = universiteOC[i];
 					var title = a[0];
 					var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
-					marker.bindPopup(title + '<br/>'+a[3]+'<br/>'+a[4]+'<br/>'+'<a href=/exchange/universite/'+a[5]+'>Clickez ici</a>'); //quand on clique (metter info plus url avec href accolade)
+					marker.bindPopup(title + '<br/>'+'Ranking:  '+a[3]+'/5'+'<br/>'+'Qualité de vie:  '+a[4]+'/5'+'<br/>'+'<a href=/exchange/universite/'+a[5]+'>Clikez ici</a>'); //quand on clique (metter info plus url avec href accolade)
 					markersOC.addLayer(marker); 
 				}
 				map.addLayer(markersOC);
