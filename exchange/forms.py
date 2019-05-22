@@ -7,6 +7,14 @@ class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
         fields = '__all__'
+        labels = {
+            'Name':('Prénom'),
+            'Surname':('Nom de famille'),
+            'INSADepartment':('Département INSA'),
+            'Nationality':('Nationalité')
+        }
+       
+        
         #widjets to change field  form
         # labels to change how it is veid
         #help_text 
@@ -16,12 +24,22 @@ class DepartForm(forms.ModelForm):
     class Meta:
         model = Department
         fields = ('Name','Rank',)
+        labels = {
+            'Name':("Nom du département de l'université dans lequel l'échange a été effectué"),
+            'Rank':('Note du département (/5)')
+        }
 
 #RajouterInfo2 - Language
 class LangueForm(forms.ModelForm):
     class Meta:
         model = UniversityLanguages
         fields = ('Language','LanguageDiploma','LanguageLevel',)
+        labels = {
+            'Language':('Langue des cours'),
+            'LanguageDiploma':('Quel certification linguistique avez-vous du passer ?'),
+            'LanguageLevel':('Quel niveau avez-vous du certifier ?')
+        }
+   
 
 #RajouterInfo3 - Exchange
 class ExchForm(forms.ModelForm):

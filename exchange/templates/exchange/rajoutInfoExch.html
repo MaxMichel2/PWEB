@@ -3,7 +3,7 @@
 
 <html>
 	<head>
-		<title>Elements Reference - Massively by HTML5 UP</title>
+		<title>Ajouter une info</title>
 		<meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <link rel="shortcut icon" type="image/png" href="{% static 'exchange/images/AstusNoBackground.png' %}"/>
@@ -32,8 +32,11 @@
                         une info</h1>
                         <p>Donne ton avis sur ton échange à l'étranger</p>
                     </header>
-                    <h3>Informations sur votre échange</h3>
+                    
                     <div class="table-wrapper">
+                        <header>
+                            <h3>Informations sur votre échange</h3>
+                        </header>
                         <form action="{% url 'rajoutInfo3' Uni.ID Stud.ID %}" method="post">
                             {% csrf_token %}
                             {{ form.as_p }}
@@ -41,7 +44,7 @@
                             {{formVisa.Visa}}
                             <label for="{{formVisa.Visa.id_for_label}}">Besoin de Visa</label>
                             </p>
-                            <input type="submit" value="Submit">
+                            <input type="submit" value="Continuer">
                         </form>
                         <!--"""<input type="checkbox" id="opA" name="opA">
    <label for="opA">Option A</label>"""-->

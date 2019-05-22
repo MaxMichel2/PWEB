@@ -79,8 +79,8 @@ class UniversityLanguages(models.Model):
 	)
 	ID = models.AutoField(primary_key=True)
 	Language = models.CharField(max_length=50, default="Inconnu")
-	LanguageDiploma = models.CharField(max_length=200, null=True, blank=True)
-	LanguageLevel = models.CharField(max_length=10, choices=LEVEL, null=True, blank=True, default="X")
+	LanguageDiploma = models.CharField(max_length=200, null=True, blank=True, help_text="Si vous n'avez pas passé de certification, ne remplissez pas ce champ.")
+	LanguageLevel = models.CharField(max_length=10, choices=LEVEL, null=True, blank=True, default="X", help_text="Si vous n'avez pas passé de certification, ne remplissez pas ce champ.")
 	University = models.ForeignKey('University', on_delete=models.CASCADE)
 
 	def __str__(self):
