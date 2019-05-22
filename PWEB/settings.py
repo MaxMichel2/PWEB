@@ -82,8 +82,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'pweb_international',
-		'USER': 'root',
-		'PASSWORD': 'root',
+		'USER': 'lorenzo',
+		'PASSWORD': 'admin',
 		'HOST': '127.0.0.1',
 		'PORT': '3306',
     }
@@ -143,7 +143,7 @@ CAS_SERVER_URL = 'https://casserver.herokuapp.com/cas/login'
 CAS_APPLY_ATTRIBUTES_TO_USER = True
 
 CAS_IGNORE_REFERER = True
-LOGIN_REDIRECT_URL = '/blog/'
-LOGOUT_REDIRECT_URL = '/blog/'
-CAS_REDIRECT_URL = '/blog/'
+LOGIN_REDIRECT_URL = '/excahnge/accueil'
+LOGOUT_REDIRECT_URL = '/excahnge/accueil'
+CAS_REDIRECT_URL = '/excahnge/accueil'
 CAS_STORE_NEXT = True
