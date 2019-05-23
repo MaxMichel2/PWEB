@@ -5,8 +5,8 @@ from . import views
 urlpatterns = [
    
     path('recherche_avance', views.RechercheAvancee, name='RechercheAvancee'),
-    path('addDep/<int:univ>', views.test, name='t'),
-    path('modifDep/<int:dep>', views.test2, name='t2'),
+    path('addDep/<int:univ>', views.ajoutOf, name='t'),
+    path('modifDep/<int:dep>', views.modifOf, name='t2'),
     path('accueil', views.accueil),
     path('universite/<int:idUni>', views.universite),
     path('rajouter', views.rajouter, name='rajouter'),
@@ -17,7 +17,6 @@ urlpatterns = [
     path('modifDepStud/<int:univ>/<int:stud>', views.rajoutInfo2, name='rajoutInfo2'),
     path('modifExch/<int:univ>/<int:stud>', views.rajoutInfo3, name='rajoutInfo3'),
     path('modifFinancial/<int:univ>/<int:exch>', views.rajoutInfo4, name='rajoutInfo4'),
-    path('universites', views.listeUnis),
     path('connexion', views.connexion, name='connexion'),
     path('deconnexion', views.deconnexion, name='deconnexion'),
     path('rapport', views.rapport)

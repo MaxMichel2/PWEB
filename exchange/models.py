@@ -92,6 +92,11 @@ class Department(models.Model):
 	University = models.ForeignKey('University', on_delete=models.CASCADE)
 	Rank = models.IntegerField(default=-1, help_text="Utilisez une valeur entre 1 et 5, 1 étant la plus basse et 5 la plus haute.")
 
+	class Meta:
+		permissions = (
+			("noter_depart", "Creer et noter un département d'une université"),
+		)
+
 	def __str__(self):
 		return self.Name
 

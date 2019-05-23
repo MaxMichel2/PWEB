@@ -13,12 +13,6 @@ class StudentForm(forms.ModelForm):
             'INSADepartment':('Département INSA'),
             'Nationality':('Nationalité')
         }
-       
-        
-        #widjets to change field  form
-        # labels to change how it is veid
-        #help_text 
-        
 
 #RajouterInfo2 - Language
 class LangueForm(forms.ModelForm):
@@ -26,6 +20,24 @@ class LangueForm(forms.ModelForm):
         model = UniversityLanguages
         fields = ('Language','LanguageDiploma','LanguageLevel',)
    
+#test pour Depart
+class TestForm2(forms.Form):
+    GRADE = (
+        (0,'------'),
+		(1, '1'),
+		(2, '2'),
+		(3, '3'),
+		(4, '4'),
+		(5, '5')
+	)
+
+    NameDep = forms.ModelChoiceField(queryset=Department.objects.none(),label="département de l'université dans lequel l'échange a été effectué",required=False)
+    Note = forms.ChoiceField(choices=GRADE,required=False, label="Note du département (/5)",help_text="Notez la qualité de l'enseignement (5 étant la note la plus haute)")
+
+    def __init__(self,qs, *args, **kwargs): 
+        super(TestForm2, self).__init__(*args, **kwargs) 
+        self.fields['NameDep'].queryset = qs
+
 
 #RajouterInfo3 - Exchange
 class ExchForm(forms.ModelForm):
@@ -90,7 +102,7 @@ class OrdreForm(forms.Form):
     ORDRES = (
         ('','------'),
         ('RankMetric','Ranking'),
-        ('LifeMetric','Style de Vie'),
+        ('LifeMetric','Qualité de Vie'),
         ('CountryName','Pays'),
         ('CWURRank','Ranking Mondial'),
         ('Demand','Demande')
