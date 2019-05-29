@@ -52,7 +52,7 @@ def accueil(request):
 def universite(request, idUni):
    #Requetes vers BD:
    univ = University.objects.get(pk=idUni)
-   cont = UniversityContracts.objects.filter(University=univ)
+   cont = UniversityContractsStudent.objects.filter(University=univ)
    langue = UniversityLanguages.objects.filter(University=univ)
    ex = Exchange.objects.filter(University=univ)
    S1 = ex.filter(Semester=1).order_by('EndDate').first() #renvoie le premier élément de "ex" pour Semestre 1
@@ -103,21 +103,21 @@ def RechercheAvancee(request):
 
       #En fonction des options choisies on fait une requete différente
       if(CountryName=="" and ContractType=="" and ordres=="CountryName" ):
-         universitiesC = UniversityContracts.objects.filter(University__City__Country__Continent=Continent).order_by('University__City__Country__CountryName')
+         universitiesC = UniversityContractsStudent.objects.filter(University__City__Country__Continent=Continent).order_by('University__City__Country__CountryName')
       elif(CountryName=="" and ContractType==""):
-         universitiesC = UniversityContracts.objects.filter(University__City__Country__Continent=Continent).order_by('University__'+ordres)
+         universitiesC = UniversityContractsStudent.objects.filter(University__City__Country__Continent=Continent).order_by('University__'+ordres)
       elif(CountryName!="" and ContractType=="" and ordres=="CountryName"):
-         universitiesC = UniversityContracts.objects.filter(University__City__Country__CountryName=CountryName).order_by('University__City__Country__CountryName')
+         universitiesC = UniversityContractsStudent.objects.filter(University__City__Country__CountryName=CountryName).order_by('University__City__Country__CountryName')
       elif(CountryName!="" and ContractType==""):
-         universitiesC = UniversityContracts.objects.filter(University__City__Country__CountryName=CountryName).order_by('University__'+ordres)
+         universitiesC = UniversityContractsStudent.objects.filter(University__City__Country__CountryName=CountryName).order_by('University__'+ordres)
       elif(CountryName!="" and ContractType!="" and ordres=="CountryName"):
-         universitiesC = UniversityContracts.objects.filter(ContractType=ContractType).filter(University__City__Country__CountryName=CountryName).order_by('University__City__Country__CountryName')
+         universitiesC = UniversityContractsStudent.objects.filter(ContractType=ContractType).filter(University__City__Country__CountryName=CountryName).order_by('University__City__Country__CountryName')
       elif(CountryName!="" and ContractType!=""):
-         universitiesC = UniversityContracts.objects.filter(ContractType=ContractType).filter(University__City__Country__CountryName=CountryName).order_by('University__'+ordres)
+         universitiesC = UniversityContractsStudent.objects.filter(ContractType=ContractType).filter(University__City__Country__CountryName=CountryName).order_by('University__'+ordres)
       elif(CountryName=="" and ContractType!="" and ordres=="CountryName"):
-         universitiesC = UniversityContracts.objects.filter(University__City__Country__Continent=Continent).filter(ContractType=ContractType).order_by('University__City__Country__CountryName')
+         universitiesC = UniversityContractsStudent.objects.filter(University__City__Country__Continent=Continent).filter(ContractType=ContractType).order_by('University__City__Country__CountryName')
       else:
-         universitiesC = UniversityContracts.objects.filter(University__City__Country__Continent=Continent).filter(ContractType=ContractType).order_by('University__'+ordres)
+         universitiesC = UniversityContractsStudent.objects.filter(University__City__Country__Continent=Continent).filter(ContractType=ContractType).order_by('University__'+ordres)
            
 
    return render(request, 'exchange/Recherche_Avancee.html', locals())
