@@ -19,5 +19,6 @@ urlpatterns = [
     path('modifFinancial/<int:univ>/<int:exch>', views.rajoutInfo4, name='rajoutInfo4'),
     path('connexion', views.connexion, name='connexion'),
     path('deconnexion', views.deconnexion, name='deconnexion'),
-    path('rapport', views.rapport)
+    path('rapport', views.rapport),
+    path('base', views.base)
 ]

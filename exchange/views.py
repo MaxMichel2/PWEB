@@ -10,7 +10,8 @@ from django.contrib.auth.decorators import login_required,permission_required,us
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Permission
 
-
+def base(request):
+   return render(request, 'exchange/base.html')
 
 #--------------------------------PAGE D'ACCUEIL-----------------------------------
 # Actualisation de rankMetrique
