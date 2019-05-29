@@ -42,11 +42,20 @@ class University(models.Model):
 	SplitableYear = models.BooleanField(default=False)
 	Project = models.BooleanField(default=False)
 	CWURRank = models.IntegerField(null=True, blank=True)
+	AvailableForBS = models.BooleanField(default=False)
+	AvailableForGCU = models.BooleanField(default=False)
+	AvailableForGE = models.BooleanField(default=False)
+	AvailableForGEN = models.BooleanField(default=False)
+	AvailableForGI = models.BooleanField(default=False)
+	AvailableForGM = models.BooleanField(default=False)
+	AvailableForIF = models.BooleanField(default=False)
+	AvailableForSGM = models.BooleanField(default=False)
+	AvailableForTC = models.BooleanField(default=False)
 
 	def __str__(self):
 		return self.Name
 
-class UniversityContracts(models.Model):
+class UniversityContractsAdmin(models.Model):
 	CONTRACTS = (
 		('AR','Accord de Recherche'),
 		('AC','Accord Cadre'),
@@ -58,6 +67,18 @@ class UniversityContracts(models.Model):
 		('PDD','Procedure Double Diplome'),
 		('S','Specifique'),
 		('X', 'Inconnu')
+	)
+	ID = models.AutoField(primary_key=True)
+	ContractType = models.CharField(max_length=200, choices=CONTRACTS, default="X")
+	University = models.ForeignKey('University', on_delete=models.CASCADE)
+
+	def __str__(self):
+		return self.ContractType
+
+class UniversityContractsStudent(models.Model):
+	CONTRACTS = (
+		('DD','Double Diplome'),
+		('M','Mobilite')
 	)
 	ID = models.AutoField(primary_key=True)
 	ContractType = models.CharField(max_length=200, choices=CONTRACTS, default="X")

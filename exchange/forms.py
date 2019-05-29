@@ -79,21 +79,13 @@ class RAContinentForm(forms.ModelForm):
 class ContractForm(forms.ModelForm):
     CONTRACTS = (
         ('','---------'),
-        ('AR','Accord de Recherche'),
-        ('AC','Accord Cadre'),
         ('DD','Double Diplome'),
-        ('DDD','Double Diplome Doctorat'),
-        ('DDMS','Double Diplome Master Specialise'),
-        ('FITEC','FITEC'),
-        ('M','Mobilite'),
-        ('PDD','Procedure Double Diplome'),
-        ('S','Specifique'),
-        ('X', 'Inconnu')
+        ('M','Mobilite')
     )
     ContractType = forms.ChoiceField(choices=CONTRACTS,required=False, label="Type de contrat avec l'INSA")
    
     class Meta:
-        model = UniversityContracts
+        model = UniversityContractsStudent
         fields = ['ContractType']
        
 
