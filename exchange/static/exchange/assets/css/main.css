@@ -3668,6 +3668,7 @@ input, select, textarea {
 			font-weight: 900;
 			letter-spacing: 0.075em;
 			list-style: none;
+			margin-top: 0;
 			margin-bottom: 0;
 			padding-left: 0;
 			text-transform: uppercase;
