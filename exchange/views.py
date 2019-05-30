@@ -45,7 +45,7 @@ def accueil(request):
     actualiserMetrique1()
     actualiserMetrique2()
 
-    return render(request, 'exchange/accueil.html', locals())
+    return render(request, 'exchange/accueil_base.html', locals())
 
 
 #-----------------------PAGE D'UNE UNIVERSITE (PAR ID)-----------------

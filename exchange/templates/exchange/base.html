@@ -8,7 +8,8 @@
 <html>
     
 	<head>
-		<title>Titre de la page (à modifier)</title>
+        {% block head%}
+        {% endblock head %}
 		<meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <link rel="shortcut icon" type="image/png" href="{% static 'exchange/images/AstusNoBackground.png' %}"/>
@@ -17,21 +18,28 @@
     </head>
 
     <body class="is-preload">
-
             <div id="wrapper">
                 
 
                 <div id="intro">
-                    <h1>Titre principal</h1>
+                    {% block intro %}
+                    {% endblock intro %}
                 </div>
                 <!--Bouton pour retourner à l'accueil-->
                 <header id="header">
                     <a href="http://localhost:8000/exchange/accueil" class="logo">Accueil</a>
                 </header>
 
+                <!--Barre de navigation-->
+                <nav id="nav">
+                    {% block nav %}
+                    {% endblock nav %}
+                </nav>
+
                 <!--Main = gros rectangle blanc-->
                 <div id="main">
-                    <!--Contenu du main-->
+                    {% block main %}
+                    {% endblock main %}
                 </div>
 
                 <!--Bas de page-->
@@ -49,6 +57,7 @@
 		<script src="{% static 'exchange/assets/js/breakpoints.min.js' %}"></script>
 		<script src="{% static 'exchange/assets/js/util.js' %}"></script>
 		<script src="{% static 'exchange/assets/js/main.js' %}"></script>
-    
+        {% block scripts %}
+        {% endblock scripts %}
     </body>
 </html>
