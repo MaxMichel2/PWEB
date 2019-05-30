@@ -35,8 +35,18 @@
 
                 <!--Barre de navigation-->
                 <nav id="nav">
-                    {% block nav %}
-                    {% endblock nav %}
+                    <ul class="links">
+                        <li><a href="/exchange/accueil">
+                            <img src="{% static 'exchange/images/HomeIconWhite.png' %}" align="middle" class="center" width="65"></img>
+                        </a></li>
+                        <li><a href="/exchange/recherche_avance">Recherche avancée</a></li>
+                        <li><a href="/exchange/rajouter">Ajouter une info</a></li>
+                        {% if user.is_authenticated %}
+                        <li><a href="/exchange/deconnexion">Déconnexion</a></li>
+                        {% else %}
+                        <li><a href="/exchange/connexion">Connexion</a></li>
+                        {% endif %}
+                    </ul>
                 </nav>
 
                 <!--Main = gros rectangle blanc-->

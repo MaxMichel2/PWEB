@@ -14,19 +14,6 @@
     </ul>
 {% endblock intro %}
 
-{% block nav %}
-    <ul class="links">
-        <li class="active"><a href="/exchange/accueil">Recherche par pays</a></li>
-        <li><a href="/exchange/recherche_avance">Recherche avancée</a></li>
-        <li><a href="/exchange/rajouter">Ajouter une info</a></li>
-        {% if user.is_authenticated %}
-        <li><a href="/exchange/deconnexion">Déconnexion</a></li>
-        {% else %}
-        <li><a href="/exchange/connexion">Connexion</a></li>
-        {% endif %}
-    </ul>
-{% endblock nav %}
-
 {% block main %}
     <header class="major">
         <h1>Recherche<br />
