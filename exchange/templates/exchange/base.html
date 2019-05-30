@@ -28,17 +28,25 @@
                     {% block intro %}
                     {% endblock intro %}
                 </div>
+
                 <!--Bouton pour retourner à l'accueil-->
                 <header id="header">
-                    <a href="http://localhost:8000/exchange/accueil" class="logo">Accueil</a>
                 </header>
 
                 <!--Barre de navigation-->
                 <nav id="nav">
                     <ul class="links">
-                        <li><a href="/exchange/accueil">
-                            <img src="{% static 'exchange/images/HomeIconWhite.png' %}" height="100%"></img>
-                        </a><p>Accueil</p></li>
+                        <li class="accueil">
+                            <a href="/exchange/accueil">
+                                <img src="{% static 'exchange/images/HomeIconWhite.png' %}" style="height:4em;margin-top:7px;"></img>
+                                <!--Ajouter "margin-right: 1em;" dans style si on décommente les lignes suivantes-->
+                                <!--
+                                <span style="float:right; display: block; align: middle;">
+                                    <span>Accueil</span>
+                                </span>
+                                -->
+                            </a>
+                        </li>
                         <li><a href="/exchange/recherche_avance">Recherche avancée</a></li>
                         <li><a href="/exchange/rajouter">Ajouter une info</a></li>
                         {% if user.is_authenticated %}

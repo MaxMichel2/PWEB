@@ -3675,8 +3675,9 @@ input, select, textarea {
 		}
 
 			#nav ul.links li {
-				display: block;
+				display: inline;
 				padding-left: 0;
+				text-align: center;
 			}
 
 				#nav ul.links li a {
