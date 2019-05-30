@@ -33,9 +33,9 @@
         <li><a href="/exchange/recherche_avance">Recherche avancée</a></li>
         <li><a href="/exchange/rajouter">Ajouter une info</a></li>
         {% if user.is_authenticated %}
-        <li><a href="/exchange/deconnexion">Se déconnecter de {{user.username}}</a></li>
+        <li><a href="/exchange/deconnexion">Déconnexion</a></li>
         {% else %}
-        <li><a href="/exchange/connexion">Se connecter</a></li>
+        <li><a href="/exchange/connexion">Connexion</a></li>
         {% endif %}
     </ul>
 {% endblock nav %}
