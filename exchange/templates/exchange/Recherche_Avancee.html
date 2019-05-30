@@ -1,162 +1,135 @@
+{% extends 'exchange/base.html' %}
 {% load static %}
-<!DOCTYPE HTML>
 
-<html>
-	<head>
-		<title>Recherche Avancée</title>
-		<meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-        <link rel="shortcut icon" type="image/png" href="{% static 'exchange/images/AstusNoBackground.png' %}"/>
-		<link rel="stylesheet" type="text/css" href="{% static 'exchange/assets/css/main.css' %}" />
-		<noscript><link rel="stylesheet" type="text.css" href="{% static 'exchange/assets/css/noscript.css' %}" /></noscript>
-	</head>
-	<body class="is-preload">
+{% block style %}
+{% endblock style %}
 
-		<!-- Wrapper -->
-			<div id="wrapper">
-                <header id="header">
-                    <a href="/exchange/accueil" class="logo">Accueil</a>
-                </header>
+{% block head %}
+    <title>Recherche Avancée</title>
+{% endblock head %}
 
-            <!-- Nav -->
-                <nav id="nav">
-                    <ul class="links">
-                        <li><a href="/exchange/accueil">Recherche par pays</a></li>
-                        <li class="active"><a href="/exchange/recherche_avance">Recherche avancée</a></li>
-                        <li><a href="/exchange/rajouter">Ajouter une info</a></li>
-                        {% if user.is_authenticated %}
-                        <li><a href="/exchange/deconnexion">Se déconnecter de {{user.username}}</a></li>
-                        {% else %}
-                        <li><a href="/exchange/connexion">Se connecter</a></li>
-                        {% endif %}
-                    </ul>
-                </nav>
-                <div id="main">
-                    <header class="major">
-                        <h1>Recherche<br />
-                        Avancée</h1>
-                        <p>Recherchez une université en fonction de filtres</p>
-                    </header>
-                    
-                    <div class="table-wrapper">
-                        <header><h3>Filtrer les Universitées selon:</h3></header>
-                        <form action="{% url 'RechercheAvancee' %}"  method="post">
-                            {% csrf_token %}
-                            <label for="id_Continent">Continent&nbsp;:</label>
-                            <select name="Continent" required="" onchange="myFunction()" id="id_Continent">
-                                <option value="" selected="">---------</option>
-                                <option value="AS">Asie</option>
-                                <option value="AF">Afrique</option>
-                                <option value="AdN">Amerique du Nord</option>
-                                <option value="AdS">Amerique du Sud</option>
-                                <option value="EU">Europe</option>
-                                <option value="OC">Oceanie</option>
-                              </select>
-                            <label for="id_CountryName">Pays&nbsp;:</label>
-                            <select name="CountryName" id="testt">
-                                <option value="" >---------</option>  
-                                {% for c in ttl %}
-                                <option value="{{ c.CountryName }}" id="{{c.ID}}" style="display:none;">{{ c.CountryName }}</option>
-                                {% endfor %}
-                            </select>
-                            {{ formContract.as_p }}
-                            <hr>
-                            <h3>Ordonner les Universités selon:</h3>
-                            {{ ordre.as_p }}
-                            </hr>
-                            <input id="buton" type="submit" value="Rechercher">
-                        </form>
-                    </div>
-                    {% if valide %}
-                    <div class="table-wrapper">
-                        <h3>Liste des universités</h3>
-                        <p>Nombre d'éléments trouvés : {{universitiesC.count}}</p>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Nom</th>
-                                    <th>Note du département</th>
-                                    <th>Qualité de vie</th>
-                                    <th>Ville</th>
-                                    <th>Pays</th>
-                                    <th>Demande</th>
-                                    <th>Type de contrat avec l'INSA</th>
+{% block intro %}
+{% endblock intro %}
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for u in universitiesC %}
-                                <tr>
-                                    <td><a href=/exchange/universite/{{u.University.ID}}>{{u.University.Name}}</a></td>
-                                    <td>{{u.University.RankMetric}}</td>
-                                    <td>{{u.University.LifeMetric}}</td>
-                                    <td>{{u.University.City.CityName}}</td>
-                                    <td>{{u.University.City.Country.CountryName}}</td>
-                                    <td>{{u.University.Demand}}</td>
-                                    <td>{{u.ContractType}}</td>
-                                </tr>
-                                {% endfor %}                                        
-                            </tbody>
-                        </table>
-                    </div>
-                    {% endif %}
-                </div>
-                <div id="copyright">
-                    <ul><li>&copy; Astus International</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
-                </div>
-                       
-            </div>
+{% block nav %}
+    <ul class="links">
+        <li class="active"><a href="/exchange/accueil">Recherche par pays</a></li>
+        <li><a href="/exchange/recherche_avance">Recherche avancée</a></li>
+        <li><a href="/exchange/rajouter">Ajouter une info</a></li>
+        {% if user.is_authenticated %}
+        <li><a href="/exchange/deconnexion">Déconnexion</a></li>
+        {% else %}
+        <li><a href="/exchange/connexion">Connexion</a></li>
+        {% endif %}
+    </ul>
+{% endblock nav %}
 
+{% block main %}
+    <header class="major">
+        <h1>Recherche<br />
+        Avancée</h1>
+        <p>Recherchez une université en fonction de filtres</p>
+    </header>
 
-             
-            <script src="{% static 'exchange/assets/js/jquery.min.js' %}"></script>
-            <script src="{% static 'exchange/assets/js/jquery.scrollex.min.js' %}"></script>
-            <script src="{% static 'exchange/assets/js/jquery.scrolly.min.js' %}"></script>
-            <script src="{% static 'exchange/assets/js/browser.min.js' %}"></script>
-            <script src="{% static 'exchange/assets/js/breakpoints.min.js' %}"></script>
-            <script src="{% static 'exchange/assets/js/util.js' %}"></script>
-            <script src="{% static 'exchange/assets/js/main.js' %}"></script>
-            
-            <script>
-                function myFunctiontest() {
-                    document.getElementById("buton").click()
-                }
-                function myFunction() {
-                    var cont = document.getElementById("id_Continent").value
-                    console.log(cont)
-                    {% for c in ttl %}
-                        document.getElementById("{{c.ID}}").setAttribute('style', 'display:none;');
-                    {% endfor %}
-                    
-                    if(cont=='AS'){
-                        {% for c in AS %}
-                            document.getElementById("{{c.ID}}").setAttribute('style', 'display:block');
-                        {% endfor %}
-                    }else if(cont=='AF'){
-                        {% for c in AF %}
-                            document.getElementById("{{c.ID}}").setAttribute('style', 'display:block');
-                        {% endfor %}
-                    }else if(cont=='AdN'){
-                        {% for c in AdN %}
-                            document.getElementById("{{c.ID}}").setAttribute('style', 'display:block');
-                        {% endfor %}
-                    }else if(cont=='AdS'){
-                        {% for c in AdS %}
-                            document.getElementById("{{c.ID}}").setAttribute('style', 'display:block');
-                        {% endfor %}
-                    }else if(cont=='EU'){
-                        {% for c in EU %}
-                            document.getElementById("{{c.ID}}").setAttribute('style', 'display:block');
-                        {% endfor %}
-                    }else if(cont=='OC'){
-                        {% for c in OC %}
-                            document.getElementById("{{c.ID}}").setAttribute('style', 'display:block');
-                        {% endfor %}
-                    }
+    <div class="table-wrapper">
+        <header><h3>Filtrer les Universitées selon:</h3></header>
+        <form action="{% url 'RechercheAvancee' %}"  method="post">
+            {% csrf_token %}
+            <label for="id_Continent">Continent&nbsp;:</label>
+            <select name="Continent" required="" onchange="myFunction()" id="id_Continent">
+                <option value="" selected="">---------</option>
+                <option value="AS">Asie</option>
+                <option value="AF">Afrique</option>
+                <option value="AdN">Amerique du Nord</option>
+                <option value="AdS">Amerique du Sud</option>
+                <option value="EU">Europe</option>
+                <option value="OC">Oceanie</option>
+                </select>
+            <label for="id_CountryName">Pays&nbsp;:</label>
+            <select name="CountryName" id="testt">
+                <option value="" >---------</option>  
+                {% for c in ttl %}
+                <option value="{{ c.CountryName }}" id="{{c.ID}}" style="display:none;">{{ c.CountryName }}</option>
+                {% endfor %}
+            </select>
+            {{ formContract.as_p }}
+            <hr>
+            <h3>Ordonner les Universités selon:</h3>
+            {{ ordre.as_p }}
+            </hr>
+            <input id="buton" type="submit" value="Rechercher">
+        </form>
+    </div>
+    {% if valide %}
+    <div class="table-wrapper">
+        <h3>Liste des universités</h3>
+        <p>Nombre d'éléments trouvés : {{universitiesC.count}}</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Note du département</th>
+                    <th>Qualité de vie</th>
+                    <th>Ville</th>
+                    <th>Pays</th>
+                    <th>Demande</th>
+                    <th>Type de contrat avec l'INSA</th>
 
-                }
-                
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in universitiesC %}
+                <tr>
+                    <td><a href=/exchange/universite/{{u.University.ID}}>{{u.University.Name}}</a></td>
+                    <td>{{u.University.RankMetric}}</td>
+                    <td>{{u.University.LifeMetric}}</td>
+                    <td>{{u.University.City.CityName}}</td>
+                    <td>{{u.University.City.Country.CountryName}}</td>
+                    <td>{{u.University.Demand}}</td>
+                    <td>{{u.ContractType}}</td>
+                </tr>
+                {% endfor %}                                        
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+{% endblock main %}
 
-            </script>
-    </body>
-</html>
+{% block scripts %}
+    function myFunctiontest() {
+        document.getElementById("buton").click()
+    }
+    function myFunction() {
+        var cont = document.getElementById("id_Continent").value
+        console.log(cont)
+        {% for c in ttl %}
+            document.getElementById("{{c.ID}}").setAttribute('style', 'display:none;');
+        {% endfor %}
+        
+        if(cont=='AS'){
+            {% for c in AS %}
+                document.getElementById("{{c.ID}}").setAttribute('style', 'display:block');
+            {% endfor %}
+        }else if(cont=='AF'){
+            {% for c in AF %}
+                document.getElementById("{{c.ID}}").setAttribute('style', 'display:block');
+            {% endfor %}
+        }else if(cont=='AdN'){
+            {% for c in AdN %}
+                document.getElementById("{{c.ID}}").setAttribute('style', 'display:block');
+            {% endfor %}
+        }else if(cont=='AdS'){
+            {% for c in AdS %}
+                document.getElementById("{{c.ID}}").setAttribute('style', 'display:block');
+            {% endfor %}
+        }else if(cont=='EU'){
+            {% for c in EU %}
+                document.getElementById("{{c.ID}}").setAttribute('style', 'display:block');
+            {% endfor %}
+        }else if(cont=='OC'){
+            {% for c in OC %}
+                document.getElementById("{{c.ID}}").setAttribute('style', 'display:block');
+            {% endfor %}
+        }
+    }
+{% endblock scripts %}

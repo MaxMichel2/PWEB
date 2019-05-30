@@ -7,8 +7,8 @@
 -->
 <html>
     <style>
-    {% block map_style %}
-    {% endblock map_style %}
+    {% block style %}
+    {% endblock style %}
     </style>
 	<head>
         {% block head%}
@@ -60,7 +60,9 @@
 		<script src="{% static 'exchange/assets/js/breakpoints.min.js' %}"></script>
 		<script src="{% static 'exchange/assets/js/util.js' %}"></script>
 		<script src="{% static 'exchange/assets/js/main.js' %}"></script>
+        <script>
         {% block scripts %}
         {% endblock scripts %}
+        </script>
     </body>
 </html>

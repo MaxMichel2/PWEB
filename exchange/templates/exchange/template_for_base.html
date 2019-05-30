@@ -5,7 +5,6 @@
 {% endblock style %}
 
 {% block head %}
-    <title>Pays</title>
 {% endblock head %}
 
 {% block intro %}
@@ -25,25 +24,6 @@
 {% endblock nav %}
 
 {% block main %}
-    <header class="major">
-        <h1>Ajouter<br />
-        une info</h1>
-        <p>Donne ton avis sur ton échange à l'étranger</p>
-    </header>
-    <div class="table-wrapper">
-        <header>
-            <h3>Pays</h3>
-        </header>
-        <table>
-            <tbody>
-                {% for p in pays_var %}
-                <tr>
-                    <td><a href=/exchange/pays/{{p.ID}}>{{p.CountryName}}</a></td>
-                </tr> 
-                {% endfor %}                                                                            
-            </tbody>
-        </table>
-    </div>
 {% endblock main %}
 
 {% block scripts %}

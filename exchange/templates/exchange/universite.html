@@ -1,302 +1,275 @@
+{% extends 'exchange/base.html' %}
 {% load static %}
-<!DOCTYPE HTML>
-<!--
-	Massively by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-    <style>
-        .accordion { 
-            /*il faut changer la hauteur des boutons, mais changer le paramètre "height" ça marche pas*/
-            background-color: #ffffff;
-            color: #444;
-            cursor: pointer;
-            width: 100%;
-            padding: 0 2rem;
-            border: none;
-            text-align: left;
-            outline: none;
-      
-            transition: 0.2s;
 
-            font-size: 1.5rem;
-            height: 2rem;
-			line-height: 0rem;
-		
-        }
-                
-        .active, .accordion:hover {
-            box-shadow: inset 0 0 0 2px #18bfef;
-			color: #18bfef !important;
-        }
-                
-        .panel {
-            padding: 0 2rem;
-            display: none;
-            background-color: white;
-            overflow: hidden;
-        }
-    </style>
-	<head>
-		<title>{{univ.Name}}</title>
-		<meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-        <link rel="shortcut icon" type="image/png" href="{% static 'exchange/images/AstusNoBackground.png' %}"/>
-		<link rel="stylesheet" type="text/css" href="{% static 'exchange/assets/css/main.css' %}" />
-		<noscript><link rel="stylesheet" type="text.css" href="{% static 'exchange/assets/css/noscript.css' %}" /></noscript>
-    </head>
+{% block style %}
+    .accordion { 
+        /*il faut changer la hauteur des boutons, mais changer le paramètre "height" ça marche pas*/
+        background-color: #ffffff;
+        color: #444;
+        cursor: pointer;
+        width: 100%;
+        padding: 0 2rem;
+        border: none;
+        text-align: left;
+        outline: none;
 
-    <body class="is-preload">
+        transition: 0.2s;
 
-            <div id="wrapper">
-                
-                <div id="intro">
-                    <h1>{{univ.Name}}</h1>
-                    <a href='{{univ.WebLink}}'>Lien vers le site de l'université</a>
-                  
-                </div>
-                <!--Bouton pour retourner à l'accueil
-                ATTENTION pb au niveau de l'url pour le retour à l'accueil-->
-                <header id="header">
-                    <a href="http://localhost:8000/exchange/accueil" class="logo">Accueil</a>
-                </header>
+        font-size: 1.5rem;
+        height: 2rem;
+        line-height: 0rem;
 
-                <div id="main">
-                    
-                    <button class="accordion">Informations générales</button>
-                    <div class="panel">
-                        <div class="row">
-                            <div class="col-6 col-12-small">
-                                <h5>Pays : </h5>
-                                {{univ.City.Country.CountryName}}
-                            </div>
-                            <div class="col-6 col-12-small">
-                                <h5>Ville : </h5>
-                                {{univ.City.CityName}}
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-6 col-12-small">
-                                <h3>Semestre 1 </h3>
-                                <li>Date de début</li>
-                                {{ S1.StartDate }}
-                                <li>Date de fin</li>
-                                {{ S1.EndDate }}
-                            </div>
-                            <div class="col-6 col-12-small">
-                                <h3>Semestre 2 </h3>
-                                <li>Date de début</li>
-                                {{ S2.StartDate }}                                     
-                                <li>Date de fin</li>
-                                {{ S2.EndDate }}
-                            </div>
-                        </div>
-                        </hr>
-                        <hr>
-                        <header>
-                            <h3>Demandes</h3>
-                        </header>
-                        <div class="row">
-                            <div class="col-4 col-8-small col-12-small">
-                            <p>Nombre de places</p>
-                            {{univ.Places}}
-                        </div>
-                        <div class="col-4 col-8-small col-12-small">
-                            <p>Nombre de demandes</p>
-                            {{univ.Demand}}
-                        </div>
-                        <div class="col-4 col-8-small col-12-small">
-                            <p>Année sécable ?</p>
-                            {{univ.SplitableYear}}
-                        </div>
-                        </hr>
-                    </div>
-                    <hr>
-                        <header>
-                            <h3>Autre</h3>
-                        </header>
-                        <div class="row">
-                            <div class="col-4 col-8-small col-12-small">
-                                <p>Type de contrat avec l'INSA :</p>
-                                {% for c in cont  %}
-                                    {{c.ContractType}}
-                                {% endfor %}
-                            </div>
-                            <div class="col-4 col-8-small col-12-small">
-                                <p>Projets :</p>
-                                {{univ.Project}}
-                            </div>
-                            <div class="col-4 col-8-small col-12-small">
-                                <p>Langue(s) des cours</p>
-                                {%for l in langue%}
-                                    {{l.Language}}
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </hr>
-                    </div>
-                        
-                    <button class="accordion">Qualité de vie</button>
-                    <div class="panel">
-                        <h3>Prix de la vie :</h3>
-                        <div class="row">
-                            <div class="col-6 col-12-small">
-                                <h5>Loyer moyen : </h5>
-                                {{ avg.r}}
-                            </div>
-                            <div class="col-6 col-12-small">
-                                <h5>Dépenses par mois en moyenne : </h5>
-                                {{ avg.m}}
-                            </div>
-                        </div>
-                    <hr>
-                        <h3>Style de vie</h3>
-                        <div class="row">
-                            <div class="col-4 col-8-small col-12-small">
-                                <h5>Vie nocturne :  /5</h5>
-                                {{ avg.n}}
-                            </div>
-                            <div class="col-4 col-8-small col-12-small">
-                                <h5>Vie culturelle :  /5</h5>
-                                {{ avg.c}}
-                            </div>
-                            <div class="col-4 col-8-small col-12-small">
-                                <h5>Sécurité :  /5</h5>
-                                {{ avg.s}}
-                            </div>
-                        </div>
-                    </hr>
-                    </div>
-                        
-                    <button class="accordion">Excellence</button>
-                    <div class="panel">
-                        <div class="row">
-                            <div class="col-6 col-12-small">
-                                <h5>Classement mondial (Shanghai) : </h5>
-                                {{univ.CWURRank}}
-                            </div>
-                            <div class="col-6 col-12-small">
-                                <h5>Note du département (FLM) : </h5>
-                                {{univ.RankMetric}}
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <button class="accordion">Administratif</button>
-                    <div class="panel">
-                        <h3>Visa</h3>
-                        <div class="row">
-                            <div class="col-6 col-12-small">
-                                <h5>Visa (non) nécessaire pour les européens </h5>
-                                <!--A revoir implémentation-->
-                                {{S1.Visa}}
-                            </div>
-                            <div class="col-6 col-12-small">
-                                <h5>Temps d'obtention du visa </h5>
-                                {{S1.VisaDays}}
-                                {{S1.VisaWeeks}}
-                                {{S1.VisaMonths}}
-                            </div>
-                        </div>
-                    <hr>
-                        <h3>Diplôme linguistique</h3>
-                        <div class="row">
-                            <div class="col-6 col-12-small">
-                                <h5>Diplôme demandé :</h5>
-                                {%for l in langue%}
-                                    {{l.LanguageDiploma}}
-                                {% endfor %}
-                            </div>
-                            <div class="col-6 col-12-small">
-                                <h5>Niveau demandé :</h5>
-                                {%for l in langue%}
-                                    {{l.LanguageLevel}}
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </hr>
-                    <hr>
-                        <h3>Bourses</h3>
-                        <div class="table-wrapper">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Bourse obtenue</th>
-                                        <th>Valeur moyenne</th>
-                                        <th>Reçu tout les</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for f in fin %}
-                                    <tr>
-                                        <td>{{f.Name}}</td>
-                                        <td>{{f.Value}}</td>
-                                        <td>{{f.ReceivedEvery}}</td>
-                                    </tr>
-                                    {% endfor %}                                       
-                                </tbody>
-                            </table>
-                        </div>
-                    </hr>
-                    <hr>
-                        <h5>Equivalence crédits nationaux/crédits ECTS :</h5>
-                        {{univ.City.Country.ECTSConversion}}
-                    </hr>
-                    </div>
+    }
+            
+    .active, .accordion:hover {
+        box-shadow: inset 0 0 0 2px #18bfef;
+        color: #18bfef !important;
+    }
+            
+    .panel {
+        padding: 0 2rem;
+        display: none;
+        background-color: white;
+        overflow: hidden;
+    }
+{% endblock style %}
 
-                    <button class="accordion">Commentaires</button>
-                    <div class="panel">
-                        {% for e in ex %}
-                        <h5>{{e.Student.Name}} {{e.Student.Surname}}, parti en {{e.StartDate}} ({{e.Year}}A {{e.Student.INSADepartement}} S{{e.Semester}})</h5>
-                            <blockquote>{{e.Comment}}</blockquote>
-                        {% endfor %}
-                    </div>
+{% block head %}
+    <title>{{univ.Name}}</title>
+{% endblock head %}
 
-                    <script>
-                        var acc = document.getElementsByClassName("accordion");
-                        var i;
-                            
-                        for (i = 0; i < acc.length; i++) {
-                            acc[i].addEventListener("click", function() {
-                            this.classList.toggle("active");
-                            var panel = this.nextElementSibling;
-                            if (panel.style.display === "block") {
-                                panel.style.display = "none";
-                            } else {
-                                panel.style.display = "block";
-                            }
-                            });
-                        }
-                    </script>
+{% block intro %}
+    <h1>{{univ.Name}}</h1>
+    <a href='{{univ.WebLink}}'>Lien vers le site de l'université</a>
+{% endblock intro %}
 
-                    <div>
-                        <a href=/exchange/modifier/{{univ.ID}} class ="button">Donner son avis sur cette université</a>
-                        {% if perms.exchange.noter_depart %}
-                        <a href=/exchange/addDep/{{univ.ID}} class="button">Ajouter une info officielle</a>
-                        {% endif %}
-                    </div>
-                       
-                       
-                    
-                   
-                </div>
+{% block nav %}
+    <ul class="links">
+        <li class="active"><a href="/exchange/accueil">Recherche par pays</a></li>
+        <li><a href="/exchange/recherche_avance">Recherche avancée</a></li>
+        <li><a href="/exchange/rajouter">Ajouter une info</a></li>
+        {% if user.is_authenticated %}
+        <li><a href="/exchange/deconnexion">Déconnexion</a></li>
+        {% else %}
+        <li><a href="/exchange/connexion">Connexion</a></li>
+        {% endif %}
+    </ul>
+{% endblock nav %}
 
-                <div id="copyright">
-						<ul><li>&copy; Astus International</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
-					</div>
-
+{% block main %}
+    <button class="accordion">Informations générales</button>
+    <div class="panel">
+        <div class="row">
+            <div class="col-6 col-12-small">
+                <h5>Pays : </h5>
+                {{univ.City.Country.CountryName}}
             </div>
+            <div class="col-6 col-12-small">
+                <h5>Ville : </h5>
+                {{univ.City.CityName}}
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-6 col-12-small">
+                <h3>Semestre 1 </h3>
+                <li>Date de début</li>
+                {{ S1.StartDate }}
+                <li>Date de fin</li>
+                {{ S1.EndDate }}
+            </div>
+            <div class="col-6 col-12-small">
+                <h3>Semestre 2 </h3>
+                <li>Date de début</li>
+                {{ S2.StartDate }}                                     
+                <li>Date de fin</li>
+                {{ S2.EndDate }}
+            </div>
+        </div>
+        </hr>
+        <hr>
+        <header>
+            <h3>Demandes</h3>
+        </header>
+        <div class="row">
+            <div class="col-4 col-8-small col-12-small">
+            <p>Nombre de places</p>
+            {{univ.Places}}
+        </div>
+        <div class="col-4 col-8-small col-12-small">
+            <p>Nombre de demandes</p>
+            {{univ.Demand}}
+        </div>
+        <div class="col-4 col-8-small col-12-small">
+            <p>Année sécable ?</p>
+            {{univ.SplitableYear}}
+        </div>
+        </hr>
+    </div>
+    <hr>
+        <header>
+            <h3>Autre</h3>
+        </header>
+        <div class="row">
+            <div class="col-4 col-8-small col-12-small">
+                <p>Type de contrat avec l'INSA :</p>
+                {% for c in cont  %}
+                    {{c.ContractType}}
+                {% endfor %}
+            </div>
+            <div class="col-4 col-8-small col-12-small">
+                <p>Projets :</p>
+                {{univ.Project}}
+            </div>
+            <div class="col-4 col-8-small col-12-small">
+                <p>Langue(s) des cours</p>
+                {%for l in langue%}
+                    {{l.Language}}
+                {% endfor %}
+            </div>
+        </div>
+    </hr>
+    </div>
+    <button class="accordion">Qualité de vie</button>
+    <div class="panel">
+        <h3>Prix de la vie :</h3>
+        <div class="row">
+            <div class="col-6 col-12-small">
+                <h5>Loyer moyen : </h5>
+                {{ avg.r}}
+            </div>
+            <div class="col-6 col-12-small">
+                <h5>Dépenses par mois en moyenne : </h5>
+                {{ avg.m}}
+            </div>
+        </div>
+    <hr>
+        <h3>Style de vie</h3>
+        <div class="row">
+            <div class="col-4 col-8-small col-12-small">
+                <h5>Vie nocturne :  /5</h5>
+                {{ avg.n}}
+            </div>
+            <div class="col-4 col-8-small col-12-small">
+                <h5>Vie culturelle :  /5</h5>
+                {{ avg.c}}
+            </div>
+            <div class="col-4 col-8-small col-12-small">
+                <h5>Sécurité :  /5</h5>
+                {{ avg.s}}
+            </div>
+        </div>
+    </hr>
+    </div>
         
-        <!-- Scripts -->
-		<script src="{% static 'exchange/assets/js/jquery.min.js' %}"></script>
-		<script src="{% static 'exchange/assets/js/jquery.scrollex.min.js' %}"></script>
-		<script src="{% static 'exchange/assets/js/jquery.scrolly.min.js' %}"></script>
-		<script src="{% static 'exchange/assets/js/browser.min.js' %}"></script>
-		<script src="{% static 'exchange/assets/js/breakpoints.min.js' %}"></script>
-		<script src="{% static 'exchange/assets/js/util.js' %}"></script>
-		<script src="{% static 'exchange/assets/js/main.js' %}"></script>
+    <button class="accordion">Excellence</button>
+    <div class="panel">
+        <div class="row">
+            <div class="col-6 col-12-small">
+                <h5>Classement mondial (Shanghai) : </h5>
+                {{univ.CWURRank}}
+            </div>
+            <div class="col-6 col-12-small">
+                <h5>Note du département (FLM) : </h5>
+                {{univ.RankMetric}}
+            </div>
+        </div>
+    </div>
     
-    </body>
-</html>
+    <button class="accordion">Administratif</button>
+    <div class="panel">
+        <h3>Visa</h3>
+        <div class="row">
+            <div class="col-6 col-12-small">
+                <h5>Visa (non) nécessaire pour les européens </h5>
+                <!--A revoir implémentation-->
+                {{S1.Visa}}
+            </div>
+            <div class="col-6 col-12-small">
+                <h5>Temps d'obtention du visa </h5>
+                {{S1.VisaDays}}
+                {{S1.VisaWeeks}}
+                {{S1.VisaMonths}}
+            </div>
+        </div>
+    <hr>
+        <h3>Diplôme linguistique</h3>
+        <div class="row">
+            <div class="col-6 col-12-small">
+                <h5>Diplôme demandé :</h5>
+                {%for l in langue%}
+                    {{l.LanguageDiploma}}
+                {% endfor %}
+            </div>
+            <div class="col-6 col-12-small">
+                <h5>Niveau demandé :</h5>
+                {%for l in langue%}
+                    {{l.LanguageLevel}}
+                {% endfor %}
+            </div>
+        </div>
+    </hr>
+    <hr>
+        <h3>Bourses</h3>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Bourse obtenue</th>
+                        <th>Valeur moyenne</th>
+                        <th>Reçu tout les</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for f in fin %}
+                    <tr>
+                        <td>{{f.Name}}</td>
+                        <td>{{f.Value}}</td>
+                        <td>{{f.ReceivedEvery}}</td>
+                    </tr>
+                    {% endfor %}                                       
+                </tbody>
+            </table>
+        </div>
+    </hr>
+    <hr>
+        <h5>Equivalence crédits nationaux/crédits ECTS :</h5>
+        {{univ.City.Country.ECTSConversion}}
+    </hr>
+    </div>
+
+    <button class="accordion">Commentaires</button>
+    <div class="panel">
+        {% for e in ex %}
+        <h5>{{e.Student.Name}} {{e.Student.Surname}}, parti en {{e.StartDate}} ({{e.Year}}A {{e.Student.INSADepartement}} S{{e.Semester}})</h5>
+            <blockquote>{{e.Comment}}</blockquote>
+        {% endfor %}
+    </div>
+
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+            
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.display === "block") {
+                panel.style.display = "none";
+            } else {
+                panel.style.display = "block";
+            }
+            });
+        }
+    </script>
+
+    <div>
+        <a href=/exchange/modifier/{{univ.ID}} class ="button">Donner son avis sur cette université</a>
+        {% if perms.exchange.noter_depart %}
+        <a href=/exchange/addDep/{{univ.ID}} class="button">Ajouter une info officielle</a>
+        {% endif %}
+    </div>
+{% endblock main %}
+
+{% block scripts %}
+{% endblock scripts %}
