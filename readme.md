@@ -38,6 +38,3 @@ The changes should be saved to the repository and you should be able to see them
     * **python manage.py runserver**
 * Open any browser and type: **localhost:8000/exchange/accueil**
 * Congratulations, the website is up and running! Feel free to play around.
-
-## Petit test pour Lorenzo
-## et la reponse de lorenzo
