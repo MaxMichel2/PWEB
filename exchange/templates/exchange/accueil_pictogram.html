@@ -44,17 +44,25 @@
             <img src="{% static 'exchange/images/attention.png' %}" width = "25" height="25"> 
         </p>
     </div>
-    
-    <p id="rateyotest1" style="margin:0;padding:0;">
-        <script>
-            $(function () {
-                $("#rateyotest1").rateYo({
-                    rating: 3.6,
-                    readOnly: true
+
+    <div id="randomthing" style="display:none;">
+        <div id="texttest" style="padding:0;margin:0;display:inline-block;white-space:nowrap;">Test:  </div>
+        <div id="rateyotest1" style="padding:0;margin:0;display:inline-block;white-space:nowrap;">
+        <!--
+            <script>
+                var temp = 
+                $(function () {
+                    $("#rateyotest1").rateYo({
+                        rating: 3.8,
+                        readOnly: true,
+                        starWidth: "12px"
+                    });
                 });
-            });
-        </script>
-    </p>
+                console.log(temp[0].childNodes[2].childNodes[2].childNodes[1].childNodes[13].childNodes[7].childNodes[3]);
+            </script>
+            -->
+        </div>
+    </div>
     
 {% endblock main %}
 
@@ -190,8 +198,18 @@
         }
         map.addLayer(markersOC);
 
+    var temp = 
+    $(function () {
+        $("#rateyotest1").rateYo({
+            rating: 2,
+            starWidth: "12px",
+        });
+    });
+    console.log(temp[0].childNodes[2].childNodes[2].childNodes[1].childNodes[13].childNodes[7].childNodes[3]);
+    console.log(document.getElementById("rateyotest1"));
+
     var marker_test = L.marker(new L.LatLng(0, 0), { title: "Test" });
-    marker_test.bindPopup('<div id="main_div">Test<p style="margin:0;padding:0;">Ranking:  </p></div>'); //quand on clique (metter info plus url avec href accolade)
+    marker_test.bindPopup("Test:  "); //quand on clique (metter info plus url avec href accolade)
     map.addLayer(marker_test);
     
 {% endblock scripts %}
