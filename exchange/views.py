@@ -70,6 +70,7 @@ def universite(request, idUni):
 
 
 #-----------------------PAGE RECHERCHE AVANCEE-----------------
+"""-------------------------A TESTER--------------------------"""
 def RechercheAvancee(request):
    #Initialisation d'un objets Université pour requête 
    qs = University.objects.none()
@@ -81,14 +82,6 @@ def RechercheAvancee(request):
 
    #liste de tout les objects Pays
    ttl = Country.objects.all()
-
-   #Trier les objects Pays par Continent
-   AS= Country.objects.filter(Continent='AS')
-   AF= Country.objects.filter(Continent='AF')
-   AdN= Country.objects.filter(Continent='AdN')
-   AdS= Country.objects.filter(Continent='AdS')
-   EU= Country.objects.filter(Continent='EU')
-   OC= Country.objects.filter(Continent='OC')
    
    #Verifie que le submit est cohérent
    if form.is_valid() and formContract.is_valid() and ordre.is_valid() :
@@ -98,10 +91,33 @@ def RechercheAvancee(request):
       ContractType = formContract.cleaned_data['ContractType']
       ordres = ordre.cleaned_data['Ordre']
       
+      print(Continent)
+      print(CountryName)
+      print(ContractType)
+      print(ordres)
+   
       #dit qu'on peut afficher la lsite des Universités
       valide=True
 
       #En fonction des options choisies on fait une requete différente
+      universitiesC = UniversityContractsStudent.objects.filter(University__City__Country__Continent=Continent)
+
+         #Si On filtre par pays
+      if(CountryName!=""):
+         universitiesC.filter(University__City__Country__CountryName=CountryName)
+
+         #Si on filtre par contract
+      if(ContractType!=""):
+         universitiesC.filter(ContractType=ContractType)
+
+         #Ordre : soit par pays soit par autre
+      if(ordres=="CountryName"):
+         universitiesC.order_by('University__City__Country__CountryName')
+      else:
+         universitiesC.order_by('University__'+ordres)
+      
+
+      """#En fonction des options choisies on fait une requete différente
       if(CountryName=="" and ContractType=="" and ordres=="CountryName" ):
          universitiesC = UniversityContractsStudent.objects.filter(University__City__Country__Continent=Continent).order_by('University__City__Country__CountryName')
       elif(CountryName=="" and ContractType==""):
@@ -117,7 +133,7 @@ def RechercheAvancee(request):
       elif(CountryName=="" and ContractType!="" and ordres=="CountryName"):
          universitiesC = UniversityContractsStudent.objects.filter(University__City__Country__Continent=Continent).filter(ContractType=ContractType).order_by('University__City__Country__CountryName')
       else:
-         universitiesC = UniversityContractsStudent.objects.filter(University__City__Country__Continent=Continent).filter(ContractType=ContractType).order_by('University__'+ordres)
+         universitiesC = UniversityContractsStudent.objects.filter(University__City__Country__Continent=Continent).filter(ContractType=ContractType).order_by('University__'+ordres)  """
            
 
    return render(request, 'exchange/Recherche_Avancee.html', locals())
