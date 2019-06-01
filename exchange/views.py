@@ -90,46 +90,26 @@ def RechercheAvancee(request):
       CountryName = request.POST.get('CountryName')
       ContractType = formContract.cleaned_data['ContractType']
       ordres = ordre.cleaned_data['Ordre']
-   
-      #dit qu'on peut afficher la lsite des Universités
-      valide=True
 
       #En fonction des options choisies on fait une requete différente
-      universitiesC = UniversityContractsStudent.objects.filter(University__City__Country__Continent=Continent)
-
+      universitiesC = UniversityContractsAdmin.objects.filter(University__City__Country__Continent=Continent)     
+                     #UniversityContractsStudent
          #Si On filtre par pays
       if(CountryName!=""):
-         universitiesC.filter(University__City__Country__CountryName=CountryName)
+         universitiesC = universitiesC.filter(University__City__Country__CountryName=CountryName)
 
          #Si on filtre par contract
       if(ContractType!=""):
-         universitiesC.filter(ContractType=ContractType)
+         universitiesC = universitiesC.filter(ContractType=ContractType)
 
          #Ordre : soit par pays soit par autre
       if(ordres=="CountryName"):
-         universitiesC.order_by('University__City__Country__CountryName')
+         universitiesC = universitiesC.order_by('-University__City__Country__CountryName')
       else:
-         universitiesC.order_by('University__'+ordres)
+         universitiesC = universitiesC.order_by('-University__'+ordres)
       
-
-      """#En fonction des options choisies on fait une requete différente
-      if(CountryName=="" and ContractType=="" and ordres=="CountryName" ):
-         universitiesC = UniversityContractsStudent.objects.filter(University__City__Country__Continent=Continent).order_by('University__City__Country__CountryName')
-      elif(CountryName=="" and ContractType==""):
-         universitiesC = UniversityContractsStudent.objects.filter(University__City__Country__Continent=Continent).order_by('University__'+ordres)
-      elif(CountryName!="" and ContractType=="" and ordres=="CountryName"):
-         universitiesC = UniversityContractsStudent.objects.filter(University__City__Country__CountryName=CountryName).order_by('University__City__Country__CountryName')
-      elif(CountryName!="" and ContractType==""):
-         universitiesC = UniversityContractsStudent.objects.filter(University__City__Country__CountryName=CountryName).order_by('University__'+ordres)
-      elif(CountryName!="" and ContractType!="" and ordres=="CountryName"):
-         universitiesC = UniversityContractsStudent.objects.filter(ContractType=ContractType).filter(University__City__Country__CountryName=CountryName).order_by('University__City__Country__CountryName')
-      elif(CountryName!="" and ContractType!=""):
-         universitiesC = UniversityContractsStudent.objects.filter(ContractType=ContractType).filter(University__City__Country__CountryName=CountryName).order_by('University__'+ordres)
-      elif(CountryName=="" and ContractType!="" and ordres=="CountryName"):
-         universitiesC = UniversityContractsStudent.objects.filter(University__City__Country__Continent=Continent).filter(ContractType=ContractType).order_by('University__City__Country__CountryName')
-      else:
-         universitiesC = UniversityContractsStudent.objects.filter(University__City__Country__Continent=Continent).filter(ContractType=ContractType).order_by('University__'+ordres)  """
-           
+      #dit qu'on peut afficher la lsite des Universités
+      valide=True           
 
    return render(request, 'exchange/Recherche_Avancee.html', locals())
 
