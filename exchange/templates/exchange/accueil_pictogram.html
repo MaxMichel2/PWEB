@@ -143,7 +143,7 @@ for(var j=0; j<universiteParContinent.length; j++){
     console.log(document.getElementById("rateyotest1"));
 
     var marker_test = L.marker(new L.LatLng(0, 0), { title: "Test" });
-    marker_test.bindPopup('<p style="font-size:12px">Test:  </p>'); //quand on clique (metter info plus url avec href accolade)
+    marker_test.bindPopup('<span style="font-size:13px;margin:0;padding:0;">Test:  </span><img src="{% static 'exchange/images/FiveStarVotedGreen.png' %}" style="height:12px;width:60px;"></img>'); //quand on clique (metter info plus url avec href accolade)
     map.addLayer(marker_test);
     
 {% endblock scripts %}
