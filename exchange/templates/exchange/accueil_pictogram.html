@@ -209,7 +209,7 @@
     console.log(document.getElementById("rateyotest1"));
 
     var marker_test = L.marker(new L.LatLng(0, 0), { title: "Test" });
-    marker_test.bindPopup("Test:  "); //quand on clique (metter info plus url avec href accolade)
+    marker_test.bindPopup('<p style="font-size:12px">Test:  </p>'); //quand on clique (metter info plus url avec href accolade)
     map.addLayer(marker_test);
     
 {% endblock scripts %}
