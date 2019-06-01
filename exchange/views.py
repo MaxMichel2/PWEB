@@ -90,11 +90,6 @@ def RechercheAvancee(request):
       CountryName = request.POST.get('CountryName')
       ContractType = formContract.cleaned_data['ContractType']
       ordres = ordre.cleaned_data['Ordre']
-      
-      print(Continent)
-      print(CountryName)
-      print(ContractType)
-      print(ordres)
    
       #dit qu'on peut afficher la lsite des Universités
       valide=True
