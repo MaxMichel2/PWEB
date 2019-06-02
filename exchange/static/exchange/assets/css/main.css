@@ -4657,30 +4657,30 @@ input, select, textarea {
 
 	/* Special Rules for Mobile */
 
-@media only screen and (max-width: 480px) {
+	@media only screen and (max-width: 480px) {
 
-	#home-icon-mobile {display:block}
-	
-	#home-icon-desktop {display:none}
-	
+		#home-icon-mobile {display:block}
+		
+		#home-icon-desktop {display:none}
+		
 	}
-	
-	 
-	
+		
+		
+		
 	/* Special Rules for Tablets */
-	
+
 	@media only screen and (min-width: 481px) {
-	
+
 		#home-icon-mobile {display:none}
-	
+
 	}
-	
-	 
-	
+		
+		
+		
 	/* Special Rules for Desktops */
-	
+
 	@media only screen and (min-width: 1024px) {
-	
+
 	#home-icon-mobile {display:none}
-	
+
 	}
