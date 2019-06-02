@@ -4654,3 +4654,16 @@ input, select, textarea {
 		}
 
 	}
+
+	.home-icon.mobile {
+		display: none;
+	}
+
+	@media only screen and (max-device-width: 480px) {
+		.home-icon {
+		  display: none;
+		}
+		.home-icon.mobile {
+		  display: block;
+		}
+	  }
