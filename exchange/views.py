@@ -81,14 +81,6 @@ def RechercheAvancee(request):
 
    #liste de tout les objects Pays
    ttl = Country.objects.all()
-
-   #Trier les objects Pays par Continent
-   AS= Country.objects.filter(Continent='AS')
-   AF= Country.objects.filter(Continent='AF')
-   AdN= Country.objects.filter(Continent='AdN')
-   AdS= Country.objects.filter(Continent='AdS')
-   EU= Country.objects.filter(Continent='EU')
-   OC= Country.objects.filter(Continent='OC')
    
    #Verifie que le submit est cohérent
    if form.is_valid() and formContract.is_valid() and ordre.is_valid() :
@@ -97,28 +89,26 @@ def RechercheAvancee(request):
       CountryName = request.POST.get('CountryName')
       ContractType = formContract.cleaned_data['ContractType']
       ordres = ordre.cleaned_data['Ordre']
-      
-      #dit qu'on peut afficher la lsite des Universités
-      valide=True
 
       #En fonction des options choisies on fait une requete différente
-      if(CountryName=="" and ContractType=="" and ordres=="CountryName" ):
-         universitiesC = UniversityContractsStudent.objects.filter(University__City__Country__Continent=Continent).order_by('University__City__Country__CountryName')
-      elif(CountryName=="" and ContractType==""):
-         universitiesC = UniversityContractsStudent.objects.filter(University__City__Country__Continent=Continent).order_by('University__'+ordres)
-      elif(CountryName!="" and ContractType=="" and ordres=="CountryName"):
-         universitiesC = UniversityContractsStudent.objects.filter(University__City__Country__CountryName=CountryName).order_by('University__City__Country__CountryName')
-      elif(CountryName!="" and ContractType==""):
-         universitiesC = UniversityContractsStudent.objects.filter(University__City__Country__CountryName=CountryName).order_by('University__'+ordres)
-      elif(CountryName!="" and ContractType!="" and ordres=="CountryName"):
-         universitiesC = UniversityContractsStudent.objects.filter(ContractType=ContractType).filter(University__City__Country__CountryName=CountryName).order_by('University__City__Country__CountryName')
-      elif(CountryName!="" and ContractType!=""):
-         universitiesC = UniversityContractsStudent.objects.filter(ContractType=ContractType).filter(University__City__Country__CountryName=CountryName).order_by('University__'+ordres)
-      elif(CountryName=="" and ContractType!="" and ordres=="CountryName"):
-         universitiesC = UniversityContractsStudent.objects.filter(University__City__Country__Continent=Continent).filter(ContractType=ContractType).order_by('University__City__Country__CountryName')
+      universitiesC = UniversityContractsAdmin.objects.filter(University__City__Country__Continent=Continent)     
+                     #UniversityContractsStudent
+         #Si On filtre par pays
+      if(CountryName!=""):
+         universitiesC = universitiesC.filter(University__City__Country__CountryName=CountryName)
+
+         #Si on filtre par contract
+      if(ContractType!=""):
+         universitiesC = universitiesC.filter(ContractType=ContractType)
+
+         #Ordre : soit par pays soit par autre
+      if(ordres=="CountryName"):
+         universitiesC = universitiesC.order_by('-University__City__Country__CountryName')
       else:
-         universitiesC = UniversityContractsStudent.objects.filter(University__City__Country__Continent=Continent).filter(ContractType=ContractType).order_by('University__'+ordres)
-           
+         universitiesC = universitiesC.order_by('-University__'+ordres)
+      
+      #dit qu'on peut afficher la lsite des Universités
+      valide=True           
 
    return render(request, 'exchange/Recherche_Avancee.html', locals())
 
@@ -164,16 +154,8 @@ def rajoutInfo(request,univ):
    #Initialise, verifie et prend les info du formulaire pour Student
     form = StudentForm(request.POST or None)
     if form.is_valid():
-        Email = form.cleaned_data['Email']
-        Name = form.cleaned_data['Name']
-        Surname = form.cleaned_data['Surname']
-        INSADepartment = form.cleaned_data['INSADepartment']
-        Nationality = form.cleaned_data['Nationality']
-
-        #Enregistre cet étudiant dans la BD
-        student = Student(Email=Email,Name=Name,Surname=Surname,INSADepartment=INSADepartment,Nationality=Nationality)
-        student.save()
-        #ou direct form.save()
+       #enregistre les info données par le Fomrulaire dans DB
+        student = form.save()
 
         #on passera l'ID de l'étudiant dans l'URL
         studentID = student.ID
@@ -194,27 +176,23 @@ def rajoutInfo2(request,univ,stud):
    #Forms pour Department et UniversityLanguage
    form2= LangueForm(request.POST or None)
 
-   #test
+   #Form pour les département de l'université en question
    qs = Department.objects.filter(University=Uni)
-   formTest = TestForm2(qs)   
-   print(request.POST)
+   formDep = DepForm(qs)   
+
    if form2.is_valid():
-      #Test
+      #Prend le resultat du form Departement
       idDep = request.POST.get('NameDep')
       note = request.POST.get('Note')
-      print(idDep)
       if(idDep!=""):
          Dep = Department.objects.get(pk=idDep)
          Dep.Rank = note
-         Dep.save()
+         Dep.save() #enregistre dans la base de donné
 
-      #form 2 Language
-      Language = form2.cleaned_data['Language']
-      LanguageDiploma = form2.cleaned_data['LanguageDiploma']
-      LanguageLevel = form2.cleaned_data['LanguageLevel']
-
-      langue = UniversityLanguages(Language=Language, LanguageDiploma= LanguageDiploma, LanguageLevel=LanguageLevel,University=Uni)
-      langue.save()
+      #enregistre langue dans DB
+      lang = form2.save(commit=False)
+      lang.University = Uni
+      lang.save()
 
       #redirige vers next form
       return redirect('/exchange/modifExch/'+str(univID)+'/'+str(studentID))
@@ -233,23 +211,13 @@ def rajoutInfo3(request,univ,stud):
    formVisa = ExchFormVisa(request.POST or None)#poue la case à cohcer c'est un cas à part
 
    if form.is_valid() and formVisa.is_valid():
-      Year = form.cleaned_data['Year']
-      StartDate = form.cleaned_data['StartDate']
-      EndDate = form.cleaned_data['EndDate']
-      Semester = form.cleaned_data['Semester']
-      Comment = form.cleaned_data['Comment']
-      VisaDays = form.cleaned_data['VisaDays']
-      VisaWeeks = form.cleaned_data['VisaWeeks']
-      VisaMonths = form.cleaned_data['VisaMonths']
-      Rent = form.cleaned_data['Rent']
-      MonthlyExpenses = form.cleaned_data['MonthlyExpenses']
-      NightLifeGrade = form.cleaned_data['NightLifeGrade']
-      CulturalLifeGrade = form.cleaned_data['CulturalLifeGrade']
-      Security = form.cleaned_data['Security']
       Visa = formVisa.cleaned_data['Visa']#case à cocher
 
-      #Rajouter dans BD
-      exch = Exchange(Year=Year,StartDate=StartDate,EndDate=EndDate,Semester=Semester,Visa=Visa,Comment=Comment,VisaMonths=VisaMonths,VisaDays=VisaDays,VisaWeeks=VisaWeeks,Rent=Rent,MonthlyExpenses=MonthlyExpenses,NightLifeGrade=NightLifeGrade,CulturalLifeGrade=CulturalLifeGrade,Security=Security,Student=Stud,University=Uni)
+      #enregitrer dans la base de donné
+      exch = form.save(commit=False)
+      exch.University = Uni
+      exch.Student = Stud
+      exch.Visa = Visa
       exch.save()
 
       #pour passage de paramètre dans URL
@@ -275,7 +243,8 @@ def rajoutInfo4(request,univ,exch):
       ReceivedEvery = form.cleaned_data['ReceivedEvery']
 
       #enregistre dans base de donnée
-      fin = FinancialAid(Name=Name,Value=Value,ReceivedEvery=ReceivedEvery,Exchange=Exch,)
+      fin = form.save(commit=False)
+      fin.Exchange = Exch
       fin.save()
 
       #aller vers page d'accueil

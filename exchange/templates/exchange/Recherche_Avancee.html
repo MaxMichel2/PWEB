@@ -85,40 +85,19 @@
 {% endblock main %}
 
 {% block scripts %}
-    function myFunctiontest() {
-        document.getElementById("buton").click()
-    }
     function myFunction() {
+        //on prend le continent saisi par utilisatuer
         var cont = document.getElementById("id_Continent").value
         console.log(cont)
+
+        //on commence par cacher tout les pays
         {% for c in ttl %}
-            document.getElementById("{{c.ID}}").setAttribute('style', 'display:none;');
+            if(cont == "{{c.Continent}}"){
+                document.getElementById("{{c.ID}}").setAttribute('style', 'display:block;');
+            }else{
+                document.getElementById("{{c.ID}}").setAttribute('style', 'display:none;');
+            }
         {% endfor %}
         
-        if(cont=='AS'){
-            {% for c in AS %}
-                document.getElementById("{{c.ID}}").setAttribute('style', 'display:block');
-            {% endfor %}
-        }else if(cont=='AF'){
-            {% for c in AF %}
-                document.getElementById("{{c.ID}}").setAttribute('style', 'display:block');
-            {% endfor %}
-        }else if(cont=='AdN'){
-            {% for c in AdN %}
-                document.getElementById("{{c.ID}}").setAttribute('style', 'display:block');
-            {% endfor %}
-        }else if(cont=='AdS'){
-            {% for c in AdS %}
-                document.getElementById("{{c.ID}}").setAttribute('style', 'display:block');
-            {% endfor %}
-        }else if(cont=='EU'){
-            {% for c in EU %}
-                document.getElementById("{{c.ID}}").setAttribute('style', 'display:block');
-            {% endfor %}
-        }else if(cont=='OC'){
-            {% for c in OC %}
-                document.getElementById("{{c.ID}}").setAttribute('style', 'display:block');
-            {% endfor %}
-        }
     }
 {% endblock scripts %}

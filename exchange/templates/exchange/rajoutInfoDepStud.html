@@ -28,7 +28,7 @@
         <form action="{% url 'rajoutInfo2' Uni.ID Stud.ID %}" method="post">
             {% csrf_token %}
                 
-                {{ formTest.as_p}}
+                {{ formDep.as_p}}
             <h3>Informations Langue</h3>
             <label for="{{form2.Language.id_for_label}}">Langue des cours</label>    
             {{ form2.Language }}

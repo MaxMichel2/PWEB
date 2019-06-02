@@ -67,136 +67,70 @@
 {% endblock main %}
 
 {% block scripts %}
-    //INITIALISATION
+//INITIALISATION
     
-    //universités + coordonées + metriques / par continent
-    var universiteAS = [];
-    var universiteAF = [];
-    var universiteAdN = [];
-    var universiteAdS = [];
-    var universiteEU = [];
-    var universiteOC = [];
-    
-    //On met les infos dans chaques tableau
-    {% for o in Univ_list %} 
-        {% if o.City.Country.Continent == 'AS' %}
-            universiteAS.push( ["{{o.Name}}",parseFloat("{{o.Lat}}".replace(',','.')),parseFloat("{{o.Long}}".replace(',','.')),"{{o.RankMetric}}","{{o.LifeMetric}}",parseInt("{{o.ID}}")] )
-        {% elif o.City.Country.Continent == 'AF' %}
-            universiteAF.push( ["{{o.Name}}",parseFloat("{{o.Lat}}".replace(',','.')),parseFloat("{{o.Long}}".replace(',','.')),"{{o.RankMetric}}","{{o.LifeMetric}}",parseInt("{{o.ID}}")] )
-        {% elif o.City.Country.Continent == 'AdN' %}
-            universiteAdN.push( ["{{o.Name}}",parseFloat("{{o.Lat}}".replace(',','.')),parseFloat("{{o.Long}}".replace(',','.')),"{{o.RankMetric}}","{{o.LifeMetric}}",parseInt("{{o.ID}}")] )
-        {% elif o.City.Country.Continent == 'AdS' %}
-            universiteAdS.push( ["{{o.Name}}",parseFloat("{{o.Lat}}".replace(',','.')),parseFloat("{{o.Long}}".replace(',','.')),"{{o.RankMetric}}","{{o.LifeMetric}}",parseInt("{{o.ID}}")] )
-        {% elif o.City.Country.Continent == 'EU' %}
-            universiteEU.push( ["{{o.Name}}",parseFloat("{{o.Lat}}".replace(',','.')),parseFloat("{{o.Long}}".replace(',','.')),"{{o.RankMetric}}","{{o.LifeMetric}}",parseInt("{{o.ID}}")] ) 
-        {% elif o.City.Country.Continent == 'OC' %}
-            universiteOC.push( ["{{o.Name}}",parseFloat("{{o.Lat}}".replace(',','.')),parseFloat("{{o.Long}}".replace(',','.')),"{{o.RankMetric}}","{{o.LifeMetric}}",parseInt("{{o.ID}}")] )
-        {% endif %}
-    {% endfor %}
-    
-    for(var i=0; i<universiteAS.length; i++){
-        console.log(universiteAS[i])
-    }
-    
-    //LA CARTE
-        // initialize the map object, passing it the id of the div where we want the map to go
-    var map = L.map("map").setView([0, 0], 2);
-    
-        //Creer un 'tile layer' contenant la carte
-    var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    minZoom: 2,
-                    maxZoom: 18,
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Points &copy 2012 LINZ'
-                }).addTo(map);
-    
-    // add this tile layer to the map we just created
-    map.addLayer(tiles);
-    
-    //METTRE LES MARKERS SUR CARTE
-    //AS
-    var markersAS = new L.MarkerClusterGroup({
+//universités + coordonées + metriques / par continent
+var universiteParContinent = [];
+var universiteAS = [];
+var universiteAF = [];
+var universiteAdN = [];
+var universiteAdS = [];
+var universiteEU = [];
+var universiteOC = [];
+
+//On met les infos dans chaques tableau
+{% for o in Univ_list %} 
+    {% if o.City.Country.Continent == 'AS' %}
+        universiteAS.push( ["{{o.Name}}",parseFloat("{{o.Lat}}".replace(',','.')),parseFloat("{{o.Long}}".replace(',','.')),"{{o.RankMetric}}","{{o.LifeMetric}}",parseInt("{{o.ID}}")] )
+    {% elif o.City.Country.Continent == 'AF' %}
+        universiteAF.push( ["{{o.Name}}",parseFloat("{{o.Lat}}".replace(',','.')),parseFloat("{{o.Long}}".replace(',','.')),"{{o.RankMetric}}","{{o.LifeMetric}}",parseInt("{{o.ID}}")] )
+    {% elif o.City.Country.Continent == 'AdN' %}
+        universiteAdN.push( ["{{o.Name}}",parseFloat("{{o.Lat}}".replace(',','.')),parseFloat("{{o.Long}}".replace(',','.')),"{{o.RankMetric}}","{{o.LifeMetric}}",parseInt("{{o.ID}}")] )
+    {% elif o.City.Country.Continent == 'AdS' %}
+        universiteAdS.push( ["{{o.Name}}",parseFloat("{{o.Lat}}".replace(',','.')),parseFloat("{{o.Long}}".replace(',','.')),"{{o.RankMetric}}","{{o.LifeMetric}}",parseInt("{{o.ID}}")] )
+    {% elif o.City.Country.Continent == 'EU' %}
+        universiteEU.push( ["{{o.Name}}",parseFloat("{{o.Lat}}".replace(',','.')),parseFloat("{{o.Long}}".replace(',','.')),"{{o.RankMetric}}","{{o.LifeMetric}}",parseInt("{{o.ID}}")] ) 
+    {% elif o.City.Country.Continent == 'OC' %}
+        universiteOC.push( ["{{o.Name}}",parseFloat("{{o.Lat}}".replace(',','.')),parseFloat("{{o.Long}}".replace(',','.')),"{{o.RankMetric}}","{{o.LifeMetric}}",parseInt("{{o.ID}}")] )
+    {% endif %}
+{% endfor %}
+
+//on rassemble tout les tableaux dans un seul
+universiteParContinent.push(universiteAS,universiteAF,universiteAdN,universiteAdS,universiteEU,universiteOC)
+
+for(var i=0; i<universiteAS.length; i++){
+    console.log(universiteAS[i])
+}
+
+//LA CARTE
+    // initialize the map object, passing it the id of the div where we want the map to go
+var map = L.map("map").setView([0, 0], 2);
+
+    //Creer un 'tile layer' contenant la carte
+var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                minZoom: 2,
+                maxZoom: 18,
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Points &copy 2012 LINZ'
+            }).addTo(map);
+
+// add this tile layer to the map we just created
+map.addLayer(tiles);
+
+//METTRE LES MARKERS SUR CARTE
+for(var j=0; j<universiteParContinent.length; j++){
+    var markers = new L.MarkerClusterGroup({
         showCoverageOnHover: false,
-        
     });
-        for (var i = 0; i < universiteAS.length; i++) {
-            var a = universiteAS[i];
+        universities = universiteParContinent[j];
+        for (var i = 0; i < universities.length; i++) {
+            var a = universities[i];
             var title = a[0];
             var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
-            marker.bindPopup(title + '<br/>'+'Ranking:  '+a[3]+'/5'+'<br/>'+'Qualité de vie:  '+a[4]+'/5'+'<br/>'+'<a href=/exchange/universite/'+a[5]+'><p style="text-align:center;margin:0;padding:0;">Cliquez ici</p></a>'); //quand on clique (metter info plus url avec href accolade)
-            markersAS.addLayer(marker); 
+            marker.bindPopup(title + '<br/>'+'Ranking:  '+a[3]+'/5'+'<br/>'+'Qualité de vie:  '+a[4]+'/5'+'<br/>'+'<a href=/exchange/universite/'+a[5]+'>Cliquez ici</a>'); //quand on clique (metter info plus url avec href accolade)
+            markers.addLayer(marker); 
         }
-        map.addLayer(markersAS);
-    
-    //AF
-    var markersAF = new L.MarkerClusterGroup({
-        showCoverageOnHover: false,
-        
-    });
-        for (var i = 0; i < universiteAF.length; i++) {
-            var a = universiteAF[i];
-            var title = a[0];
-            var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
-            marker.bindPopup(title + '<br/>'+'Ranking:  '+a[3]+'/5'+'<br/>'+'Qualité de vie:  '+a[4]+'/5'+'<br/>'+'<a href=/exchange/universite/'+a[5]+'><p style="text-align:center;margin:0;padding:0;">Cliquez ici</p></a>'); //quand on clique (metter info plus url avec href accolade)
-            markersAF.addLayer(marker); 
-        }
-        map.addLayer(markersAF);
-    
-    //AdN
-    var markersAdN = new L.MarkerClusterGroup({
-        showCoverageOnHover: false,
-        
-    });
-        for (var i = 0; i < universiteAdN.length; i++) {
-            var a = universiteAdN[i];
-            var title = a[0];
-            var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
-            marker.bindPopup(title + '<br/>'+'Ranking:  '+a[3]+'/5'+'<br/>'+'Qualité de vie:  '+a[4]+'/5'+'<br/>'+'<a href=/exchange/universite/'+a[5]+'><p style="text-align:center;margin:0;padding:0;">Cliquez ici</p></a>'); //quand on clique (metter info plus url avec href accolade)
-            markersAdN.addLayer(marker); 
-        }
-        map.addLayer(markersAdN);
-    
-    //AdS
-    var markersAdS = new L.MarkerClusterGroup({
-        showCoverageOnHover: false,
-        
-    });
-        for (var i = 0; i < universiteAdS.length; i++) {
-            var a = universiteAdS[i];
-            var title = a[0];
-            var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
-            marker.bindPopup(title + '<br/>'+'Ranking:  '+a[3]+'/5'+'<br/>'+'Qualité de vie:  '+a[4]+'/5'+'<br/>'+'<a href=/exchange/universite/'+a[5]+'><p style="text-align:center;margin:0;padding:0;">Cliquez ici</p></a>'); //quand on clique (metter info plus url avec href accolade)
-            markersAdS.addLayer(marker); 
-        }
-        map.addLayer(markersAdS);
-    
-    //EU
-    var markersEU = new L.MarkerClusterGroup({
-        showCoverageOnHover: false,
-        
-    });
-        for (var i = 0; i < universiteEU.length; i++) {
-            var a = universiteEU[i];
-            var title = a[0];
-            var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
-            marker.bindPopup(title + '<br/>'+'Ranking:  '+a[3]+'/5'+'<br/>'+'Qualité de vie:  '+a[4]+'/5'+'<br/>'+'<a href=/exchange/universite/'+a[5]+'><p style="text-align:center;margin:0;padding:0;">Cliquez ici</p></a>'); //quand on clique (metter info plus url avec href accolade)
-            markersEU.addLayer(marker); 
-            
-        }
-        map.addLayer(markersEU);
-    
-    //OC
-    var markersOC = new L.MarkerClusterGroup({
-        showCoverageOnHover: false,
-        
-    });
-        for (var i = 0; i < universiteOC.length; i++) {
-            var a = universiteOC[i];
-            var title = a[0];
-            var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
-            marker.bindPopup(title + '<br/>'+'Ranking:  '+a[3]+'/5'+'<br/>'+'Qualité de vie:  '+a[4]+'/5'+'<br/>'+'<a href=/exchange/universite/'+a[5]+'><p style="text-align:center;margin:0;padding:0;">Cliquez ici</p></a>'); //quand on clique (metter info plus url avec href accolade)
-            markersOC.addLayer(marker); 
-        }
-        map.addLayer(markersOC);
+        map.addLayer(markers);
+}
 
     var temp = 
     $(function () {

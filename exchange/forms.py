@@ -18,10 +18,10 @@ class StudentForm(forms.ModelForm):
 class LangueForm(forms.ModelForm):
     class Meta:
         model = UniversityLanguages
-        fields = ('Language','LanguageDiploma','LanguageLevel',)
+        exclude = ('University',)
    
-#test pour Depart
-class TestForm2(forms.Form):
+#RajouterInfo2 -  Departement
+class DepForm(forms.Form):
     GRADE = (
         (0,'------'),
 		(1, '1'),
@@ -35,7 +35,7 @@ class TestForm2(forms.Form):
     Note = forms.ChoiceField(choices=GRADE,required=False, label="Note du département (/5)",help_text="Notez la qualité de l'enseignement (5 étant la note la plus haute)")
 
     def __init__(self,qs, *args, **kwargs): 
-        super(TestForm2, self).__init__(*args, **kwargs) 
+        super(DepForm, self).__init__(*args, **kwargs) 
         self.fields['NameDep'].queryset = qs
 
 
@@ -43,7 +43,7 @@ class TestForm2(forms.Form):
 class ExchForm(forms.ModelForm):
     class Meta:
         model = Exchange
-        fields = ('Year','Semester','StartDate','EndDate','Rent','MonthlyExpenses','NightLifeGrade','CulturalLifeGrade','Security','VisaMonths', 'VisaWeeks', 'VisaDays','Comment')
+        exclude = ('Student','University','Visa',)
         widgets = {
             'Comment':forms.Textarea(attrs={'cols': 80, 'rows': 10})
         }
@@ -60,7 +60,7 @@ class ExchFormVisa(forms.ModelForm):
 class FinancialForm(forms.ModelForm):
     class Meta:
         model = FinancialAid
-        fields = ('Name','Value','ReceivedEvery',)
+        exclude = ('Exchange',)
         labels = {
             'Name':("Nom de la bourse"),
             'Value':("Valeur de la bourse (en €)"),
