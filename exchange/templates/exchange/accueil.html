@@ -14,8 +14,9 @@
     <link rel="stylesheet" type="text/css" href="{% static 'exchange/assets/css/MarkerCluster.Default.css' %}"/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ==" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js" integrity="sha512-WXoSHqw/t26DszhdMhOXOkI7qCiv5QWXhH9R7CgvgZMHz1ImlkVQ3uNsiQKu5wwbbxtPzFXd1hK4tzno2VqhpA==" crossorigin=""></script>
-    <script type='text/javascript' src='{% static 'exchange/assets/js/jquery2.min.js' %}'></script>
-    <script type='text/javascript' src='{% static 'exchange/assets/js/leaflet.markercluster.js' %}'></script>
+    <script type='text/javascript' src="{% static 'exchange/assets/js/jquery2.min.js' %}"></script>
+    <script type='text/javascript' src="{% static 'exchange/assets/js/leaflet.markercluster.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'exchange/assets/css/jquery.rateyo.css' %}"/>
 {% endblock head %}
 
 {% block intro %}
@@ -43,20 +44,41 @@
             <img src="{% static 'exchange/images/attention.png' %}" width = "25" height="25"> 
         </p>
     </div>
+
+    <div id="randomthing" style="display:none;">
+        <div id="texttest" style="padding:0;margin:0;display:inline-block;white-space:nowrap;">Test:  </div>
+        <div id="rateyotest1" style="padding:0;margin:0;display:inline-block;white-space:nowrap;">
+        <!--
+            <script>
+                var temp = 
+                $(function () {
+                    $("#rateyotest1").rateYo({
+                        rating: 3.8,
+                        readOnly: true,
+                        starWidth: "12px"
+                    });
+                });
+                console.log(temp[0].childNodes[2].childNodes[2].childNodes[1].childNodes[13].childNodes[7].childNodes[3]);
+            </script>
+            -->
+        </div>
+    </div>
+    
 {% endblock main %}
 
 {% block scripts %}
-    //INITIALISATION
-    
-    //universités + coordonées + metriques / par continent
+    // INITIALISATION
+        
+    // universités + coordonées + metriques / par continent
+    var universiteParContinent = [];
     var universiteAS = [];
     var universiteAF = [];
     var universiteAdN = [];
     var universiteAdS = [];
     var universiteEU = [];
     var universiteOC = [];
-    
-    //On met les infos dans chaques tableau
+
+    // On met les infos dans chaques tableau
     {% for o in Univ_list %} 
         {% if o.City.Country.Continent == 'AS' %}
             universiteAS.push( ["{{o.Name}}",parseFloat("{{o.Lat}}".replace(',','.')),parseFloat("{{o.Long}}".replace(',','.')),"{{o.RankMetric}}","{{o.LifeMetric}}",parseInt("{{o.ID}}")] )
@@ -72,108 +94,129 @@
             universiteOC.push( ["{{o.Name}}",parseFloat("{{o.Lat}}".replace(',','.')),parseFloat("{{o.Long}}".replace(',','.')),"{{o.RankMetric}}","{{o.LifeMetric}}",parseInt("{{o.ID}}")] )
         {% endif %}
     {% endfor %}
-    
-    for(var i=0; i<universiteAS.length; i++){
-        console.log(universiteAS[i])
-    }
-    
-    //LA CARTE
-        // initialize the map object, passing it the id of the div where we want the map to go
+
+    //on rassemble tout les tableaux dans un seul
+    universiteParContinent.push(universiteAS,universiteAF,universiteAdN,universiteAdS,universiteEU,universiteOC)
+
+    // LA CARTE
+    // initialize the map object, passing it the id of the div where we want the map to go
     var map = L.map("map").setView([0, 0], 2);
-    
-        //Creer un 'tile layer' contenant la carte
+
+    //Creer un 'tile layer' contenant la carte
     var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     minZoom: 2,
                     maxZoom: 18,
                     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Points &copy 2012 LINZ'
                 }).addTo(map);
-    
+
     // add this tile layer to the map we just created
     map.addLayer(tiles);
-    
+
     //METTRE LES MARKERS SUR CARTE
-    //AS
-    var markersAS = new L.MarkerClusterGroup({
-        showCoverageOnHover: false,
-        
-    });
-        for (var i = 0; i < universiteAS.length; i++) {
-            var a = universiteAS[i];
-            var title = a[0];
-            var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
-            marker.bindPopup(title + '<br/>'+'Ranking:  '+a[3]+'/5'+'<br/>'+'Qualité de vie:  '+a[4]+'/5'+'<br/>'+'<a href=/exchange/universite/'+a[5]+'>Cliquez ici</a>'); //quand on clique (metter info plus url avec href accolade)
-            markersAS.addLayer(marker); 
-        }
-        map.addLayer(markersAS);
+    for(var j=0; j<universiteParContinent.length; j++){
+        var markers = new L.MarkerClusterGroup({
+            showCoverageOnHover: false,
+        });
+            universities = universiteParContinent[j];
+            for (var i = 0; i < universities.length; i++) {
+                var a = universities[i];
+                var title = a[0];
+                var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
+
+                var rank = parseFloat(a[3].replace(/(\d),(?=\d)/g, '$1.'));
+                if (rank != -1) {
+                    rank = Math.ceil(rank*2)/2;
+                }
+
+                var life = parseFloat(a[4].replace(/(\d),(?=\d)/g, '$1.'));
+                if (life != -1) {
+                    life = Math.ceil(life*2)/2;
+                }
+
+                var imageRank = ""; // Choix image pour Ranking
+                var imageLife = ""; // Choix image pour Qualité de Vie
+                
+                switch(rank){
+                    case 0.5:
+                        imageRank = '<img src="{% static 'exchange/images/HalfStarVotedRed.png' %}" style="height:12px;width:60px;"></img>';
+                        break;
+                    case 1:
+                        imageRank = '<img src="{% static 'exchange/images/OneStarVotedRed.png' %}" style="height:12px;width:60px;"></img>';
+                        break;
+                    case 1.5:
+                        imageRank = '<img src="{% static 'exchange/images/OneHalfStarVotedRed.png' %}" style="height:12px;width:60px;"></img>';
+                        break;
+                    case 2:
+                        imageRank = '<img src="{% static 'exchange/images/TwoStarVotedOrange.png' %}" style="height:12px;width:60px;"></img>';
+                        break;
+                    case 2.5:
+                        imageRank = '<img src="{% static 'exchange/images/TwoHalfStarVotedOrange.png' %}" style="height:12px;width:60px;"></img>';
+                        break;
+                    case 3:
+                        imageRank = '<img src="{% static 'exchange/images/ThreeStarVotedOrange.png' %}" style="height:12px;width:60px;"></img>';
+                        break;
+                    case 3.5:
+                        imageRank = '<img src="{% static 'exchange/images/ThreeHalfStarVotedGreen.png' %}" style="height:12px;width:60px;"></img>';
+                        break;
+                    case 4:
+                        imageRank = '<img src="{% static 'exchange/images/FourStarVotedGreen.png' %}" style="height:12px;width:60px;"></img>';
+                        break;
+                    case 4.5:
+                        imageRank = '<img src="{% static 'exchange/images/FourHalfStarVotedGreen.png' %}" style="height:12px;width:60px;"></img>';
+                        break;
+                    case 5:
+                        imageRank = '<img src="{% static 'exchange/images/FiveStarVotedGreen.png' %}" style="height:12px;width:60px;"></img>';
+                        break;
+                    default:
+                        imageRank = '<img src="{% static 'exchange/images/FiveStarNotVoted.png' %}" style="height:12px;width:60px;"></img>';
+                        break;
+                }
+                
+                switch(life){
+                    case 0.5:
+                        imageLife = '<img src="{% static 'exchange/images/HalfStarVotedRed.png' %}" style="height:12px;width:60px;"></img>';
+                        break;
+                    case 1:
+                        imageLife = '<img src="{% static 'exchange/images/OneStarVotedRed.png' %}" style="height:12px;width:60px;"></img>';
+                        break;
+                    case 1.5:
+                        imageLife = '<img src="{% static 'exchange/images/OneHalfStarVotedRed.png' %}" style="height:12px;width:60px;"></img>';
+                        break;
+                    case 2:
+                        imageLife = '<img src="{% static 'exchange/images/TwoStarVotedOrange.png' %}" style="height:12px;width:60px;"></img>';
+                        break;
+                    case 2.5:
+                        imageLife = '<img src="{% static 'exchange/images/TwoHalfStarVotedOrange.png' %}" style="height:12px;width:60px;"></img>';
+                        break;
+                    case 3:
+                        imageLife = '<img src="{% static 'exchange/images/ThreeStarVotedOrange.png' %}" style="height:12px;width:60px;"></img>';
+                        break;
+                    case 3.5:
+                        imageLife = '<img src="{% static 'exchange/images/ThreeHalfStarVotedGreen.png' %}" style="height:12px;width:60px;"></img>';
+                        break;
+                    case 4:
+                        imageLife = '<img src="{% static 'exchange/images/FourStarVotedGreen.png' %}" style="height:12px;width:60px;"></img>';
+                        break;
+                    case 4.5:
+                        imageLife = '<img src="{% static 'exchange/images/FourHalfStarVotedGreen.png' %}" style="height:12px;width:60px;"></img>';
+                        break;
+                    case 5:
+                        imageLife = '<img src="{% static 'exchange/images/FiveStarVotedGreen.png' %}" style="height:12px;width:60px;"></img>';
+                        break;
+                    default:
+                        imageLife = '<img src="{% static 'exchange/images/FiveStarNotVoted.png' %}" style="height:12px;width:60px;"></img>';
+                        break;
+                }
+                
+                marker.bindPopup('<div style="text-align:center;">' + 
+                '<span style="font-size:13px;margin:0;padding:0;">' + title + '</span><br/>' + 
+                '<span style="font-size:13px;margin:0;padding:0;">Ranking:  </span>' + imageRank + '<br/>' + 
+                '<span style="font-size:13px;margin:0;padding:0;">Qualité de vie:  </span>' + imageLife + '<br/>' + 
+                '<a href=/exchange/universite/'+a[5]+' style="font-size:13px;margin:0;padding:0;">Cliquez ici</a>' + 
+                '</div>'); //quand on clique (metter info plus url avec href accolade)
+                markers.addLayer(marker); 
+            }
+            map.addLayer(markers);
+    }
     
-    //AF
-    var markersAF = new L.MarkerClusterGroup({
-        showCoverageOnHover: false,
-        
-    });
-        for (var i = 0; i < universiteAF.length; i++) {
-            var a = universiteAF[i];
-            var title = a[0];
-            var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
-            marker.bindPopup(title + '<br/>'+'Ranking:  '+a[3]+'/5'+'<br/>'+'Qualité de vie:  '+a[4]+'/5'+'<br/>'+'<a href=/exchange/universite/'+a[5]+'>Cliquez ici</a>'); //quand on clique (metter info plus url avec href accolade)
-            markersAF.addLayer(marker); 
-        }
-        map.addLayer(markersAF);
-    
-    //AdN
-    var markersAdN = new L.MarkerClusterGroup({
-        showCoverageOnHover: false,
-        
-    });
-        for (var i = 0; i < universiteAdN.length; i++) {
-            var a = universiteAdN[i];
-            var title = a[0];
-            var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
-            marker.bindPopup(title + '<br/>'+'Ranking:  '+a[3]+'/5'+'<br/>'+'Qualité de vie:  '+a[4]+'/5'+'<br/>'+'<a href=/exchange/universite/'+a[5]+'>Cliquez ici</a>'); //quand on clique (metter info plus url avec href accolade)
-            markersAdN.addLayer(marker); 
-        }
-        map.addLayer(markersAdN);
-    
-    //AdS
-    var markersAdS = new L.MarkerClusterGroup({
-        showCoverageOnHover: false,
-        
-    });
-        for (var i = 0; i < universiteAdS.length; i++) {
-            var a = universiteAdS[i];
-            var title = a[0];
-            var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
-            marker.bindPopup(title + '<br/>'+'Ranking:  '+a[3]+'/5'+'<br/>'+'Qualité de vie:  '+a[4]+'/5'+'<br/>'+'<a href=/exchange/universite/'+a[5]+'>Cliquez ici</a>'); //quand on clique (metter info plus url avec href accolade)
-            markersAdS.addLayer(marker); 
-        }
-        map.addLayer(markersAdS);
-    
-    //EU
-    var markersEU = new L.MarkerClusterGroup({
-        showCoverageOnHover: false,
-        
-    });
-        for (var i = 0; i < universiteEU.length; i++) {
-            var a = universiteEU[i];
-            var title = a[0];
-            var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
-            marker.bindPopup(title + '<br/>'+'Ranking:  '+a[3]+'/5'+'<br/>'+'Qualité de vie:  '+a[4]+'/5'+'<br/>'+'<a href=/exchange/universite/'+a[5]+'>Cliquez ici</a>'); //quand on clique (metter info plus url avec href accolade)
-            markersEU.addLayer(marker); 
-            
-        }
-        map.addLayer(markersEU);
-    
-    //OC
-    var markersOC = new L.MarkerClusterGroup({
-        showCoverageOnHover: false,
-        
-    });
-        for (var i = 0; i < universiteOC.length; i++) {
-            var a = universiteOC[i];
-            var title = a[0];
-            var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
-            marker.bindPopup(title + '<br/>'+'Ranking:  '+a[3]+'/5'+'<br/>'+'Qualité de vie:  '+a[4]+'/5'+'<br/>'+'<a href=/exchange/universite/'+a[5]+'>Cliquez ici</a>'); //quand on clique (metter info plus url avec href accolade)
-            markersOC.addLayer(marker); 
-        }
-        map.addLayer(markersOC);
 {% endblock scripts %}
