@@ -36,6 +36,7 @@
 
 {% block head %}
     <title>{{univ.Name}}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'exchange/assets/css/jquery.rateyo.css' %}"/>
 {% endblock head %}
 
 {% block intro %}
@@ -114,7 +115,7 @@
             </div>
             <div class="col-4 col-8-small col-12-small">
                 <p>Langue(s) des cours</p>
-                {%for l in langue%}
+                {% for l in langue %}
                     {{l.Language}}
                 {% endfor %}
             </div>
@@ -138,16 +139,19 @@
         <h3>Style de vie</h3>
         <div class="row">
             <div class="col-4 col-8-small col-12-small">
-                <h5>Vie nocturne :  /5</h5>
-                {{ avg.n}}
+                <h5>Vie nocturne :</h5>
+                <script>
+                    //Ici il y aura l'affichage en étoiles des ratings
+                </script>
+                {{ avg.n }}
             </div>
             <div class="col-4 col-8-small col-12-small">
-                <h5>Vie culturelle :  /5</h5>
-                {{ avg.c}}
+                <h5>Vie culturelle :</h5>
+                {{ avg.c }}
             </div>
             <div class="col-4 col-8-small col-12-small">
-                <h5>Sécurité :  /5</h5>
-                {{ avg.s}}
+                <h5>Sécurité :</h5>
+                {{ avg.s }}
             </div>
         </div>
     </hr>
