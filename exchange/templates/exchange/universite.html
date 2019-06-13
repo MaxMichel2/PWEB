@@ -32,6 +32,22 @@
         background-color: white;
         overflow: hidden;
     }
+
+    .column2 {
+        float: left;
+        width: 50%;
+    }
+
+    .column3 {
+        float: left;
+        width: 33.33%;
+    }
+
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
 {% endblock style %}
 
 {% block head %}
@@ -52,25 +68,25 @@
     <button class="accordion">Informations générales</button>
     <div class="panel">
         <div class="row">
-            <div class="col-6 col-12-small">
+            <div class="column2">
                 <h5>Pays : </h5>
                 {{univ.City.Country.CountryName}}
             </div>
-            <div class="col-6 col-12-small">
+            <div class="column2">
                 <h5>Ville : </h5>
                 {{univ.City.CityName}}
             </div>
         </div>
         <hr>
         <div class="row">
-            <div class="col-6 col-12-small">
+            <div class="column2">
                 <h3>Semestre 1 </h3>
                 <li>Date de début</li>
                 {{ S1.StartDate }}
                 <li>Date de fin</li>
                 {{ S1.EndDate }}
             </div>
-            <div class="col-6 col-12-small">
+            <div class="column2">
                 <h3>Semestre 2 </h3>
                 <li>Date de début</li>
                 {{ S2.StartDate }}                                     
@@ -84,15 +100,15 @@
             <h3>Demandes</h3>
         </header>
         <div class="row">
-            <div class="col-4 col-8-small col-12-small">
+            <div class="column3">
             <p>Nombre de places</p>
             {{univ.Places}}
         </div>
-        <div class="col-4 col-8-small col-12-small">
+        <div class="column3">
             <p>Nombre de demandes</p>
             {{univ.Demand}}
         </div>
-        <div class="col-4 col-8-small col-12-small">
+        <div class="column3">
             <p>Année sécable ?</p>
             {{univ.SplitableYear}}
         </div>
@@ -103,17 +119,17 @@
             <h3>Autre</h3>
         </header>
         <div class="row">
-            <div class="col-4 col-8-small col-12-small">
+            <div class="column3">
                 <p>Type de contrat avec l'INSA :</p>
                 {% for c in cont  %}
                     {{c.ContractType}}
                 {% endfor %}
             </div>
-            <div class="col-4 col-8-small col-12-small">
+            <div class="column3">
                 <p>Projets :</p>
                 {{univ.Project}}
             </div>
-            <div class="col-4 col-8-small col-12-small">
+            <div class="column3">
                 <p>Langue(s) des cours</p>
                 {% for l in langue %}
                     {{l.Language}}
@@ -126,32 +142,88 @@
     <div class="panel">
         <h3>Prix de la vie :</h3>
         <div class="row">
-            <div class="col-6 col-12-small">
+            <div class="column2">
                 <h5>Loyer moyen : </h5>
-                {{ avg.r}}
+                {{ avg.r }}
             </div>
-            <div class="col-6 col-12-small">
+            <div class="column2">
                 <h5>Dépenses par mois en moyenne : </h5>
-                {{ avg.m}}
+                {{ avg.m }}
             </div>
         </div>
     <hr>
         <h3>Style de vie</h3>
         <div class="row">
-            <div class="col-4 col-8-small col-12-small">
-                <h5>Vie nocturne :</h5>
+            <h5>Vie nocturne :</h5>
+            <div id="NightLife" class="column3">
+                <script src="{% static 'exchange/assets/js/jquery3.min.js' %}"></script>
+                <script src="{% static 'exchange/assets/js/jquery.rateyo.js' %}"></script>
                 <script>
-                    //Ici il y aura l'affichage en étoiles des ratings
+                    var night = parseFloat("{{ avg.n }}".replace(/,/g, '.'));
+                    console.log(night);
+                    $(function () {
+
+                        $("#NightLife").rateYo({
+                        
+                            rating    : night,
+                            spacing   : "5px",
+                            readOnly: true,
+                            multiColor: {
+                        
+                                "startColor": "#FF0000", //RED
+                                "endColor"  : "#00FF00"  //GREEN
+                            }
+                        });
+                    });
                 </script>
-                {{ avg.n }}
             </div>
-            <div class="col-4 col-8-small col-12-small">
-                <h5>Vie culturelle :</h5>
-                {{ avg.c }}
+            <h5>Vie culturelle :</h5>
+            <br>
+            <div id="CulturalLife" class="column3">
+                <script src="{% static 'exchange/assets/js/jquery3.min.js' %}"></script>
+                <script src="{% static 'exchange/assets/js/jquery.rateyo.js' %}"></script>
+                <script>
+                    var cultural = parseFloat("{{ avg.c }}".replace(/,/g, '.'));
+                    console.log(cultural);
+                    $(function () {
+
+                        $("#CulturalLife").rateYo({
+                        
+                            rating    : cultural,
+                            spacing   : "5px",
+                            readOnly: true,
+                            multiColor: {
+                        
+                                "startColor": "#FF0000", //RED
+                                "endColor"  : "#00FF00"  //GREEN
+                            }
+                        });
+                    });
+                </script>
             </div>
-            <div class="col-4 col-8-small col-12-small">
-                <h5>Sécurité :</h5>
-                {{ avg.s }}
+            <h5>Sécurité :</h5>
+            <br>
+            <div id="Security" class="column3">
+                <script src="{% static 'exchange/assets/js/jquery3.min.js' %}"></script>
+                <script src="{% static 'exchange/assets/js/jquery.rateyo.js' %}"></script>
+                <script>
+                    var security = parseFloat("{{ avg.s }}".replace(/,/g, '.'));
+                    console.log(security);
+                    $(function () {
+
+                        $("#Security").rateYo({
+                        
+                            rating    : security,
+                            spacing   : "5px",
+                            readOnly: true,
+                            multiColor: {
+                        
+                                "startColor": "#FF0000", //RED
+                                "endColor"  : "#00FF00"  //GREEN
+                            }
+                        });
+                    });
+                </script>
             </div>
         </div>
     </hr>
@@ -160,11 +232,11 @@
     <button class="accordion">Excellence</button>
     <div class="panel">
         <div class="row">
-            <div class="col-6 col-12-small">
+            <div class="column2">
                 <h5>Classement mondial (Shanghai) : </h5>
                 {{univ.CWURRank}}
             </div>
-            <div class="col-6 col-12-small">
+            <div class="column2">
                 <h5>Note du département (FLM) : </h5>
                 {{univ.RankMetric}}
             </div>
@@ -175,12 +247,12 @@
     <div class="panel">
         <h3>Visa</h3>
         <div class="row">
-            <div class="col-6 col-12-small">
+            <div class="column2">
                 <h5>Visa (non) nécessaire pour les européens </h5>
                 <!--A revoir implémentation-->
                 {{S1.Visa}}
             </div>
-            <div class="col-6 col-12-small">
+            <div class="column2">
                 <h5>Temps d'obtention du visa </h5>
                 {{S1.VisaDays}}
                 {{S1.VisaWeeks}}
@@ -190,13 +262,13 @@
     <hr>
         <h3>Diplôme linguistique</h3>
         <div class="row">
-            <div class="col-6 col-12-small">
+            <div class="column2">
                 <h5>Diplôme demandé :</h5>
                 {%for l in langue%}
                     {{l.LanguageDiploma}}
                 {% endfor %}
             </div>
-            <div class="col-6 col-12-small">
+            <div class="column2">
                 <h5>Niveau demandé :</h5>
                 {%for l in langue%}
                     {{l.LanguageLevel}}
