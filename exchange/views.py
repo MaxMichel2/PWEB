@@ -13,6 +13,9 @@ from django.contrib.auth.models import Permission
 def base(request):
    return render(request, 'exchange/base.html')
 
+def espace(request):
+   return render(request, 'exchange/espace.html')
+
 #--------------------------------PAGE D'ACCUEIL-----------------------------------
 # Actualisation de rankMetrique
 def actualiserMetrique1():

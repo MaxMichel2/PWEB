@@ -20,5 +20,6 @@ urlpatterns = [
     path('login', views.connexion, name='connexion'),
     path('logout', views.deconnexion, name='deconnexion'),
     path('rapport', views.rapport),
-    path('base', views.base)
+    path('base', views.base),
+    path('espace-etudiant', views.espace)
 ]
