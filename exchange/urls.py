@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
    
-    path('recherche_avance', views.RechercheAvancee, name='RechercheAvancee'),
+    path('recherche_avancee', views.RechercheAvancee, name='RechercheAvancee'),
     path('addDep/<int:univ>', views.ajoutOf, name='t'),
     path('modifDep/<int:dep>', views.modifOf, name='t2'),
     path('accueil', views.accueil),
@@ -21,5 +21,5 @@ urlpatterns = [
     path('logout', views.deconnexion, name='deconnexion'),
     path('rapport', views.rapport),
     path('base', views.base),
-    path('espace-etudiant', views.espace)
+    path('espaceetudiant', views.espace)
 ]
