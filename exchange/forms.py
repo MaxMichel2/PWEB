@@ -116,9 +116,16 @@ class DepartForm(forms.ModelForm):
 class UnivForm(forms.ModelForm):
     class Meta:
         model = University
-        fields = ('Places','Demand',)
+        fields = ('Demand',)
         labels = {
-            'Places':('Nombre de places'),
             'Demand':('Nombre de demandes (en moyenne)')
+        }
+
+class UnivPlacesForm(forms.ModelForm):
+    class Meta:
+        model = UniversityPlaces
+        fields = ('Places',)
+        labels = {
+            'Places':('Nombre de places')
         }
 

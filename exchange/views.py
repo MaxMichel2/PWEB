@@ -58,6 +58,7 @@ def universite(request, idUni):
    cont = UniversityContractsStudent.objects.filter(University=univ)
    langue = UniversityLanguages.objects.filter(University=univ)
    ex = Exchange.objects.filter(University=univ)
+   pl = UniversityPlaces.objects.filter(University=univ)
    S1 = ex.filter(Semester=1).order_by('EndDate').first() #renvoie le premier élément de "ex" pour Semestre 1
    S2 = ex.filter(Semester=2).order_by('EndDate').first() #renvoie le premier élément de "ex" pour Semestre 2
    
@@ -292,10 +293,12 @@ def ajoutOf(request,univ):
    #Initialisation des forms
    form = DepartForm(request.POST or None)
    formUni = UnivForm(request.POST or None)
+   formUniPlaces = UnivPlacesForm(request.POST or None)
 
    #Reuperation de l'Universite ensuite des département de l'Université
    Uni = University.objects.get(pk=univ)
    departs = Department.objects.filter(University = Uni)
+   pl = UniversityPlaces.objects.filter(University = Uni)
 
    #recupère les données du Form de Départment
    if form.is_valid():
@@ -308,13 +311,14 @@ def ajoutOf(request,univ):
    
    #recupere les donnes du form Université
    if formUni.is_valid():
-      Places = formUni.cleaned_data['Places']
+      Places = formUniPlaces.cleaned_data['Places']
       Demand = formUni.cleaned_data['Demand']
 
       #modifie les valeurs de l'université
-      Uni.Places = Places
+      pl.Places = Places
       Uni.Demand = Demand
       Uni.save()
+      pl.save()
 
    return render(request, 'exchange/ajoutOf.html',locals())
 
