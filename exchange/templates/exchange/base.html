@@ -21,54 +21,54 @@
     </head>
 
     <body class="is-preload">
-            <div id="wrapper">
-                
-                {% block intro %}
-                {% endblock intro %}
+        <div id="wrapper">
 
-                <!--Bouton pour retourner à l'accueil-->
-                <header id="header">
-                </header>
+            {% block intro %}
+            {% endblock intro %}
 
-                <!--Barre de navigation-->
-                <nav id="nav">
-                    <ul class="links">
-                        <li class="accueil">
-                            <a href="/exchange/accueil">
-                                <img id="home-icon-desktop" src="{% static 'exchange/images/HomeIconWhite.png' %}" style="height:3em;margin-top:15px;"></img> <!-- 1em = 16px -->
-                                <!-- <img id="home-icon-mobile" src="{% static 'exchange/images/HomeIconBlack.png' %}" style="height:3em;margin-top:15px;"></img> --> <!-- 1em = 16px -->
-                                <!--Ajouter "margin-right: 1em;" dans style si on décommente les lignes suivantes-->
-                                <!--
-            <span style="float:right; display: block; align: middle;">
-                <span>Accueil</span>
-            </span>
+            <!--Bouton pour retourner à l'accueil
+            <header id="header">
+            </header>
             -->
-                            </a>
-                        </li>
-                        <li><a href="/exchange/recherche_avance">Recherche avancée</a></li>
-                        <li><a href="/exchange/rajouter">Ajouter une info</a></li>
-                        <!--
-                        {% if user.is_authenticated %}
-                        <li><a href="/exchange/logout">Déconnexion</a></li>
-                        {% else %}
-                        <li><a href="/exchange/login">Connexion</a></li>
-                        {% endif %}
-                        -->
-                    </ul>
-                </nav>
+            <!--Barre de navigation-->
+            <nav id="nav">
+                <ul class="links">
+                    <li class="accueil">
+                        <a href="/exchange/accueil">
+                            <img id="home-icon-desktop" src="{% static 'exchange/images/HomeIconWhite.png' %}" style="height:3em;margin-top:15px;"></img> <!-- 1em = 16px -->
+                            <!-- <img id="home-icon-mobile" src="{% static 'exchange/images/HomeIconBlack.png' %}" style="height:3em;margin-top:15px;"></img> --> <!-- 1em = 16px -->
+                            <!--Ajouter "margin-right: 1em;" dans style si on décommente les lignes suivantes-->
+                            <!--
+                            <span style="float:right; display: block; align: middle;">
+                                <span>Accueil</span>
+                            </span>
+                            -->
+                        </a>
+                    </li>
+                    <li><a href="/exchange/recherche_avance">Recherche avancée</a></li>
+                    <li><a href="/exchange/rajouter">Ajouter une info</a></li>
+                    <!--
+                    {% if user.is_authenticated %}
+                    <li><a href="/exchange/logout">Déconnexion</a></li>
+                    {% else %}
+                    <li><a href="/exchange/login">Connexion</a></li>
+                    {% endif %}
+                    -->
+                </ul>
+            </nav>
 
-                <!--Main = gros rectangle blanc-->
-                <div id="main">
-                    {% block main %}
-                    {% endblock main %}
-                </div>
-
-                <!--Bas de page-->
-                <div id="copyright">
-                    <ul><li>&copy; Astus International</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
-                </div>
-
+            <!--Main = gros rectangle blanc-->
+            <div id="main">
+                {% block main %}
+                {% endblock main %}
             </div>
+
+            <!--Bas de page-->
+            <div id="copyright">
+                <ul><li>&copy; Astus International</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+            </div>
+
+        </div>
         
         <!-- Scripts -->
 		<script src="{% static 'exchange/assets/js/jquery.min.js' %}"></script>
