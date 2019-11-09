@@ -69,6 +69,7 @@ def universite(request, idUni):
    
    #la moyenne des différentes notes pour touts les object Exchange d'un Université
    avg = Exchange.objects.filter(University=univ).aggregate(r=Avg('Rent'),m=Avg('MonthlyExpenses'),n=Avg('NightLifeGrade'),c=Avg('CulturalLifeGrade'),s=Avg('Security'))#mettre le cout de la vie aussi
+   avgPlaces = UniversityPlaces.objects.filter(University=univ).aggregate(p=Avg('Places'))
 
    return render(request, 'exchange/universite.html', locals())
 

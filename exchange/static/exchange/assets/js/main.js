@@ -223,13 +223,13 @@
 					$main.scrollex({
 						mode: 'bottom',
 						top: '25vh',
-						bottom: '-50vh',
+						bottom: '-50vh'/*,
 						enter: function() {
 							$intro.addClass('hidden');
 						},
 						leave: function() {
 							$intro.removeClass('hidden');
-						}
+						}*/
 					});
 
 				});
@@ -242,13 +242,13 @@
 					$main.scrollex({
 						mode: 'middle',
 						top: '15vh',
-						bottom: '-15vh',
+                        bottom: '-15vh'/*,
 						enter: function() {
 							$intro.addClass('hidden');
 						},
 						leave: function() {
 							$intro.removeClass('hidden');
-						}
+						}*/
 					});
 
 			});
