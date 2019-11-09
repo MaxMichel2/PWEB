@@ -53,12 +53,12 @@ class University(models.Model):
 
 class UniversityPlaces(models.Model):
     DURATION = (("S", "Semestre"),
-                ("A", "Année"),
-                ("X", "Inconnu"))
+                ("A", "Année"))
     ID = models.AutoField(primary_key=True)
     University = models.ForeignKey('University', on_delete=models.CASCADE)
-    Duration = models.CharField(max_length=200, choices=DURATION, default="X")
+    Duration = models.CharField(max_length=200, choices=DURATION)
     Places = models.IntegerField(default=-1)
+    Exclusive = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.ID)

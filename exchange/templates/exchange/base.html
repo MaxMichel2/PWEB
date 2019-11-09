@@ -1,4 +1,4 @@
-{% load static %}
+﻿{% load static %}
 <!DOCTYPE HTML>
 <!--
 	Massively by HTML5 UP
@@ -39,19 +39,21 @@
                                 <!-- <img id="home-icon-mobile" src="{% static 'exchange/images/HomeIconBlack.png' %}" style="height:3em;margin-top:15px;"></img> --> <!-- 1em = 16px -->
                                 <!--Ajouter "margin-right: 1em;" dans style si on décommente les lignes suivantes-->
                                 <!--
-                                <span style="float:right; display: block; align: middle;">
-                                    <span>Accueil</span>
-                                </span>
-                                -->
+            <span style="float:right; display: block; align: middle;">
+                <span>Accueil</span>
+            </span>
+            -->
                             </a>
                         </li>
                         <li><a href="/exchange/recherche_avance">Recherche avancée</a></li>
                         <li><a href="/exchange/rajouter">Ajouter une info</a></li>
+                        <!--
                         {% if user.is_authenticated %}
                         <li><a href="/exchange/logout">Déconnexion</a></li>
                         {% else %}
                         <li><a href="/exchange/login">Connexion</a></li>
                         {% endif %}
+                        -->
                     </ul>
                 </nav>
 
