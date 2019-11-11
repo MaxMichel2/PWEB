@@ -4,22 +4,22 @@ from . import views
 
 urlpatterns = [
    
-    path('/search', views.search, name='search'),
-    path('/addDep/<int:univ>', views.ajoutOf, name='t'),
-    path('/modifDep/<int:dep>', views.modifOf, name='t2'),
-    path('/home', views.home),
-    path('/universite/<int:idUni>', views.universite),
-    path('/rajouter', views.rajouter, name='rajouter'),
-    path('/continent/<str:cont>', views.pays, name='pays'),
-    path('/pays/<int:pays>', views.villes, name='villes'),
-    path('/ville/<int:ville>', views.univs, name='univs'),
-    path('/modifier/<int:univ>', views.rajoutInfo, name='rajoutInfo'), #universite/<int:univ>/informations-personnelles
-    path('/modifDepStud/<int:univ>/<int:stud>', views.rajoutInfo2, name='rajoutInfo2'), #universite/<int:univ>/<int:stud>/departement
-    path('/modifExch/<int:univ>/<int:stud>', views.rajoutInfo3, name='rajoutInfo3'), #universite/<int:univ>/<int:stud>/echange
-    path('/modifFinancial/<int:univ>/<int:exch>', views.rajoutInfo4, name='rajoutInfo4'), #universite/<int:univ>/<int:exch>/bourses
-    path('/login', views.connexion, name='connexion'),
-    path('/logout', views.deconnexion, name='deconnexion'),
-    path('/rapport', views.rapport),
-    path('/base', views.base),
-    path('/espaceetudiant', views.espace)
+    path('search', views.search, name='search'),
+    path('add-department/<int:univ>', views.addDepartment, name='add-department'),
+    path('edit-department/<int:dep>', views.editDepartment, name='edit-department'),
+    path('home', views.home),
+    path('university/<int:idUni>', views.university),
+    path('review-exchange', views.reviewExchange, name='review-exchange'),
+    path('continents/<str:continent>', views.countries, name='countries'),
+    path('countries/<int:country>', views.cities, name='cities'),
+    path('cities/<int:city>', views.universities, name='universities'),
+    path('edit/<int:univ>', views.edit, name='edit'), #universite/<int:univ>/informations-personnelles
+    path('edit-department-student/<int:univ>/<int:stud>', views.editDepartmentStudent, name='edit-department-student'), #universite/<int:univ>/<int:stud>/departement
+    path('edit-exchange/<int:univ>/<int:stud>', views.editExchange, name='edit-exchange'), #universite/<int:univ>/<int:stud>/echange
+    path('edit-financial/<int:univ>/<int:exch>', views.editFinancial, name='edit-financial'), #universite/<int:univ>/<int:exch>/bourses
+    path('login', views.exchangeLogin, name='exchange-login'),
+    path('logout', views.exchangeLogout, name='exchange-logout'),
+    path('rapport', views.rapport),
+    path('base', views.base),
+    path('user', views.user)
 ]

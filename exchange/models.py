@@ -66,13 +66,13 @@ class UniversityPlaces(models.Model):
 class UniversityContractsAdmin(models.Model):
     CONTRACTS = (('AR','Accord de Recherche'),
         ('AC','Accord Cadre'),
-        ('DD','Double Diplome'),
-        ('DDD','Double Diplome Doctorat'),
-        ('DDMS','Double Diplome Master Specialise'),
+        ('DD','Double Diplôme'),
+        ('DDD','Double Diplôme Doctorat'),
+        ('DDMS','Double Diplôme Master Spécialisé'),
         ('FITEC','FITEC'),
-        ('M','Mobilite'),
-        ('PDD','Procedure Double Diplome'),
-        ('S','Specifique'),
+        ('M','Mobilité'),
+        ('PDD','Procedure Double Diplôme'),
+        ('S','Spécifique'),
         ('X', 'Inconnu'))
     ID = models.AutoField(primary_key=True)
     ContractType = models.CharField(max_length=200, choices=CONTRACTS, default="X")
@@ -82,8 +82,8 @@ class UniversityContractsAdmin(models.Model):
         return self.ContractType
 
 class UniversityContractsStudent(models.Model):
-    CONTRACTS = (('DD','Double Diplome'),
-        ('M','Mobilite'))
+    CONTRACTS = (('DD','Double Diplôme'),
+        ('M','Mobilité'))
     ID = models.AutoField(primary_key=True)
     ContractType = models.CharField(max_length=200, choices=CONTRACTS, default="X")
     University = models.ForeignKey('University', on_delete=models.CASCADE)

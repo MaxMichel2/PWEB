@@ -273,7 +273,7 @@
             <div class="column2">
                 <h5>Niveau demandé :</h5>
                 {%for l in langue%}
-                    {{l.LanguageLevel}}
+                    {{l.get_LanguageLevel_display}}
                 {% endfor %}
             </div>
         </div>
@@ -294,7 +294,7 @@
                     <tr>
                         <td>{{f.Name}}</td>
                         <td>{{f.Value}}</td>
-                        <td>{{f.ReceivedEvery}}</td>
+                        <td>{{f.get_ReceivedEvery_display}}</td>
                     </tr>
                     {% endfor %}                                       
                 </tbody>
@@ -333,9 +333,9 @@
     </script>
 
     <div>
-        <a href=/exchange/modifier/{{univ.ID}} class ="button">Donner son avis sur cette université</a>
+        <a href=/exchange/edit/{{univ.ID}} class ="button">Donner son avis sur cette université</a>
         {% if perms.exchange.noter_depart %}
-        <a href=/exchange/addDep/{{univ.ID}} class="button">Ajouter une info officielle</a>
+        <a href=/exchange/add-department/{{univ.ID}} class="button">Ajouter une info officielle</a>
         {% endif %}
     </div>
 {% endblock main %}

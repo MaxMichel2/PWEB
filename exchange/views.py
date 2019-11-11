@@ -13,8 +13,8 @@ from django.contrib.auth.models import Permission
 def base(request):
    return render(request, 'exchange/base.html')
 
-def espace(request):
-   return render(request, 'exchange/espace.html')
+def user(request):
+   return render(request, 'exchange/user.html')
 
 #--------------------------------PAGE D'ACCUEIL-----------------------------------
 # Actualisation de rankMetrique
@@ -52,7 +52,7 @@ def home(request):
 
 
 #-----------------------PAGE D'UNE UNIVERSITE (PAR ID)-----------------
-def universite(request, idUni):
+def university(request, idUni):
    #Requetes vers BD:
    univ = University.objects.get(pk=idUni)
    cont = UniversityContractsStudent.objects.filter(University=univ)
@@ -71,7 +71,7 @@ def universite(request, idUni):
    avg = Exchange.objects.filter(University=univ).aggregate(r=Avg('Rent'),m=Avg('MonthlyExpenses'),n=Avg('NightLifeGrade'),c=Avg('CulturalLifeGrade'),s=Avg('Security'))#mettre le cout de la vie aussi
    avgPlaces = UniversityPlaces.objects.filter(University=univ).aggregate(p=Avg('Places'))
 
-   return render(request, 'exchange/universite.html', locals())
+   return render(request, 'exchange/university.html', locals())
 
 
 #-----------------------PAGE RECHERCHE AVANCEE-----------------
@@ -121,37 +121,37 @@ def search(request):
 
 #---------RAJOUTER INFO--------------------------------
 #selection continent
-def rajouter(request):        
-    return render(request, 'exchange/rajouter.html', locals())
+def reviewExchange(request):        
+    return render(request, 'exchange/reviewExchange.html', locals())
 
 #selection pays
-def pays(request,cont):
+def countries(request,continent):
    #donne lsite des objects pays selon le Continent du paramètre de l'URL
     pays_var = Country.objects.filter(Continent=cont)
-    return render(request, 'exchange/pays.html',locals())
+    return render(request, 'exchange/countries.html',locals())
 
 #selection ville
-def villes(request,pays):
+def cities(request,country):
    #donne l'object pays grace à l'URL
     p = Country.objects.get(pk=pays)
 
     #donne les villes pour ce pays là
     ville = City.objects.filter(Country=p)
 
-    return render(request, 'exchange/villes.html',locals())
+    return render(request, 'exchange/cities.html',locals())
 
 #selection univ
-def univs(request,ville):
+def universities(request,city):
    #Obtien l'objet City grave à l'URL
     v = City.objects.get(pk=ville)
 
     #donne toutes les universités de cette ville là
     Uni = University.objects.filter(City=v)
 
-    return render(request, 'exchange/univs.html',locals())
+    return render(request, 'exchange/universities.html',locals())
 
 #rajouter info étape 1:Student
-def rajoutInfo(request,univ):
+def edit(request,univ):
    #prend l'object Université par l'URL
     Uni = University.objects.get(pk=univ)
     univID = Uni.ID
@@ -166,12 +166,12 @@ def rajoutInfo(request,univ):
         studentID = student.ID
         
         #redirige vers prochaine page
-        return redirect('/exchange/modifDepStud/'+str(univID)+'/'+str(studentID))
+        return redirect('/exchange/edit-department-student/'+str(univID)+'/'+str(studentID))
 
-    return render(request, 'exchange/rajoutInfo.html', locals())
+    return render(request, 'exchange/edit.html', locals())
 
 #rajouter info étape 2:Department et UnivLanguage
-def rajoutInfo2(request,univ,stud):
+def editDepartmentStudent(request,univ,stud):
    #Recupère Université et Student du l'URL
    Uni = University.objects.get(pk=univ)
    Stud = Student.objects.get(pk=stud)
@@ -200,12 +200,12 @@ def rajoutInfo2(request,univ,stud):
       lang.save()
 
       #redirige vers next form
-      return redirect('/exchange/modifExch/'+str(univID)+'/'+str(studentID))
+      return redirect('/exchange/edit-exchange/'+str(univID)+'/'+str(studentID))
 
-   return render(request, 'exchange/rajoutInfoDepStud.html', locals())
+   return render(request, 'exchange/editDepartmentStudent.html', locals())
 
 #rajouter info étape 3:Exchange
-def rajoutInfo3(request,univ,stud):
+def editExchange(request,univ,stud):
    #recupère info de URL
    Uni = University.objects.get(pk=univ)
    Stud = Student.objects.get(pk=stud)
@@ -229,12 +229,12 @@ def rajoutInfo3(request,univ,stud):
       exchID=exch.ID
 
       #redirige vers next form
-      return redirect('/exchange/modifFinancial/'+str(univID)+'/'+str(exchID))
+      return redirect('/exchange/edit-financial/'+str(univID)+'/'+str(exchID))
 
-   return render(request, 'exchange/rajoutInfoExch.html', locals())
+   return render(request, 'exchange/editExchange.html', locals())
 
 #rajouter info étape 4: Aides Finances
-def rajoutInfo4(request,univ,exch):
+def editFinancial(request,univ,exch):
    #recupère données de URL
    Uni = University.objects.get(pk=univ)
    Exch = Exchange.objects.get(pk=exch)
@@ -255,13 +255,13 @@ def rajoutInfo4(request,univ,exch):
       #aller vers page d'accueil
       return redirect('/exchange/home')
 
-   return render(request, 'exchange/rajoutInfoFin.html', locals())
+   return render(request, 'exchange/editFinancial.html', locals())
 
 
 #----------------AUTHENTIFICATION---------
 #Connexion
 @login_required(login_url='/accounts/login/')#redirige vers CAS
-def connexion(request):
+def exchangeLogin(request):
     print(request.session['attributes'])#affiche attributs de l'utilisateur
     user = request.user#prend le user
 
@@ -279,7 +279,7 @@ def check(user):
 
 #DECONEXION ou sinon CAS_IGNORE_REFERER à true
 @user_passes_test(check , login_url='/accounts/logout/')#redirige vers deconnexion CAS
-def deconnexion(request):
+def exchangeLogout(request):
     logout(request)
     #HttpResponse(reverse('cas_ng_logout'))
     #reverse(connexion)
@@ -290,7 +290,7 @@ def deconnexion(request):
 #----------------------PROF : MODIFIE--------------------
 #pour la page d'ajout de département
 @permission_required('exchange.noter_depart')
-def ajoutOf(request,univ):
+def addDepartment(request,univ):
    #Initialisation des forms
    form = DepartForm(request.POST or None)
    formUni = UnivForm(request.POST or None)
@@ -321,11 +321,11 @@ def ajoutOf(request,univ):
       Uni.save()
       pl.save()
 
-   return render(request, 'exchange/ajoutOf.html',locals())
+   return render(request, 'exchange/addDepartment.html',locals())
 
 #pour la page de modification d'un département
 @permission_required('exchange.noter_depart')
-def modifOf(request,dep):
+def editDepartment(request,dep):
    #recupère le départ de l'URL
    form = DepartForm(request.POST or None)
    depart = Department.objects.get(pk = dep)
@@ -341,9 +341,9 @@ def modifOf(request,dep):
       depart.save()
 
       #redirige vers la première page d'ajout officiellle
-      return redirect('/exchange/addDep/'+str(depart.University.ID))
+      return redirect('/exchange/add-department/'+str(depart.University.ID))
 
-   return render(request, 'exchange/ModifOf.html',locals())
+   return render(request, 'exchange/editDepartment.html',locals())
 
 
 

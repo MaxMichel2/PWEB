@@ -143,7 +143,7 @@ CAS_SERVER_URL = 'https://casserver.herokuapp.com/cas/login'
 CAS_APPLY_ATTRIBUTES_TO_USER = True
 
 CAS_IGNORE_REFERER = True
-LOGIN_REDIRECT_URL = '/excahnge/accueil'
-LOGOUT_REDIRECT_URL = '/excahnge/accueil'
-CAS_REDIRECT_URL = '/excahnge/accueil'
+LOGIN_REDIRECT_URL = '/exchange/home'
+LOGOUT_REDIRECT_URL = '/exchange/home'
+CAS_REDIRECT_URL = '/exchange/home'
 CAS_STORE_NEXT = True
