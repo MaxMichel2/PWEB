@@ -108,11 +108,19 @@
             </div>
             <div class="column3">
                 <p>Nombre de demandes</p>
+                {% if univ.Demand == -1 %}
+                Pas d'information
+                {% else %}
                 {{univ.Demand}}
+                {% endif %}
             </div>
             <div class="column3">
                 <p>Année sécable ?</p>
-                {{univ.SplitableYear}}
+                {% if univ.SplitableYear %}
+                Oui
+                {% else %}
+                Non
+                {% endif %}
             </div>
         </div>
         </hr>
@@ -124,12 +132,16 @@
             <div class="column3">
                 <p>Type de contrat avec l'INSA :</p>
                 {% for c in cont  %}
-                {{c.ContractType}}
+                {{c.get_ContractType_display}}
                 {% endfor %}
             </div>
             <div class="column3">
                 <p>Projets :</p>
-                {{univ.Project}}
+                {% if univ.Project %}
+                Oui
+                {% else %}
+                Non
+                {% endif %}
             </div>
             <div class="column3">
                 <p>Langue(s) des cours</p>
@@ -153,82 +165,85 @@
                 {{ avg.m }}
             </div>
         </div>
-    <hr>
+        <hr>
         <h3>Style de vie</h3>
         <div class="row">
-            <h5>Vie nocturne :</h5>
-            <div id="NightLife" class="column3">
-                <script src="{% static 'exchange/assets/js/jquery3.min.js' %}"></script>
-                <script src="{% static 'exchange/assets/js/jquery.rateyo.js' %}"></script>
-                <script>
+            <div class="column3">
+                <h5>Vie nocturne :</h5>
+                <div id="NightLife">
+                    <script src="{% static 'exchange/assets/js/jquery.min.js' %}"></script>
+                    <script src="{% static 'exchange/assets/js/jquery.rateyo.js' %}"></script>
+                    <script>
                     var night = parseFloat("{{ avg.n }}".replace(/,/g, '.'));
                     console.log(night);
                     $(function () {
 
                         $("#NightLife").rateYo({
-                        
+
                             rating    : night,
                             spacing   : "5px",
                             readOnly: true,
                             multiColor: {
-                        
+
                                 "startColor": "#FF0000", //RED
                                 "endColor"  : "#00FF00"  //GREEN
                             }
                         });
                     });
-                </script>
+                    </script>
+                </div>
             </div>
-            <h5>Vie culturelle :</h5>
-            <br>
-            <div id="CulturalLife" class="column3">
-                <script src="{% static 'exchange/assets/js/jquery3.min.js' %}"></script>
-                <script src="{% static 'exchange/assets/js/jquery.rateyo.js' %}"></script>
-                <script>
+            <div class="column3">
+                <h5>Vie culturelle :</h5>
+                <div id="CulturalLife">
+                    <script src="{% static 'exchange/assets/js/jquery.min.js' %}"></script>
+                    <script src="{% static 'exchange/assets/js/jquery.rateyo.js' %}"></script>
+                    <script>
                     var cultural = parseFloat("{{ avg.c }}".replace(/,/g, '.'));
                     console.log(cultural);
                     $(function () {
 
                         $("#CulturalLife").rateYo({
-                        
+
                             rating    : cultural,
                             spacing   : "5px",
                             readOnly: true,
                             multiColor: {
-                        
+
                                 "startColor": "#FF0000", //RED
                                 "endColor"  : "#00FF00"  //GREEN
                             }
                         });
                     });
-                </script>
+                    </script>
+                </div>
             </div>
-            <h5>Sécurité :</h5>
-            <br>
-            <div id="Security" class="column3">
-                <script src="{% static 'exchange/assets/js/jquery3.min.js' %}"></script>
-                <script src="{% static 'exchange/assets/js/jquery.rateyo.js' %}"></script>
-                <script>
+            <div class="column3">
+                <h5>Sécurité :</h5>
+                <div id="Security" class="column3">
+                    <script src="{% static 'exchange/assets/js/jquery.min.js' %}"></script>
+                    <script src="{% static 'exchange/assets/js/jquery.rateyo.js' %}"></script>
+                    <script>
                     var security = parseFloat("{{ avg.s }}".replace(/,/g, '.'));
                     console.log(security);
                     $(function () {
 
                         $("#Security").rateYo({
-                        
+
                             rating    : security,
                             spacing   : "5px",
                             readOnly: true,
                             multiColor: {
-                        
+
                                 "startColor": "#FF0000", //RED
                                 "endColor"  : "#00FF00"  //GREEN
                             }
                         });
                     });
-                </script>
+                    </script>
+                </div>
             </div>
         </div>
-    </hr>
     </div>
         
     <button class="accordion">Excellence</button>
@@ -310,8 +325,10 @@
     <button class="accordion">Commentaires</button>
     <div class="panel">
         {% for e in ex %}
-        <h5>{{e.Student.Name}} {{e.Student.Surname}}, parti en {{e.StartDate}} ({{e.Year}}A {{e.Student.INSADepartement}} S{{e.Semester}})</h5>
-            <blockquote>{{e.Comment}}</blockquote>
+            {% if e.Comment %}
+                <h5>{{e.Student.Name}} {{e.Student.Surname}}, parti en {{e.StartDate}} ({{e.Year}}A {{e.Student.INSADepartement}} S{{e.Semester}})</h5>
+                <blockquote>{{e.Comment}}</blockquote>
+            {% endif %}
         {% endfor %}
     </div>
 

@@ -56,7 +56,7 @@ def university(request, idUni):
    #Requetes vers BD:
    univ = University.objects.get(pk=idUni)
    cont = UniversityContractsStudent.objects.filter(University=univ)
-   langue = UniversityLanguages.objects.filter(University=univ)
+   langue = UniversityLanguages.objects.filter(University=univ).exclude(Language="Inconnu").distinct()
    ex = Exchange.objects.filter(University=univ)
    pl = UniversityPlaces.objects.filter(University=univ)
    S1 = ex.filter(Semester=1).order_by('EndDate').first() #renvoie le premier élément de "ex" pour Semestre 1
