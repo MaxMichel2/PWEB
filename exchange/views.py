@@ -40,7 +40,7 @@ def actualiserMetrique2():
        instance.save()
 
 
-def accueil(request):
+def home(request):
    #requete pour donner toutes les universitées
     Univ_list = University.objects.all()
 
@@ -48,7 +48,7 @@ def accueil(request):
     actualiserMetrique1()
     actualiserMetrique2()
 
-    return render(request, 'exchange/accueil.html', locals())
+    return render(request, 'exchange/home.html', locals())
 
 
 #-----------------------PAGE D'UNE UNIVERSITE (PAR ID)-----------------
@@ -253,7 +253,7 @@ def rajoutInfo4(request,univ,exch):
       fin.save()
 
       #aller vers page d'accueil
-      return redirect('/exchange/accueil')
+      return redirect('/exchange/home')
 
    return render(request, 'exchange/rajoutInfoFin.html', locals())
 
@@ -271,7 +271,7 @@ def connexion(request):
     #ici faire user.atribuChePa == blabla
     
     #reviesn à la page d'accueil
-    return redirect('/exchange/accueil')
+    return redirect('/exchange/home')
 
 #Renvoie faux si utilisateur est connecté 
 def check(user):
@@ -284,7 +284,7 @@ def deconnexion(request):
     #HttpResponse(reverse('cas_ng_logout'))
     #reverse(connexion)
     #redirige vers accueil
-    return redirect('/exchange/accueil')
+    return redirect('/exchange/home')
 
 
 #----------------------PROF : MODIFIE--------------------

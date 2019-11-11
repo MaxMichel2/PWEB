@@ -36,7 +36,7 @@ The changes should be saved to the repository and you should be able to see them
     * **python manage.py makemigrations**
     * **python manage.py migrate**
     * **python manage.py runserver**
-* Open any browser and type: **localhost:8000/exchange/accueil**
+* Open any browser and type: **localhost:8000/exchange/home**
 * Congratulations, the website is up and running! Feel free to play around.
 
 ## Update database from django shell

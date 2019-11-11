@@ -7,7 +7,7 @@ urlpatterns = [
     path('recherche_avancee', views.RechercheAvancee, name='RechercheAvancee'),
     path('addDep/<int:univ>', views.ajoutOf, name='t'),
     path('modifDep/<int:dep>', views.modifOf, name='t2'),
-    path('accueil', views.accueil),
+    path('home', views.home),
     path('universite/<int:idUni>', views.universite),
     path('rajouter', views.rajouter, name='rajouter'),
     path('continent/<str:cont>', views.pays, name='pays'),

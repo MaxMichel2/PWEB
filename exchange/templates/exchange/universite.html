@@ -71,11 +71,11 @@
     <div class="panel">
         <div class="row">
             <div class="column2">
-                <h5>Pays : </h5>
+                <h3>Pays : </h3>
                 {{univ.City.Country.CountryName}}
             </div>
             <div class="column2">
-                <h5>Ville : </h5>
+                <h3>Ville : </h3>
                 {{univ.City.CityName}}
             </div>
         </div>
@@ -91,7 +91,7 @@
             <div class="column2">
                 <h3>Semestre 2 </h3>
                 <li>Date de début</li>
-                {{ S2.StartDate }}                                     
+                {{ S2.StartDate }}
                 <li>Date de fin</li>
                 {{ S2.EndDate }}
             </div>
@@ -103,20 +103,20 @@
         </header>
         <div class="row">
             <div class="column3">
-            <p>Nombre de places</p>
-            {{avgPlaces.p}}
-        </div>
-        <div class="column3">
-            <p>Nombre de demandes</p>
-            {{univ.Demand}}
-        </div>
-        <div class="column3">
-            <p>Année sécable ?</p>
-            {{univ.SplitableYear}}
+                <p>Nombre de places</p>
+                {{avgPlaces.p}}
+            </div>
+            <div class="column3">
+                <p>Nombre de demandes</p>
+                {{univ.Demand}}
+            </div>
+            <div class="column3">
+                <p>Année sécable ?</p>
+                {{univ.SplitableYear}}
+            </div>
         </div>
         </hr>
-    </div>
-    <hr>
+        <hr>
         <header>
             <h3>Autre</h3>
         </header>
@@ -124,7 +124,7 @@
             <div class="column3">
                 <p>Type de contrat avec l'INSA :</p>
                 {% for c in cont  %}
-                    {{c.ContractType}}
+                {{c.ContractType}}
                 {% endfor %}
             </div>
             <div class="column3">
@@ -134,11 +134,11 @@
             <div class="column3">
                 <p>Langue(s) des cours</p>
                 {% for l in langue %}
-                    {{l.Language}}
+                {{l.Language}}
                 {% endfor %}
             </div>
         </div>
-    </hr>
+        </hr>
     </div>
     <button class="accordion">Qualité de vie</button>
     <div class="panel">
