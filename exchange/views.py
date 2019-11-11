@@ -75,7 +75,7 @@ def universite(request, idUni):
 
 
 #-----------------------PAGE RECHERCHE AVANCEE-----------------
-def RechercheAvancee(request):
+def search(request):
    #Initialisation d'un objets Université pour requête 
    qs = University.objects.none()
 
@@ -115,7 +115,7 @@ def RechercheAvancee(request):
       #dit qu'on peut afficher la lsite des Universités
       valide=True           
 
-   return render(request, 'exchange/Recherche_Avancee.html', locals())
+   return render(request, 'exchange/search.html', locals())
 
 
 

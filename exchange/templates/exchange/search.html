@@ -24,7 +24,7 @@
 
     <div class="table-wrapper">
         <header><h3>Filtrer les Universitées selon:</h3></header>
-        <form action="{% url 'RechercheAvancee' %}"  method="post">
+        <form action="{% url 'search' %}"  method="post">
             {% csrf_token %}
             <label for="id_Continent">Continent&nbsp;:</label>
             <select name="Continent" required="" onchange="myFunction()" id="id_Continent">
