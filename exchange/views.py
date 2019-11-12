@@ -2,13 +2,17 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .forms import *
 from exchange.models import *
-from django.db.models import Avg
+from django.db.models import Avg, Func
 
 #pour l'authentification
 from django_cas_ng.signals import cas_user_authenticated #signal
 from django.contrib.auth.decorators import login_required,permission_required,user_passes_test
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Permission
+
+class Round(Func):
+    function = 'ROUND'
+    template='%(function)s(%(expressions)s, 2)'
 
 def base(request):
    return render(request, 'exchange/base.html')
@@ -68,8 +72,7 @@ def university(request, idUni):
       fin = fin | FinancialAid.objects.filter(Exchange=e)
    
    #la moyenne des différentes notes pour touts les object Exchange d'un Université
-   avg = Exchange.objects.filter(University=univ).aggregate(r=Avg('Rent'),m=Avg('MonthlyExpenses'),n=Avg('NightLifeGrade'),c=Avg('CulturalLifeGrade'),s=Avg('Security'))#mettre le cout de la vie aussi
-   avgPlaces = UniversityPlaces.objects.filter(University=univ).aggregate(p=Avg('Places'))
+   avg = Exchange.objects.filter(University=univ).aggregate(r=Round(Avg('Rent')),m=Round(Avg('MonthlyExpenses')),n=Avg('NightLifeGrade'),c=Avg('CulturalLifeGrade'),s=Avg('Security'))#mettre le cout de la vie aussi
 
    return render(request, 'exchange/university.html', locals())
 

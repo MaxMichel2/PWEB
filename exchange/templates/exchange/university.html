@@ -43,6 +43,11 @@
         width: 33.33%;
     }
 
+    .column4 {
+        float: left;
+        width: 25%;
+    }
+
     .row:after {
         content: "";
         display: table;
@@ -96,17 +101,42 @@
                 {{ S2.EndDate }}
             </div>
         </div>
-        </hr>
+
+        <hr>
+        <header>
+            <h3>Places</h3>
+        </header>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre de places</th>
+                        <th>Durée</th>
+                        <th>Exclusive à TC</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in pl %}
+                    <tr>
+                        <td>{{p.Places}}</td>
+                        <td>{{p.get_Duration_display}}</td>
+                        {% if p.Exclusive %}
+                        <td>Oui</td>
+                        {% else %}
+                        <td>Non</td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}                                       
+                </tbody>
+            </table>
+        </div>
+
         <hr>
         <header>
             <h3>Demandes</h3>
         </header>
         <div class="row">
-            <div class="column3">
-                <p>Nombre de places</p>
-                {{avgPlaces.p}}
-            </div>
-            <div class="column3">
+            <div class="column2">
                 <p>Nombre de demandes</p>
                 {% if univ.Demand == -1 %}
                 Pas d'information
@@ -114,7 +144,7 @@
                 {{univ.Demand}}
                 {% endif %}
             </div>
-            <div class="column3">
+            <div class="column2">
                 <p>Année sécable ?</p>
                 {% if univ.SplitableYear %}
                 Oui
@@ -123,7 +153,6 @@
                 {% endif %}
             </div>
         </div>
-        </hr>
         <hr>
         <header>
             <h3>Autre</h3>
@@ -157,12 +186,20 @@
         <h3>Prix de la vie :</h3>
         <div class="row">
             <div class="column2">
-                <h5>Loyer moyen : </h5>
-                {{ avg.r }}
+                <h5>Loyer mensuel moyen : </h5>
+                {% if avg.r %}
+                {{avg.r|floatformat:"0.00"}} €
+                {% else %}
+                Pas d'information
+                {% endif %}
             </div>
             <div class="column2">
                 <h5>Dépenses par mois en moyenne : </h5>
-                {{ avg.m }}
+                {% if avg.m %}
+                {{avg.m|floatformat:"0.00"}} €
+                {% else %}
+                Pas d'information
+                {% endif %}
             </div>
         </div>
         <hr>
@@ -265,12 +302,17 @@
         <h3>Visa</h3>
         <div class="row">
             <div class="column2">
-                <h5>Visa (non) nécessaire pour les européens </h5>
+                <h5>Visa nécessaire</h5>
                 <!--A revoir implémentation-->
-                {{S1.Visa}}
+                {% if S1.Visa %}
+                Oui
+                {% else %}
+                Non
+                {% endif %}
             </div>
             <div class="column2">
                 <h5>Temps d'obtention du visa </h5>
+
                 {{S1.VisaDays}}
                 {{S1.VisaWeeks}}
                 {{S1.VisaMonths}}
@@ -294,7 +336,7 @@
         </div>
     </hr>
     <hr>
-        <h3>Bourses</h3>
+    <h3>Bourses</h3>
         <div class="table-wrapper">
             <table>
                 <thead>
@@ -326,7 +368,7 @@
     <div class="panel">
         {% for e in ex %}
             {% if e.Comment %}
-                <h5>{{e.Student.Name}} {{e.Student.Surname}}, parti en {{e.StartDate}} ({{e.Year}}A {{e.Student.INSADepartement}} S{{e.Semester}})</h5>
+                <h5>{{e.Student.Name}} {{e.Student.Surname}}, parti le {{e.StartDate}} ({{e.Year}}A {{e.Student.INSADepartement}} S{{e.Semester}})</h5>
                 <blockquote>{{e.Comment}}</blockquote>
             {% endif %}
         {% endfor %}
