@@ -188,7 +188,7 @@
             <div class="column2">
                 <h5>Loyer mensuel moyen : </h5>
                 {% if avg.r %}
-                {{avg.r|floatformat:"0.00"}} €
+                {{avg.r}} €
                 {% else %}
                 Pas d'information
                 {% endif %}
@@ -196,7 +196,7 @@
             <div class="column2">
                 <h5>Dépenses par mois en moyenne : </h5>
                 {% if avg.m %}
-                {{avg.m|floatformat:"0.00"}} €
+                {{avg.m}} €
                 {% else %}
                 Pas d'information
                 {% endif %}
