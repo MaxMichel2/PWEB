@@ -44,7 +44,7 @@ The changes should be saved to the repository and you should be able to see them
 * Open a terminal in the folder that contains **manage.py**
 * Run the following command:
 	* **python manage.py shell**
-* Once in the shell, type **from exchange.models import**
+* Once in the shell, type **from exchange.models import \***
 * You can now access and modify any element within the database
 
 **Examples**
