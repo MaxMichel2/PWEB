@@ -66,6 +66,12 @@ def university(request, idUni):
    S1 = ex.filter(Semester=1).order_by('EndDate').first() #renvoie le premier élément de "ex" pour Semestre 1
    S2 = ex.filter(Semester=2).order_by('EndDate').first() #renvoie le premier élément de "ex" pour Semestre 2
    
+   # S1 = ex.filter(Semester=1)
+   # S1 will contain 0 or multiple Exchange objects in a QuerySet
+   # use for e in S1: day_of_the_year = e.StartDate.strftime("%-j") <-- Gives the day of the year of that specific datetime.date object
+   # Round the average value
+   # Find a way to turn a value between 1 and 366 to a dd-MM format
+   
    #Pour avoir toutes les financialAid d'une échange "ex"
    fin = FinancialAid.objects.none()
    for e in ex:
