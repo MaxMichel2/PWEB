@@ -76,29 +76,37 @@
     <div class="panel">
         <div class="row">
             <div class="column2">
+                <center>
                 <h3>Pays : </h3>
                 {{univ.City.Country.CountryName}}
+                </center>
             </div>
             <div class="column2">
+                <center>
                 <h3>Ville : </h3>
                 {{univ.City.CityName}}
+                </center>
             </div>
         </div>
         <hr>
         <div class="row">
             <div class="column2">
+                <center>
                 <h3>Semestre 1 </h3>
                 <li>Date de début</li>
-                {{ S1.StartDate }}
+                {{ s1_start_date }}
                 <li>Date de fin</li>
-                {{ S1.EndDate }}
+                {{ s1_end_date }}
+                </center>
             </div>
             <div class="column2">
+                <center>
                 <h3>Semestre 2 </h3>
                 <li>Date de début</li>
-                {{ S2.StartDate }}
+                {{ s2_start_date }}
                 <li>Date de fin</li>
-                {{ S2.EndDate }}
+                {{ s2_end_date }}
+                </center>
             </div>
         </div>
 
@@ -137,20 +145,24 @@
         </header>
         <div class="row">
             <div class="column2">
-                <p>Nombre de demandes</p>
+                <center>
+                <h5>Nombre de demandes</h5>
                 {% if univ.Demand == -1 %}
                 Pas d'information
                 {% else %}
                 {{univ.Demand}}
                 {% endif %}
+                </center>
             </div>
             <div class="column2">
-                <p>Année sécable ?</p>
+                <center>
+                <h5>Année sécable ?</h5>
                 {% if univ.SplitableYear %}
                 Oui
                 {% else %}
                 Non
                 {% endif %}
+                </center>
             </div>
         </div>
         <hr>
@@ -159,24 +171,30 @@
         </header>
         <div class="row">
             <div class="column3">
-                <p>Type de contrat avec l'INSA :</p>
+                <center>
+                <h5>Type de contrat avec l'INSA :</h5>
                 {% for c in cont  %}
                 {{c.get_ContractType_display}}
                 {% endfor %}
+                </center>
             </div>
             <div class="column3">
-                <p>Projets :</p>
+                <center>
+                <h5>Projets :</h5>
                 {% if univ.Project %}
                 Oui
                 {% else %}
                 Non
                 {% endif %}
+                </center>
             </div>
             <div class="column3">
-                <p>Langue(s) des cours</p>
+                <center>
+                <h5>Langue(s) des cours</h5>
                 {% for l in langue %}
                 {{l.Language}}
                 {% endfor %}
+                </center>
             </div>
         </div>
         </hr>
@@ -186,26 +204,31 @@
         <h3>Prix de la vie :</h3>
         <div class="row">
             <div class="column2">
+                <center>
                 <h5>Loyer mensuel moyen : </h5>
                 {% if avg.r %}
                 {{avg.r}} €
                 {% else %}
                 Pas d'information
                 {% endif %}
+                </center>
             </div>
             <div class="column2">
+                <center>
                 <h5>Dépenses par mois en moyenne : </h5>
                 {% if avg.m %}
                 {{avg.m}} €
                 {% else %}
                 Pas d'information
                 {% endif %}
+                </center>
             </div>
         </div>
         <hr>
         <h3>Style de vie</h3>
         <div class="row">
             <div class="column3">
+                <center>
                 <h5>Vie nocturne :</h5>
                 <div id="NightLife">
                     <script src="{% static 'exchange/assets/js/jquery.min.js' %}"></script>
@@ -229,8 +252,10 @@
                     });
                     </script>
                 </div>
+                </center>
             </div>
             <div class="column3">
+                <center>
                 <h5>Vie culturelle :</h5>
                 <div id="CulturalLife">
                     <script src="{% static 'exchange/assets/js/jquery.min.js' %}"></script>
@@ -254,10 +279,12 @@
                     });
                     </script>
                 </div>
+                </center>
             </div>
             <div class="column3">
+                <center>
                 <h5>Sécurité :</h5>
-                <div id="Security" class="column3">
+                <div id="Security">
                     <script src="{% static 'exchange/assets/js/jquery.min.js' %}"></script>
                     <script src="{% static 'exchange/assets/js/jquery.rateyo.js' %}"></script>
                     <script>
@@ -279,6 +306,7 @@
                     });
                     </script>
                 </div>
+                </center>
             </div>
         </div>
     </div>
@@ -287,12 +315,24 @@
     <div class="panel">
         <div class="row">
             <div class="column2">
+                <center>
                 <h5>Classement mondial (Shanghai) : </h5>
+                {% if univ.CWURRank == 0 %}
+                Pas d'information
+                {% else %}
                 {{univ.CWURRank}}
+                {% endif %}
+                </center>
             </div>
             <div class="column2">
+                <center>
                 <h5>Note du département (FLM) : </h5>
+                {% if univ.RankMetric == -1 %}
+                Pas d'information
+                {% else %}
                 {{univ.RankMetric}}
+                {% endif %}
+                </center>
             </div>
         </div>
     </div>
@@ -302,6 +342,7 @@
         <h3>Visa</h3>
         <div class="row">
             <div class="column2">
+                <center>
                 <h5>Visa nécessaire</h5>
                 <!--A revoir implémentation-->
                 {% if S1.Visa %}
@@ -309,29 +350,36 @@
                 {% else %}
                 Non
                 {% endif %}
+                </center>
             </div>
             <div class="column2">
+                <center>
                 <h5>Temps d'obtention du visa </h5>
 
                 {{S1.VisaDays}}
                 {{S1.VisaWeeks}}
                 {{S1.VisaMonths}}
+                </center>
             </div>
         </div>
     <hr>
         <h3>Diplôme linguistique</h3>
         <div class="row">
             <div class="column2">
+                <center>
                 <h5>Diplôme demandé :</h5>
-                {%for l in langue%}
+                {% for l in langue %}
                     {{l.LanguageDiploma}}
                 {% endfor %}
+                </center>
             </div>
             <div class="column2">
+                <center>
                 <h5>Niveau demandé :</h5>
-                {%for l in langue%}
+                {% for l in langue %}
                     {{l.get_LanguageLevel_display}}
                 {% endfor %}
+                </center>
             </div>
         </div>
     </hr>
@@ -359,8 +407,10 @@
         </div>
     </hr>
     <hr>
+        <center>
         <h5>Equivalence crédits nationaux/crédits ECTS :</h5>
         {{univ.City.Country.ECTSConversion}}
+        </center>
     </hr>
     </div>
 

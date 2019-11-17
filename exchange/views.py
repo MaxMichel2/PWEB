@@ -1,8 +1,9 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .forms import *
-from exchange.models import *
+from .models import *
 from django.db.models import Avg, Func
+import datetime
 
 #pour l'authentification
 from django_cas_ng.signals import cas_user_authenticated #signal
@@ -10,9 +11,21 @@ from django.contrib.auth.decorators import login_required,permission_required,us
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Permission
 
+months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
+
+def day_month_conversion(day_of_year):
+   d = datetime.datetime.strptime(str(day_of_year), "%j")
+   day = d.strftime("%#d")
+   month = d.strftime("%#m")
+   return(day+" "+months[int(month)-1])
+ 
+def visa_duration(day, week, month):
+   if day > 1:
+      d = str(day)+" jours"
+
 class Round(Func):
-    function = 'ROUND'
-    template='%(function)s(%(expressions)s, 2)'
+   function = 'ROUND'
+   template='%(function)s(%(expressions)s, 2)'
 
 def base(request):
    return render(request, 'exchange/base.html')
@@ -28,9 +41,9 @@ def actualiserMetrique1():
   
    #insère la valeur dans l'université
    for elem in metrique_Depa:
-       instance = University.objects.get(ID=elem[0])
-       instance.RankMetric = elem[1]
-       instance.save()
+      instance = University.objects.get(ID=elem[0])
+      instance.RankMetric = elem[1]
+      instance.save()
 
 # Actualisation de lifeMetric
 def actualiserMetrique2():
@@ -39,20 +52,20 @@ def actualiserMetrique2():
   
    #insère la valeur dans l'université
    for elem in metrique2_Depa:
-       instance = University.objects.get(ID=elem[0])
-       instance.LifeMetric = ((elem[1]+elem[2]+elem[3])/3)
-       instance.save()
+      instance = University.objects.get(ID=elem[0])
+      instance.LifeMetric = ((elem[1]+elem[2]+elem[3])/3)
+      instance.save()
 
 
 def home(request):
    #requete pour donner toutes les universitées
-    Univ_list = University.objects.all()
+   Univ_list = University.objects.all()
 
-    #actualise les métriques
-    actualiserMetrique1()
-    actualiserMetrique2()
+   #actualise les métriques
+   actualiserMetrique1()
+   actualiserMetrique2()
 
-    return render(request, 'exchange/home.html', locals())
+   return render(request, 'exchange/home.html', locals())
 
 
 #-----------------------PAGE D'UNE UNIVERSITE (PAR ID)-----------------
@@ -63,14 +76,50 @@ def university(request, idUni):
    langue = UniversityLanguages.objects.filter(University=univ).exclude(Language="Inconnu").distinct()
    ex = Exchange.objects.filter(University=univ)
    pl = UniversityPlaces.objects.filter(University=univ)
-   S1 = ex.filter(Semester=1).order_by('EndDate').first() #renvoie le premier élément de "ex" pour Semestre 1
-   S2 = ex.filter(Semester=2).order_by('EndDate').first() #renvoie le premier élément de "ex" pour Semestre 2
+   S1 = ex.filter(Semester=1) #renvoie le premier élément de "ex" pour Semestre 1
+   S2 = ex.filter(Semester=2) #renvoie le premier élément de "ex" pour Semestre 2
    
-   # S1 = ex.filter(Semester=1)
    # S1 will contain 0 or multiple Exchange objects in a QuerySet
-   # use for e in S1: day_of_the_year = e.StartDate.strftime("%-j") <-- Gives the day of the year of that specific datetime.date object
+   # use 
+   s1_start, s1_end, s2_start, s2_end = 0, 0, 0, 0
+   s1_start_date, s1_end_date, s2_start_date, s2_end_date = "Pas d'information", "Pas d'information", "Pas d'information", "Pas d'information"
+   if S1:
+      for e in S1: 
+         s1_start += int(e.StartDate.strftime("%j")) # <-- Gives the day of the year of that specific datetime.date object
+         s1_end += int(e.EndDate.strftime("%j"))
+      
+      s1_start_date = day_month_conversion(round(s1_start/len(S1)))
+      s1_end_date = day_month_conversion(round(s1_end/len(S1)))
+   
+   if S2:
+      for e in S2:
+         s2_start += int(e.StartDate.strftime("%j"))
+         s2_end += int(e.EndDate.strftime("%j"))
+      
+      s2_start_date = day_month_conversion(round(s2_start/len(S2)))
+      s2_end_date = day_month_conversion(round(s2_end/len(S2)))      
+   
    # Round the average value
    # Find a way to turn a value between 1 and 366 to a dd-MM format
+   
+   visa_days, visa_weeks, visa_months = 0, 0, 0
+   day_count, week_count, month_count = 0, 0, 0
+   for e in ex:
+      if e.VisaDays != -1:
+         day_count += 1
+         visa_days += e.VisaDays
+      if e.VisaWeeks != -1:
+         week_count += 1
+         visa_weeks += e.VisaWeeks
+      if e.VisaMonths != -1:
+         month_count += 1
+         visa_months += e.VisaMonths
+         
+   visa_days = round(visa_days/day_count)
+   visa_weeks = round(visa_weeks/week_count)
+   visa_months = round(visa_months/month_count)
+   
+   print(visa_days, visa_weeks, visa_months)
    
    #Pour avoir toutes les financialAid d'une échange "ex"
    fin = FinancialAid.objects.none()
