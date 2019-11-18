@@ -159,10 +159,19 @@ def university(request, idUni):
 	else:
 		visa_text = "Visa non nécessaire"
 	
-	#Pour avoir toutes les financialAid d'une échange "ex"
+	# Pour avoir toutes les FinancialAid d'une échange "ex"
 	fin = FinancialAid.objects.none()
 	for e in ex:
 		fin = fin | FinancialAid.objects.filter(Exchange=e).exclude(Value=-1)
+	
+	fin_list = []
+	fin_filtered = fin.values("Name", "ReceivedEvery").annotate(avg_value=Avg("Value"))
+	
+	# temp NE DOIS JAMAIS ETRE SAUVEGARDE!!!!!!!!!!!!
+	for f in fin_filtered:
+		temp = FinancialAid(Name = f["Name"], Value=f["avg_value"], ReceivedEvery=f["ReceivedEvery"], Exchange=Exchange.objects.first())
+		fin_list.append(temp)
+	
 	
 	#la moyenne des différentes notes pour touts les object Exchange d'un Université
 	avg = Exchange.objects.filter(University=univ).aggregate(r=Round(Avg('Rent')),m=Round(Avg('MonthlyExpenses')),n=Avg('NightLifeGrade'),c=Avg('CulturalLifeGrade'),s=Avg('Security'))#mettre le cout de la vie aussi

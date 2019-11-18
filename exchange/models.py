@@ -142,8 +142,7 @@ class Student(models.Model):
         return self.Email
 
 class FinancialAid(models.Model):
-    RECEIVED_EVERY = (("J", "Jours"),
-        ("S", "Semaines"),
+    RECEIVED_EVERY = (("S", "Semaines"),
         ("M", "Mois"))
     ID = models.AutoField(primary_key=True)
     Name = models.CharField(max_length=100, null=True, blank=True)

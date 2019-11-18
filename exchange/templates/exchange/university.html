@@ -399,14 +399,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for f in fin %}
-                        {% if f.Value != -1 %}
-                            <tr>
-                                <td>{{f.Name}}</td>
-                                <td>{{f.Value}}</td>
-                                <td>{{f.get_ReceivedEvery_display}}</td>
-                            </tr>
-                        {% endif %}
+                    {% for f in fin_list %}
+                        <tr>
+                            <td>{{f.Name}}</td>
+                            <td>{{f.Value}} €</td>
+                            <td>{{f.get_ReceivedEvery_display}}</td>
+                        </tr>
                     {% endfor %}                                       
                 </tbody>
             </table>
