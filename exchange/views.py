@@ -4,6 +4,7 @@ from .forms import *
 from .models import *
 from django.db.models import Avg, Func
 import datetime
+from collections import defaultdict
 
 #pour l'authentification
 from django_cas_ng.signals import cas_user_authenticated #signal
@@ -46,7 +47,12 @@ def visa_duration(day, week, month):
 		return w
 	elif m != "":
 		return m
-     
+
+def duplicates_in_fin(list_to_check):
+    tally = defaultdict(list)
+    for index, item in enumerate(list_to_check):
+        tally[item].append(index)
+    return ((key,locs) for key,locs in tally.items() if len(locs)>1)
 
 class Round(Func):
 	function = 'ROUND'
@@ -105,13 +111,15 @@ def university(request, idUni):
 	S2 = ex.filter(Semester=2) #renvoie le premier élément de "ex" pour Semestre 2
 	
 	# S1 will contain 0 or multiple Exchange objects in a QuerySet
-	# use 
+	# Check if there is a need for a Visa anywhere
 	s1_start, s1_end, s2_start, s2_end = 0, 0, 0, 0
 	s1_start_date, s1_end_date, s2_start_date, s2_end_date = "Pas d'information", "Pas d'information", "Pas d'information", "Pas d'information"
+	visa = []
 	if S1:
-		for e in S1: 
+		for e in S1:
 			s1_start += int(e.StartDate.strftime("%j")) # <-- Gives the day of the year of that specific datetime.date object
 			s1_end += int(e.EndDate.strftime("%j"))
+			visa.append(e.Visa)
 		
 		s1_start_date = day_month_conversion(round(s1_start/len(S1)))
 		s1_end_date = day_month_conversion(round(s1_end/len(S1)))
@@ -120,36 +128,41 @@ def university(request, idUni):
 		for e in S2:
 			s2_start += int(e.StartDate.strftime("%j"))
 			s2_end += int(e.EndDate.strftime("%j"))
+			visa.append(e.Visa)
 		
 		s2_start_date = day_month_conversion(round(s2_start/len(S2)))
-		s2_end_date = day_month_conversion(round(s2_end/len(S2)))      
+		s2_end_date = day_month_conversion(round(s2_end/len(S2)))
 	
 	# Round the average value
 	# Find a way to turn a value between 1 and 366 to a dd-MM format
-	
 	visa_days, visa_weeks, visa_months = 0, 0, 0
-	day_count, week_count, month_count = 0, 0, 0
-	for e in ex:
-		if e.VisaDays != -1:
-			day_count += 1
-			visa_days += e.VisaDays
-		if e.VisaWeeks != -1:
-			week_count += 1
-			visa_weeks += e.VisaWeeks
-		if e.VisaMonths != -1:
-			month_count += 1
-			visa_months += e.VisaMonths
-			
-	visa_days = round(visa_days/day_count)
-	visa_weeks = round(visa_weeks/week_count)
-	visa_months = round(visa_months/month_count)
-	
-	visa_text = visa_duration(visa_days, visa_weeks, visa_months)
+	day_count, week_count, month_count = 0, 0, 0	
+	visa_text = ""
+ 
+	if True in visa:
+		for e in ex:
+			if e.VisaDays != -1:
+				day_count += 1
+				visa_days += e.VisaDays
+			if e.VisaWeeks != -1:
+				week_count += 1
+				visa_weeks += e.VisaWeeks
+			if e.VisaMonths != -1:
+				month_count += 1
+				visa_months += e.VisaMonths
+				
+		visa_days = round(visa_days/day_count)
+		visa_weeks = round(visa_weeks/week_count)
+		visa_months = round(visa_months/month_count)
+		
+		visa_text = visa_duration(visa_days, visa_weeks, visa_months)
+	else:
+		visa_text = "Visa non nécessaire"
 	
 	#Pour avoir toutes les financialAid d'une échange "ex"
 	fin = FinancialAid.objects.none()
 	for e in ex:
-		fin = fin | FinancialAid.objects.filter(Exchange=e)
+		fin = fin | FinancialAid.objects.filter(Exchange=e).exclude(Value=-1)
 	
 	#la moyenne des différentes notes pour touts les object Exchange d'un Université
 	avg = Exchange.objects.filter(University=univ).aggregate(r=Round(Avg('Rent')),m=Round(Avg('MonthlyExpenses')),n=Avg('NightLifeGrade'),c=Avg('CulturalLifeGrade'),s=Avg('Security'))#mettre le cout de la vie aussi

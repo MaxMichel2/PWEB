@@ -345,7 +345,7 @@
                 <center>
                 <h5>Visa nécessaire</h5>
                 <!--A revoir implémentation-->
-                {% if S1.Visa %}
+                {% if True in visa %}
                 Oui
                 {% else %}
                 Non
@@ -415,7 +415,11 @@
     <hr>
         <center>
         <h5>Equivalence crédits nationaux/crédits ECTS :</h5>
-        {{univ.City.Country.ECTSConversion}}
+        {% if univ.City.Country.ECTSConversion != -1 %}
+            {{univ.City.Country.ECTSConversion}}
+        {% else %}
+            Pas d'information
+        {% endif %}
         </center>
     </hr>
     </div>
