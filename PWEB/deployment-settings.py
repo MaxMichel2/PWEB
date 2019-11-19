@@ -22,10 +22,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '^(^z3s*c@6m3ssu4@6j0bbud0y^_3$q@_rj&5*7%8js@jodf$3'
 
-
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_BROWSER_XSS_FILTER = True
+# SECURE_HSTS_SECONDS = 10 # READ DOC BEFORE UNCOMMENTING!!!!
+# SECURE_SSL_REDIRECT = True # CHECK BEFORE SETTING THIS!!!!!
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost']
 
@@ -52,6 +57,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_cas_ng.middleware.CASMiddleware',
 ]
+
+X_FRAME_OPTIONS = 'DENY'
 
 ROOT_URLCONF = 'PWEB.urls'
 
