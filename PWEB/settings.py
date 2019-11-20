@@ -84,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'pweb_international',
 		'USER': 'root',
-		'PASSWORD': 'root',
+		'PASSWORD': 'pweb',
 		'HOST': '127.0.0.1',
 		'PORT': '3306',
     }
@@ -149,3 +149,4 @@ LOGIN_REDIRECT_URL = '/exchange/home'
 LOGOUT_REDIRECT_URL = '/exchange/home'
 CAS_REDIRECT_URL = '/exchange/home'
 CAS_STORE_NEXT = True
+
