@@ -25,7 +25,7 @@ SECRET_KEY = '^(^z3s*c@6m3ssu4@6j0bbud0y^_3$q@_rj&5*7%8js@jodf$3'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -84,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'pweb_international',
 		'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': 'pweb',
 		#'PASSWORD': 'pweb',
 		'HOST': '127.0.0.1',
 		'PORT': '3306',
@@ -128,7 +128,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'http://tc-net3.insa-lyon.fr:8001/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 
