@@ -27,7 +27,7 @@
         <header>
             <h3>Informations sur votre échange</h3>
         </header>
-        <form action="{% url 'rajoutInfo3' Uni.ID Stud.ID %}" method="post">
+        <form action="{% url 'edit-exchange' Uni.ID Stud.ID %}" method="post">
             {% csrf_token %}
             
             <div class="row">

@@ -5,33 +5,27 @@
 {% endblock style %}
 
 {% block head %}
-    <title>Ajouter une info - Université</title>
+    <title>Espace Etudiant</title>
 {% endblock head %}
 
 {% block intro %}
     <div id="intro" style="min-height: 0vh;">
+        <h1>Retour<br/>
+        d'échange</h1>
+        <p></p>
         <ul class="actions">
             <li><a href="#nav" class="button icon solo fa-arrow-down scrolly">Continue</a></li>
-        </ul>
+        </ul> 
     </div>
 {% endblock intro %}
 
 {% block main %}
     <header class="major">
-        <h1>Ajouter<br />
-        une info</h1>
-        <p>Donne ton avis sur ton échange à l'étranger</p>
+        <h2>Informations</h2>
     </header>
+    
+    <div id="centralsection" height="20rem">
 
-    <div class="table-wrapper">
-        <header>
-            <h3>Informations personnelles</h3>
-        </header>
-        <form action="{% url 'edit' Uni.ID %}" method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Continuer">
-        </form>
     </div>
 {% endblock main %}
 

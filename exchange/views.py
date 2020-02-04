@@ -190,7 +190,7 @@ def search(request):
 	ordre = OrdreForm(request.POST or None)
 
 	#liste de tout les objects Pays
-	ttl = Country.objects.all()
+	ttl = Country.objects.all().order_by('CountryName')
 	
 	#Verifie que le submit est cohérent
 	if form.is_valid() and formContract.is_valid() and ordre.is_valid() :
@@ -232,13 +232,13 @@ def reviewExchange(request):
 #selection pays
 def countries(request,continent):
 	#donne lsite des objects pays selon le Continent du paramètre de l'URL
-	 pays_var = Country.objects.filter(Continent=cont)
+	 pays_var = Country.objects.filter(Continent=continent)
 	 return render(request, 'exchange/countries.html',locals())
 
 #selection ville
 def cities(request,country):
 	#donne l'object pays grace à l'URL
-	 p = Country.objects.get(pk=pays)
+	 p = Country.objects.get(pk=country)
 
 	 #donne les villes pour ce pays là
 	 ville = City.objects.filter(Country=p)
@@ -248,7 +248,7 @@ def cities(request,country):
 #selection univ
 def universities(request,city):
 	#Obtien l'objet City grave à l'URL
-	 v = City.objects.get(pk=ville)
+	 v = City.objects.get(pk=city)
 
 	 #donne toutes les universités de cette ville là
 	 Uni = University.objects.filter(City=v)
@@ -450,7 +450,8 @@ def editDepartment(request,dep):
 
 	return render(request, 'exchange/editDepartment.html',locals())
 
-
+def review(request):
+    return render(request, 'exchange/addInformation.html', {})
 
 #--------------Rapport---------------
 def rapport(request):

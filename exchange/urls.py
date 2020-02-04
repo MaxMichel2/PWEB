@@ -10,9 +10,9 @@ urlpatterns = [
     path('home', views.home),
     path('university/<int:idUni>', views.university),
     path('review-exchange', views.reviewExchange, name='review-exchange'),
-    path('continents/<str:continent>', views.countries, name='countries'),
-    path('countries/<int:country>', views.cities, name='cities'),
-    path('cities/<int:city>', views.universities, name='universities'),
+    path('continent/<str:continent>', views.countries, name='countries'),
+    path('country/<int:country>', views.cities, name='cities'),
+    path('city/<int:city>', views.universities, name='universities'),
     path('edit/<int:univ>', views.edit, name='edit'), #universite/<int:univ>/informations-personnelles
     path('edit-department-student/<int:univ>/<int:stud>', views.editDepartmentStudent, name='edit-department-student'), #universite/<int:univ>/<int:stud>/departement
     path('edit-exchange/<int:univ>/<int:stud>', views.editExchange, name='edit-exchange'), #universite/<int:univ>/<int:stud>/echange
@@ -21,5 +21,6 @@ urlpatterns = [
     path('logout', views.exchangeLogout, name='exchange-logout'),
     path('rapport', views.rapport),
     path('base', views.base),
-    path('user', views.user)
+    path('user', views.user),
+    path('review', views.review)
 ]

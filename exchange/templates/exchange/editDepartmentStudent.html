@@ -27,7 +27,7 @@
         <header>
                 <h3>Informations sur l'université</h3>
         </header>
-        <form action="{% url 'rajoutInfo2' Uni.ID Stud.ID %}" method="post">
+        <form action="{% url 'edit-department-student' Uni.ID Stud.ID %}" method="post">
             {% csrf_token %}
                 
                 {{ formDep.as_p}}
