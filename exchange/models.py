@@ -171,7 +171,7 @@ class Exchange(models.Model):
     EndDate = models.DateField()
     Semester = models.IntegerField(default=-1, choices=SEMESTER_CHOICE)
     Visa = models.BooleanField(default=False)
-    Comment = models.CharField(max_length=1000, null=True, blank=True)
+    Comment = models.CharField(max_length=10000, null=True, blank=True)
     VisaMonths = models.IntegerField(null=True, blank=True, default=-1,)
     VisaWeeks = models.IntegerField(null=True, blank=True, default=-1,)
     VisaDays = models.IntegerField(null=True, blank=True, default=-1)
