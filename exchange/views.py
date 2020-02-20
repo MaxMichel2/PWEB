@@ -201,15 +201,15 @@ def search(request):
 		ordres = ordre.cleaned_data['Ordre']
 
 		#En fonction des options choisies on fait une requete différente
-		universitiesC = UniversityContractsAdmin.objects.filter(University__City__Country__Continent=Continent)     
+		universitiesC = UniversityContractsAdmin.objects.filter(University__City__Country__Continent=Continent).order_by('University')     
 							#UniversityContractsStudent
 			#Si On filtre par pays
 		if(CountryName!=""):
-			universitiesC = universitiesC.filter(University__City__Country__CountryName=CountryName)
+			universitiesC = universitiesC.filter(University__City__Country__CountryName=CountryName).order_by('CountryName')
 
 			#Si on filtre par contract
 		if(ContractType!=""):
-			universitiesC = universitiesC.filter(ContractType=ContractType)
+			universitiesC = universitiesC.filter(ContractType=ContractType).order_by('ContractType')
 
 			#Ordre : soit par pays soit par autre
 		if(ordres=="CountryName"):
