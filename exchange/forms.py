@@ -99,7 +99,7 @@ class OrdreForm(forms.Form):
         ('CWURRank','Ranking Mondial'),
         ('Demand','Demande')
     )
-    Ordre = forms.ChoiceField(choices=ORDRES)
+    Ordre = forms.ChoiceField(choices=ORDRES, widget=forms.Select(attrs={'class':"required"}))
 
 #------------------PROF: MOFIFIE----------------
 #RajouterInfo2 - Department

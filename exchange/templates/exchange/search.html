@@ -2,6 +2,14 @@
 {% load static %}
 
 {% block style %}
+    .required:after {
+        content:" *";
+        color: red;
+    }
+    .required_before:before {
+        content:"* ";
+        color: red;
+    }
 {% endblock style %}
 
 {% block head %}
@@ -26,7 +34,7 @@
         <header><h3>Filtrer les Universitées selon:</h3></header>
         <form action="{% url 'search' %}"  method="post">
             {% csrf_token %}
-            <label for="id_Continent">Continent&nbsp;:</label>
+            <label class="required" for="id_Continent">Continent&nbsp;:</label>
             <select name="Continent" required="" onchange="myFunction()" id="id_Continent">
                 <option value="" selected="">---------</option>
                 <option value="AS">Asie</option>
@@ -35,7 +43,8 @@
                 <option value="AdS">Amerique du Sud</option>
                 <option value="EU">Europe</option>
                 <option value="OC">Oceanie</option>
-                </select>
+            </select>
+            </br>
             <label for="id_CountryName">Pays&nbsp;:</label>
             <select name="CountryName" id="testt">
                 <option value="" >---------</option>  
@@ -43,10 +52,20 @@
                 <option value="{{ c.CountryName }}" id="{{c.ID}}" style="display:none;">{{ c.CountryName }}</option>
                 {% endfor %}
             </select>
+            </br>
             {{ formContract.as_p }}
             <hr>
             <h3>Ordonner les Universités selon:</h3>
-            {{ ordre.as_p }}
+            <label class="required" for="id_Ordre">Ordre&nbsp;:</label>
+            <select name="Ordre" required="" id="id_Ordre">
+                <option value="" selected="">---------</option>
+                <option value="RankMetric">Ranking</option>
+                <option value="LifeMetric">Qualité de Vie</option>
+                <option value="CountryName">Pays</option>
+                <option value="CWURRank">Ranking Mondial</option>
+                <option value="Demand">Demande</option>
+            </select>
+            </br>
             </hr>
             <input id="buton" type="submit" value="Rechercher">
         </form>
@@ -84,6 +103,7 @@
         </table>
     </div>
     {% endif %}
+    <p class="required_before" style="font-size:12px;"> - Champ requis</p>
 {% endblock main %}
 
 {% block scripts %}

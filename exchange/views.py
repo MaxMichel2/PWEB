@@ -201,23 +201,23 @@ def search(request):
 		ordres = ordre.cleaned_data['Ordre']
 
 		#En fonction des options choisies on fait une requete différente
-		universitiesC = UniversityContractsAdmin.objects.filter(University__City__Country__Continent=Continent).order_by('University')     
+		universitiesC = UniversityContractsAdmin.objects.filter(University__City__Country__Continent=Continent)     
 							#UniversityContractsStudent
 			#Si On filtre par pays
 		if(CountryName!=""):
-			universitiesC = universitiesC.filter(University__City__Country__CountryName=CountryName).order_by('CountryName')
+			universitiesC = universitiesC.filter(University__City__Country__CountryName=CountryName)
 
 			#Si on filtre par contract
 		if(ContractType!=""):
-			universitiesC = universitiesC.filter(ContractType=ContractType).order_by('ContractType')
+			universitiesC = universitiesC.filter(ContractType=ContractType)
 
 			#Ordre : soit par pays soit par autre
 		if(ordres=="CountryName"):
-			universitiesC = universitiesC.order_by('-University__City__Country__CountryName')
+			universitiesC = universitiesC.order_by('University__City__Country__CountryName', 'University__City__CityName')
 		else:
-			universitiesC = universitiesC.order_by('-University__'+ordres)
+			universitiesC = universitiesC.order_by('-University__'+ordres, 'University__City__Country__CountryName', 'University__City__CityName')
 		
-		#dit qu'on peut afficher la lsite des Universités
+		#dit qu'on peut afficher la liste des Universités
 		valide=True           
 
 	return render(request, 'exchange/search.html', locals())
